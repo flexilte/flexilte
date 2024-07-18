@@ -31,7 +31,6 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: pnpm publish-packages
-          token: ${{ secrets.WEBSITE_PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -44,6 +43,7 @@ jobs:
         with:
           repository: flexilte/flexilte.github.io
           path: gh-pages
+          token: ${{ secrets.WEBSITE_PAT }}
 
       - name: Copy Build Content
         run: |
