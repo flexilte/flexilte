@@ -10,14 +10,5 @@
       "cache": false,
       "persistent": true
     }
-  },
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
   }
 }

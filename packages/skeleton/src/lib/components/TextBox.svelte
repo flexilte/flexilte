@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let type = '';
-	export let text;
+	export let text: string;
 	export let classList = '';
 
 	const buildClass = () => {

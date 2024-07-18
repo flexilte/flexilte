@@ -4,7 +4,7 @@ export interface LayoutConfig<C extends Record<string, ComponentType>> {
 	id?: string; // will be added to the element
 	width?: string; // tailwind class for the width (w-1/6)
 	component?: keyof C & string; // component name
-	props?: Record<string, any>; // component props
+	props?: Record<string, unknown>; // component props
 	nodeClass?: string; // classes apply to cols/rows/elements
 	wrapperClass?: string; // create and wrap element with a wrapper, this is a short hand for components that doesn't like flex box
 	layoutClass?: string; // classes apply to cols/rows

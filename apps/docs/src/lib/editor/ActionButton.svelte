@@ -2,7 +2,7 @@
 	import { getDrawerStore, getModalStore } from '@skeletonlabs/skeleton';
 	import { componentStore, triggerRefresh } from './editorStore';
 
-	export let type = '';
+	export let type: string;
 	const modalStore = getModalStore();
 	const exportJson = () => {
 		modalStore.trigger({
