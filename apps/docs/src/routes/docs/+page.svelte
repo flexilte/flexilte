@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { components, docStore } from '$lib/common';
-	import { Flexilte, type LayoutConfig } from '@flexilte/core';
+	import { Flexilte } from '@flexilte/core';
 </script>
 
 {#if $docStore}

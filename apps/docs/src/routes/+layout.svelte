@@ -22,7 +22,6 @@
 	import yaml from 'highlight.js/lib/languages/yaml';
 	import json from 'highlight.js/lib/languages/json';
 	import Icon from '@iconify/svelte';
-	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { Flexilte } from '@flexilte/core';
 	import ExportBox from '$lib/editor/ExportBox.svelte';
 	import { components } from '$lib/editor/editorStore';

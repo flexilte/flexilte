@@ -3,10 +3,10 @@
 
 	// you can get value from both slot or bind:res
 	export let url: string;
-	export let res: any;
+	export let res: unknown;
 	let isLoading: boolean;
-	let response: any;
-	let error: any;
+	let response: unknown;
+	let error: unknown;
 	isLoading = true;
 
 	onMount(() => {

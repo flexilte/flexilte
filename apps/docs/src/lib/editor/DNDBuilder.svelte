@@ -13,7 +13,6 @@
 	import 'gridstack/dist/gridstack-extra.min.css';
 	import {
 		GridStack,
-		type GridItemHTMLElement,
 		type GridStackNode,
 		type GridStackOptions
 	} from 'gridstack/dist/es5/gridstack';
@@ -150,10 +149,11 @@
 
 	const initComp = (node: GridStackNode) => {
 		if (!node.id) node.id = Date.now().toString();
+		if (!node!.el?.innerText) return;
 		const comp = {
 			id: node.id,
 			component: node!.el?.innerText,
-			props: JSON.parse(JSON.stringify(defaultMap[node!.el?.innerText!])),
+			props: JSON.parse(JSON.stringify(defaultMap[node!.el?.innerText])),
 			posX: 'middle',
 			posY: 'middle'
 		};
@@ -226,8 +226,9 @@
 		if (!grid) return;
 		const items = grid.getGridItems();
 		items.forEach((e) => {
+			if (!e.gridstackNode?.subGrid) return;
 			initEvents(e.gridstackNode!);
-			initEventOnOldGrid(e.gridstackNode?.subGrid!);
+			initEventOnOldGrid(e.gridstackNode?.subGrid);
 		});
 	};
 

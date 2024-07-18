@@ -1,17 +1,17 @@
 {
 	"name": "@flexilte/core",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package",
+		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
-		"lint": "eslint --fix --ignore-path ../../.gitignore .",
-		"format": "prettier --write ."
+		"lint": "prettier --check --write . && eslint --ignore-path ../../.gitignore .",
+		"format": "prettier --write . && eslint --fix ."
 	},
 	"exports": {
 		".": {

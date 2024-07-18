@@ -12,4 +12,4 @@ export default {
 		body: 'body',
 		footer: 'footer'
 	}
-} as Record<string, Record<string, any>>;
+} as Record<string, Record<string, unknown>>;

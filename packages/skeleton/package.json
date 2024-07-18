@@ -1,6 +1,6 @@
 {
 	"name": "@flexilte/skeleton",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -10,8 +10,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"lint": "prettier --check --write . && eslint --ignore-path ../../.gitignore .",
+		"format": "prettier --write . && eslint --fix ."
 	},
 	"exports": {
 		".": {
@@ -52,10 +52,33 @@
 		"vite-plugin-tailwind-purgecss": "0.3.3",
 		"vitest": "^1.6.0"
 	},
-	"svelte": "./src/lib/index.ts",
-	"types": "./src/lib/index.ts",
+	"keywords": [
+		"components",
+		"ui",
+		"component",
+		"svelte",
+		"component-library",
+		"ui-components",
+		"ui-framework",
+		"tailwind",
+		"tailwindcss",
+		"components-library",
+		"sveltekit",
+		"skeleton"
+	],
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
 		"highlight.js": "11.9.0"
-	}
+	},
+	"files": [
+		"./dist/**/*.svelte",
+		"./dist/**/*.js",
+		"./dist/**/*.d.ts",
+		"./dist/**/*.cjs",
+		"./dist/**/*.d.cts",
+		"!./dist/**/*.test.*"
+	]
 }
