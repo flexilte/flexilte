@@ -19,6 +19,9 @@
 			"svelte": "./src/lib/index.ts"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"peerDependencies": {
 		"svelte": "^4.0.0"
 	},

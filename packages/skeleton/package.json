@@ -20,6 +20,9 @@
 			"default": "./src/lib/index.ts"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"peerDependencies": {
 		"@skeletonlabs/skeleton": "^2.10.0",
 		"svelte": "^4.0.0"
