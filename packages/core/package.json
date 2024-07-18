@@ -1,29 +1,57 @@
 {
 	"name": "@flexilte/core",
-	"version": "1.1.1",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package",
-		"prepublishOnly": "npm run package",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "vitest",
-		"lint": "prettier --check --write . && eslint --ignore-path ../../.gitignore .",
-		"format": "prettier --write . && eslint --fix ."
+	"version": "1.1.2",
+	"description": "A SvelteKit layout library.",
+	"keywords": [
+		"components",
+		"ui",
+		"component",
+		"svelte",
+		"component-library",
+		"ui-components",
+		"ui-framework",
+		"tailwind",
+		"tailwindcss",
+		"components-library",
+		"sveltekit"
+	],
+	"homepage": "https://flexilte.github.io",
+	"bugs": {
+		"url": "https://github.com/flexilte/flexilte/issues"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/flexilte/flexilte.git"
+	},
+	"author": "borgmon <borgmon.contact@gmail.com>",
+	"type": "module",
 	"exports": {
 		".": {
-			"types": "./src/lib/index.ts",
-			"svelte": "./src/lib/index.ts"
+			"types": "./src/lib/types.ts",
+			"svelte": "./src/lib/index.ts",
+			"default": "./src/lib/index.ts"
 		}
 	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"peerDependencies": {
-		"svelte": "^4.0.0"
+	"types": "./src/lib/index.ts",
+	"files": [
+		"./dist/**/*.svelte",
+		"./dist/**/*.js",
+		"./dist/**/*.d.ts",
+		"./dist/**/*.cjs",
+		"./dist/**/*.d.cts",
+		"!./dist/**/*.test.*"
+	],
+	"scripts": {
+		"build": "vite build",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"dev": "vite dev",
+		"format": "prettier --write . && eslint --fix .",
+		"lint": "prettier --check --write . && eslint --ignore-path ../../.gitignore .",
+		"package": "svelte-kit sync && svelte-package",
+		"prepublishOnly": "npm run package",
+		"preview": "vite preview",
+		"test": "vitest"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.2.1",
@@ -46,29 +74,22 @@
 		"vite": "^5.2.12",
 		"vitest": "^1.6.0"
 	},
-	"keywords": [
-		"components",
-		"ui",
-		"component",
-		"svelte",
-		"component-library",
-		"ui-components",
-		"ui-framework",
-		"tailwind",
-		"tailwindcss",
-		"components-library",
-		"sveltekit"
-	],
-	"main": "./dist/index.js",
-	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.ts",
-	"type": "module",
-	"files": [
-		"./dist/**/*.svelte",
-		"./dist/**/*.js",
-		"./dist/**/*.d.ts",
-		"./dist/**/*.cjs",
-		"./dist/**/*.d.cts",
-		"!./dist/**/*.test.*"
-	]
+	"peerDependencies": {
+		"svelte": "^4.0.0"
+	},
+	"publishConfig": {
+		"access": "public",
+		"exports": {
+			".": {
+				"types": "./dist/types.d.ts",
+				"svelte": "./dist/index.js",
+				"default": "./dist/index.js"
+			}
+		},
+		"types": "./dist/types.d.ts"
+	},
+	"links": {
+		"documentation": "https://flexilte.github.io",
+		"changelog": "https://github.com/flexilte/flexilte/blob/main/packages/core/CHANGELOG.md"
+	}
 }

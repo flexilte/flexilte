@@ -1,5 +1,11 @@
 # @flexilte/skeleton
 
+## 1.1.2
+
+### Patch Changes
+
+- update package json
+
 ## 1.1.1
 
 ### Patch Changes
