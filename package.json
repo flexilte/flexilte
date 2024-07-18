@@ -6,7 +6,7 @@
     "preview": "turbo run preview -F docs",
     "lint": "turbo run lint -- --fix",
     "format": "prettier --write .",
-    "publish-packages": "turbo run build lint && changeset version && changeset publish"
+    "publish-packages": "turbo run build lint --filter=!docs && changeset version && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",

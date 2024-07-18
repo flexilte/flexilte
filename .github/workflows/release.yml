@@ -32,6 +32,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Build Website
+        run: pnpm build
+
       - name: Checkout GitHub Pages Repo
         uses: actions/checkout@v3
         with:
