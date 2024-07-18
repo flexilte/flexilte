@@ -1,0 +1,35 @@
+{
+	"rows": [
+		{
+			"cols": [
+				{
+					"width": "1/2",
+					"rows": [
+						{
+							"component": "TitleBox",
+							"data": null
+						},
+						{
+							"component": "TitleBox",
+							"data": { "content": "name" },
+							"style": "border-separate border-spacing-2 border border-slate-500 p-10"
+						}
+					]
+				},
+				{
+					"width": "1/2",
+					"rows": [
+						{
+							"component": "ImageBox",
+							"data": { "url": "https://placedog.net/200/280" }
+						},
+						{
+							"component": "AsyncBox",
+							"data": { "url": "/api/slow" }
+						}
+					]
+				}
+			]
+		}
+	]
+}

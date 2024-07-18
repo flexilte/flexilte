@@ -1,0 +1,38 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"width": {
+			"type": "string"
+		},
+		"component": {
+			"type": "string"
+		},
+		"props": {
+			"type": "object",
+			"additionalProperties": true
+		},
+		"isLoading": {
+			"type": "boolean"
+		},
+		"className": {
+			"type": "string"
+		},
+		"wrapperClass": {
+			"type": "string"
+		},
+		"cols": {
+			"type": "array",
+			"items": {
+				"$ref": "#"
+			}
+		},
+		"rows": {
+			"type": "array",
+			"items": {
+				"$ref": "#"
+			}
+		}
+	},
+	"additionalProperties": false
+}

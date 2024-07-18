@@ -1,0 +1,84 @@
+{
+	"rows": [
+		{
+			"cols": [
+				{
+					"width": "w-1/6",
+					"nodeClass": "variant-ghost p-4",
+					"rows": [
+						{
+							"component": "TextBox",
+							"props": {
+								"type": "h4",
+								"text": "UI Components"
+							}
+						},
+						{
+							"component": "DNDList",
+							"layoutClass": "flex-1"
+						},
+						{
+							"component": "RemoveBox"
+						}
+					]
+				},
+				{
+					"width": "w-4/6",
+					"nodeClass": "variant-ghost p-4",
+					"rows": [
+						{
+							"cols": [
+								{
+									"posY": "middle",
+									"component": "TextBox",
+									"props": {
+										"type": "h4",
+										"text": "Builder"
+									}
+								},
+								{
+									"width": "w-1/6",
+									"posX": "right",
+									"rows": [
+										{
+											"cols": [
+												{
+													"component": "ActionButton",
+													"props": {
+														"type": "render"
+													},
+													"posX": "right"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"component": "DNDBuilder",
+							"layoutClass": "flex-1"
+						}
+					]
+				},
+				{
+					"width": "w-1/6",
+					"nodeClass": "variant-ghost p-4",
+					"rows": [
+						{
+							"component": "TextBox",
+							"props": {
+								"type": "h4",
+								"text": "Inspector"
+							}
+						},
+						{
+							"component": "Inspector",
+							"layoutClass": "flex-1"
+						}
+					]
+				}
+			]
+		}
+	]
+}

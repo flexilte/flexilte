@@ -1,0 +1,10 @@
+{
+	"rows": [
+		{
+			"component": "ImageBox",
+			"props": {
+				"url": "https://placedog.net/500"
+			}
+		}
+	]
+}

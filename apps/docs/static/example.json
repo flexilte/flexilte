@@ -1,0 +1,298 @@
+{
+	"nodeClass": "md:my-2",
+	"rows": [
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Alignments",
+				"type": "h4"
+			},
+			"nodeClass": "h-8"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "upper left"
+			},
+			"posX": "left",
+			"nodeClass": "h-16"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "very middle"
+			},
+			"posX": "middle",
+			"posY": "middle",
+			"nodeClass": "h-16"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "bottom right"
+			},
+			"posX": "right",
+			"posY": "bottom",
+			"nodeClass": "h-16"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Columns",
+				"type": "h4"
+			},
+			"nodeClass": "h-8"
+		},
+		{
+			"cols": [
+				{
+					"width": "md:w-1/3",
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16"
+				},
+				{
+					"width": "md:w-1/3",
+					"component": "ProgressRadial",
+					"props": {
+						"value": 33
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": ""
+				},
+				{
+					"width": "md:w-1/3",
+					"component": "ProgressBar",
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16"
+				}
+			]
+		},
+		{
+			"alignHeight": true,
+			"cols": [
+				{
+					"width": "md:w-1/3",
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16"
+				},
+				{
+					"width": "md:w-1/3",
+					"component": "ProgressRadial",
+					"props": {
+						"value": 33
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "p-4"
+				},
+				{
+					"width": "md:w-1/3",
+					"alignHeight": true,
+					"rows": [
+						{
+							"alignHeight": true,
+							"cols": [
+								{
+									"width": "md:w-1/3",
+									"component": "TextBox",
+									"props": {
+										"text": "test"
+									},
+									"posX": "middle",
+									"posY": "middle",
+									"nodeClass": "h-16"
+								},
+								{
+									"width": "md:w-1/3",
+									"component": "ProgressRadial",
+									"props": {
+										"value": 33
+									},
+									"posX": "middle",
+									"posY": "middle",
+									"nodeClass": "p-4"
+								},
+								{
+									"width": "md:w-1/3",
+									"component": "ProgressBar",
+									"posX": "middle",
+									"posY": "middle",
+									"nodeClass": "h-16"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Overflows/Wrap",
+				"type": "h4"
+			},
+			"nodeClass": "h-8"
+		},
+		{
+			"wrap": "wrap",
+			"cols": [
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				},
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				},
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				}
+			]
+		},
+		{
+			"wrap": "nowrap",
+			"cols": [
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-96"
+				},
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-96"
+				},
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "test"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-96"
+				}
+			]
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Width",
+				"type": "h4"
+			},
+			"nodeClass": "h-8"
+		},
+		{
+			"cols": [
+				{
+					"width": "w-2/12",
+					"component": "TextBox",
+					"props": {
+						"text": "w-2/12"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				},
+				{
+					"width": "w-5/12",
+					"component": "TextBox",
+					"props": {
+						"text": "w-5/12"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				},
+				{
+					"width": "w-7/12",
+					"component": "TextBox",
+					"props": {
+						"text": "w-7/12"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				}
+			]
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Gap",
+				"type": "h4"
+			},
+			"nodeClass": "h-8"
+		},
+		{
+			"gap": "gap-4",
+			"cols": [
+				{
+					"width": "w-2/12",
+					"component": "TextBox",
+					"props": {
+						"text": "w-2/12"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				},
+				{
+					"width": "w-5/12",
+					"component": "TextBox",
+					"props": {
+						"text": "w-5/12"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				},
+				{
+					"width": "w-7/12",
+					"component": "TextBox",
+					"props": {
+						"text": "w-7/12"
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "h-16 w-72"
+				}
+			]
+		}
+	]
+}

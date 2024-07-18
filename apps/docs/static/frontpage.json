@@ -1,0 +1,104 @@
+{
+	"rows": [
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Flexilte",
+				"type": "title"
+			},
+			"posX": "middle",
+			"posY": "middle",
+			"nodeClass": "mt-6 bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Create dynamic and flexible layouts effortlessly with our JSON-powered Svelte framework.",
+				"type": "h3"
+			},
+			"posX": "middle",
+			"posY": "middle",
+			"nodeClass": "mt-12 text-center"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Framework that makes you think: WHY NOBODY HAVE DONE THIS UNTIL NOW!"
+			},
+			"posX": "middle",
+			"posY": "middle",
+			"nodeClass": "mt-12 text-center"
+		},
+		{
+			"nodeClass": "mt-12",
+			"cols": [
+				{
+					"gap": "gap-2",
+					"rows": [
+						{
+							"component": "ButtonBox",
+							"props": {
+								"text": "Get Started",
+								"link": "./docs",
+								"variant": "variant-filled-primary"
+							}
+						},
+						{
+							"component": "ButtonBox",
+							"props": {
+								"text": "Drag and drop editor",
+								"link": "./editor",
+								"variant": "variant-filled-secondary"
+							}
+						},
+						{
+							"component": "ButtonBox",
+							"props": {
+								"text": "Generate using LLM",
+								"link": "./ai",
+								"variant": "variant-filled-tertiary"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"nodeClass": "mt-12",
+			"gap": "gap-4",
+			"alignHeight": true,
+			"cols": [
+				{
+					"component": "CardBox",
+					"props": {
+						"img": "dnd.jpeg",
+						"title": "Drag and Drop Editor",
+						"body": "Build your UI with ease using our simple drag-and-drop editor, perfectly designed for quick prototyping and adjustments.",
+						"link": "./editor"
+					}
+				},
+				{
+					"component": "CardBox",
+					"props": {
+						"img": "ai.jpeg",
+						"title": "AI/LLM Page Generation",
+						"body": "Unlock the full potential of AI by generating custom pages in seconds. Simplify your workflow with AI-driven page creation. Support offline LLMs like Ollama.",
+						"link": "./ai"
+					}
+				},
+				{
+					"component": "CardBox",
+					"props": {
+						"img": "dynamic.jpeg",
+						"title": "Dynamic Page Loading",
+						"body": "Experience ultimate flexibility with dynamic page loading. Easily update and modify content without any hassle. Click here to see the original json!",
+						"link": "/frontpage.json"
+					}
+				}
+			]
+		},
+		{
+			"component": "DemoBox"
+		}
+	]
+}
