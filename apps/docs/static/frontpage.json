@@ -4,11 +4,12 @@
 			"component": "TextBox",
 			"props": {
 				"text": "Flexilte",
-				"type": "title"
+				"type": "h1",
+				"classList": "text-7xl bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone"
 			},
 			"posX": "middle",
 			"posY": "middle",
-			"nodeClass": "mt-6 bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone"
+			"nodeClass": "mt-6"
 		},
 		{
 			"component": "TextBox",
@@ -23,7 +24,7 @@
 		{
 			"component": "TextBox",
 			"props": {
-				"text": "Framework that makes you think: WHY NOBODY HAVE DONE THIS UNTIL NOW!"
+				"text": "A framework that will make you think: \"Why hasn't anyone done this until now?\""
 			},
 			"posX": "middle",
 			"posY": "middle",
