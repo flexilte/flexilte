@@ -1,58 +1,78 @@
-# create-svelte
+# Flexilte
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Flexilte is a powerful Svelte framework that transforms JSON into flex-based pages. It supports any frontend UI framework and custom components, allowing for dynamic page creation and easy integration with AI-generated layouts.
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+**DEMO https://flexilte.github.io/**
 
-## Creating a project
+(Yes this entire website is Flexilte json generated)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+
+- JSON-driven layout generation
+- Support for custom components and any frontend UI framework
+- AI-powered page generation
+- Drag-and-drop editor
+- Flexible and responsive designs
+
+## Installation
+
+Install Flexilte:
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm install @flexilte/core
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+If you use [skeleton](https://github.com/skeletonlabs/skeleton), Flexilte comes with wrappers:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm install @flexilte/core @flexilte/skeleton
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## Basic Usage
 
-## Building
-
-To build your library:
-
-```bash
-npm run package
+```svelte
+<script lang="ts">
+	import { Flexilte } from '@flexilte/core';
+    export const components = {
+        Avatar,
+    };
+    const layoutConfig: LayoutConfig<typeof components> = {
+        "rows": [
+            {
+                "cols": {
+                    "component": "Avatar",
+                    "props": {
+                        "src": "https://placedog.net/512/512",
+                        "width": "w-32",
+                        "rounded": "rounded-full"
+                    }
+                }
+            }
+        ]
+    }
+</script>
+<Flexilte layoutConfig={$docStore} {components}></Flexilte>
 ```
 
-To create a production version of your showcase app:
+## Layout Config Model
 
-```bash
-npm run build
-```
+Layout config is a recursive tree.
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
+```ts
+interface LayoutConfig<C extends Record<string, ComponentType>> {
+  id?: string; // will be added to the element
+  width?: string; // tailwind class for the width (w-1/6)
+  component?: keyof C & string; // component name
+  props?: Record<string, unknown>; // component props
+  nodeClass?: string; // classes apply to cols/rows/elements
+  wrapperClass?: string; // create and wrap element with a wrapper, this is a short hand for components that doesn't like flex box
+  layoutClass?: string; // classes apply to cols/rows
+  cols?: LayoutConfig<C>[]; // array of itself
+  rows?: LayoutConfig<C>[]; // array of itself
+  posX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally
+  posY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically
+  alignHeight?: boolean; // if true then all element in the same row/col will align at the bottom
+  wrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way
+  gap?: string; // tailwind class for the gap (gap-4)
+}
 ```
