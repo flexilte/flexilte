@@ -1,5 +1,11 @@
 # @flexilte/core
 
+## 1.1.1
+
+### Patch Changes
+
+- update npm links
+
 ## 1.1.0
 
 ### Minor Changes
