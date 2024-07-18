@@ -1,5 +1,11 @@
 # @flexilte/skeleton
 
+## 1.1.3
+
+### Patch Changes
+
+- fix export
+
 ## 1.1.2
 
 ### Patch Changes
