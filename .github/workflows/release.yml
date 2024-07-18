@@ -56,5 +56,5 @@ jobs:
           git add .
           git commit -m "Update Website"
           gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-          gh repo set-default ${{ github.repository }}
+          gh repo set-default flexilte/flexilte.github.io
           gh push origin main
