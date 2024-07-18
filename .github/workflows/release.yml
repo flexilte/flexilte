@@ -55,4 +55,6 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Update Website"
-          git push
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+          gh repo set-default ${{ github.repository }}
+          gh push origin main
