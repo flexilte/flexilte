@@ -1,5 +1,11 @@
 # @flexilte/skeleton
 
+## 1.1.0
+
+### Minor Changes
+
+- e1dd884: update npm readme
+
 ## 1.0.0
 
 ### Major Changes
