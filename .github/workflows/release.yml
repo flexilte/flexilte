@@ -27,8 +27,26 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: pnpm publish-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Checkout GitHub Pages Repo
+        uses: actions/checkout@v3
+        with:
+          repository: flexilte/flexilte.github.io
+          path: gh-pages
+
+      - name: Copy Build Content
+        run: |
+          cp -r apps/docs/build/* gh-pages/
+
+      - name: Commit and Push Changes
+        run: |
+          cd gh-pages
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update documentation"
+          git push

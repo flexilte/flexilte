@@ -1,10 +1,115 @@
 {
 	"rows": [
 		{
-			"component": "ImageBox",
-			"props": {
-				"url": "https://placedog.net/500"
-			}
+			"cols": [
+				{
+					"gap": "gap-6",
+					"rows": [
+						{
+							"nodeClass": "mt-6",
+							"component": "TextBox",
+							"props": {
+								"text": "Documentation",
+								"type": "h1"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "Flexilte is a powerful Svelte framework that transforms JSON into flex-based pages. It supports any frontend UI framework and custom components, allowing for dynamic page creation and easy integration with AI-generated layouts."
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "DEMO: You are looking at it! Yes this entire website is Flexilte json generated! At the bottom of every page, there is a link to check the original JSON config.",
+								"classList": "font-bold"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "Features",
+								"type": "h2"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "- JSON-driven layout generation\n- Support for custom components and any frontend UI framework\n- AI-powered page generation\n- Drag-and-drop editor\n- Flexible and responsive designs"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "Installation",
+								"type": "h2"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "To install Flexilte with skeleton UI wrapper:"
+							}
+						},
+						{
+							"component": "CodeBlock",
+							"props": {
+								"code": "npm install @flexilte/core @flexilte/skeleton",
+								"language": "bash"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "Basic Usage",
+								"type": "h2"
+							}
+						},
+						{
+							"component": "CodeBlock",
+							"props": {
+								"code": "<script lang=\"ts\">\n\timport { Flexilte } from '@flexilte/core';\n    export const components = {\n        InputChip,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"InputChip\",\n                    \"props\": {\n                        \"value\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"input\": \"Your favorite pet?\",\n                        \"name\": \"InputChip\"\n                    }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte layoutConfig={$docStore} {components}></Flexilte>",
+								"language": "ts"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "This will render:"
+							}
+						},
+						{
+							"component": "InputChip",
+							"props": {
+								"value": ["Cat", "Dog"],
+								"input": "Your favorite pet?",
+								"name": "InputChip"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "Layout Config Model",
+								"type": "h2"
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "Layout config is a recursive tree."
+							}
+						},
+						{
+							"component": "CodeBlock",
+							"props": {
+								"code": "interface LayoutConfig<C extends Record<string, ComponentType>> {\n\tid?: string; // will be added to the element\n\twidth?: string; // tailwind class for the width (w-1/6)\n\tcomponent?: keyof C & string; // component name\n\tprops?: Record<string, unknown>; // component props\n\tnodeClass?: string; // classes apply to cols/rows/elements\n\twrapperClass?: string; // create and wrap element with a wrapper, this is a short hand for components that doesn't like flex box\n\tlayoutClass?: string; // classes apply to cols/rows\n\tcols?: LayoutConfig<C>[]; // array of itself\n\trows?: LayoutConfig<C>[]; // array of itself\n\tposX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally\n\tposY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically\n\talignHeight?: boolean; // if true then all element in the same row/col will align at the bottom\n\twrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way\n\tgap?: string; // tailwind class for the gap (gap-4)\n}",
+								"language": "ts"
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }
