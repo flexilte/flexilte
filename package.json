@@ -6,9 +6,7 @@
     "preview": "turbo run preview -F docs",
     "lint": "turbo run lint -- --fix",
     "format": "prettier --write .",
-    "publish:core": "npm publish packages/core",
-    "publish:skeleton": "npm publish packages/skeleton",
-    "publish:all": "npm run publish:core && npm run publish:skeleton"
+    "publish": "turbo run build lint test && changeset version"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
