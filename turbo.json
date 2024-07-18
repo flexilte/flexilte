@@ -3,9 +3,18 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".svelte-kit/**", ".vercel/**"]
+      "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
     },
     "lint": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  },
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true

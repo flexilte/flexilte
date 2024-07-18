@@ -2,8 +2,10 @@
 	"name": "@flexilte/core",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build && npm run package",
+		"dev:vite": "vite dev",
+		"build:vite": "vite build && npm run package",
+		"dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+		"build": "tsup src/lib/index.ts --format cjs,esm --dts",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",
@@ -43,7 +45,29 @@
 		"vite": "^5.2.12",
 		"vitest": "^1.6.0"
 	},
-	"svelte": "./src/lib/index.ts",
-	"types": "./src/lib/index.ts",
-	"type": "module"
+	"keywords": [
+		"components",
+		"ui",
+		"component",
+		"svelte",
+		"component-library",
+		"ui-components",
+		"ui-framework",
+		"tailwind",
+		"tailwindcss",
+		"components-library",
+		"sveltekit"
+	],
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"files": [
+		"./dist/**/*.svelte",
+		"./dist/**/*.js",
+		"./dist/**/*.d.ts",
+		"./dist/**/*.cjs",
+		"./dist/**/*.d.cts",
+		"!./dist/**/*.test.*"
+	]
 }

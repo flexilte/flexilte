@@ -5,7 +5,10 @@
     "dev": "turbo run dev -F docs",
     "preview": "turbo run preview -F docs",
     "lint": "turbo run lint -- --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "publish:core": "npm publish packages/core",
+    "publish:skeleton": "npm publish packages/skeleton",
+    "publish:all": "npm run publish:core && npm run publish:skeleton"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
