@@ -31,6 +31,7 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: pnpm publish-packages
+          token: ${{ secrets.WEBSITE_PAT }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -55,6 +56,4 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Update Website"
-          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-          gh repo set-default flexilte/flexilte.github.io
-          gh push origin main
+          git push
