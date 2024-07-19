@@ -69,7 +69,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "<script lang=\"ts\">\n\timport { Flexilte } from '@flexilte/core';\n    export const components = {\n        InputChip,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"InputChip\",\n                    \"props\": {\n                        \"value\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"input\": \"Your favorite pet?\",\n                        \"name\": \"InputChip\"\n                    }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte layoutConfig={$docStore} {components}></Flexilte>",
+								"code": "<script lang=\"ts\">\n\timport { Flexilte } from '@flexilte/core';\n    export const components = {\n        InputChip,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"InputChip\",\n                    \"props\": {\n                        \"value\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"input\": \"Your favorite pet?\",\n                        \"name\": \"InputChip\"\n                    }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {LayoutConfig} {components}></Flexilte>",
 								"language": "ts"
 							}
 						},
