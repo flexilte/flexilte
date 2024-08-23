@@ -96,7 +96,7 @@
 	</label>
 </div>
 
-<div class="input-group input-group-divider grid-cols-[auto_1fr_auto] rounded-container-token mt-6">
+<div class="input-group input-group-divider grid-cols-[auto_1fr_auto] rounded-container-token my-6">
 	<button class="input-group-shim"></button>
 	<textarea
 		bind:value={currentMessage}

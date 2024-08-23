@@ -155,7 +155,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				},
 				{
 					"component": "TextBox",
@@ -164,7 +164,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				},
 				{
 					"component": "TextBox",
@@ -173,7 +173,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				}
 			]
 		},
@@ -187,7 +187,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-96"
+					"nodeClass": "h-16"
 				},
 				{
 					"component": "TextBox",
@@ -196,7 +196,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-96"
+					"nodeClass": "h-16"
 				},
 				{
 					"component": "TextBox",
@@ -205,7 +205,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-96"
+					"nodeClass": "h-16"
 				}
 			]
 		},
@@ -227,7 +227,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				},
 				{
 					"width": "w-5/12",
@@ -237,7 +237,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				},
 				{
 					"width": "w-7/12",
@@ -247,7 +247,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				}
 			]
 		},
@@ -270,7 +270,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				},
 				{
 					"width": "w-5/12",
@@ -280,7 +280,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				},
 				{
 					"width": "w-7/12",
@@ -290,7 +290,7 @@
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16 w-72"
+					"nodeClass": "h-16"
 				}
 			]
 		}
