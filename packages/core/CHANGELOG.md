@@ -1,5 +1,11 @@
 # @flexilte/core
 
+## 1.2.0
+
+### Minor Changes
+
+- 583a9b6: add noAutoMobile
+
 ## 1.1.3
 
 ### Patch Changes
