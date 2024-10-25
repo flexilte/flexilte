@@ -1,5 +1,4 @@
 {
-	"nodeClass": "md:my-2",
 	"gap": "gap-2",
 	"rows": [
 		{
@@ -8,7 +7,7 @@
 				"text": "Alignments",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"component": "TextBox",
@@ -16,6 +15,7 @@
 				"text": "upper left"
 			},
 			"posX": "left",
+			"posY": "top",
 			"nodeClass": "h-16"
 		},
 		{
@@ -23,8 +23,6 @@
 			"props": {
 				"text": "very middle"
 			},
-			"posX": "middle",
-			"posY": "middle",
 			"nodeClass": "h-16"
 		},
 		{
@@ -42,7 +40,7 @@
 				"text": "Columns",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"cols": [
@@ -139,7 +137,7 @@
 				"text": "Overflows/Wrap",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"wrap": "wrap",
@@ -211,7 +209,7 @@
 				"text": "Width",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"cols": [
@@ -253,7 +251,7 @@
 				"text": "Gap",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"gap": "gap-4",
@@ -296,7 +294,7 @@
 				"text": "Align Height",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"cols": [
@@ -307,8 +305,7 @@
 						"text": "test"
 					},
 					"posX": "middle",
-					"posY": "middle",
-					"nodeClass": "h-full"
+					"posY": "middle"
 				},
 				{
 					"width": "md:w-1/3",
@@ -324,8 +321,7 @@
 					"width": "md:w-1/3",
 					"component": "ProgressBar",
 					"posX": "middle",
-					"posY": "middle",
-					"nodeClass": "h-full"
+					"posY": "middle"
 				}
 			]
 		},
@@ -335,10 +331,10 @@
 				"text": "Layout Class",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
-			"layoutClass": "bg-warning-500 opacity-70",
+			"layoutClass": "border-warning-400-500-token",
 			"cols": [
 				{
 					"width": "md:w-1/3",
@@ -399,24 +395,69 @@
 		{
 			"component": "TextBox",
 			"props": {
-				"text": "Node Class",
+				"text": "Wrapper Class",
 				"type": "h4"
 			},
-			"nodeClass": "h-8"
+			"posX": "left"
 		},
 		{
 			"cols": [
 				{
- 					"component": "TextBox",
+					"component": "TextBox",
 					"props": {
 						"text": "test4"
 					},
 					"posX": "middle",
 					"posY": "middle",
-					"nodeClass": "h-16"
+					"wrapperClass": "h-16 w-full flex justify-center items-center"
 				},
 				{
- 					"component": "ProgressRadial",
+					"component": "ProgressRadial",
+					"props": {
+						"value": 33
+					},
+					"posX": "middle",
+					"posY": "middle",
+					"nodeClass": "p-4"
+				}
+			]
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Node Class",
+				"type": "h4"
+			},
+			"posX": "left"
+		},
+		{
+			"cols": [
+				{
+					"posX": "middle",
+					"posY": "middle",
+					"rows": [
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "test4"
+							},
+							"posX": "middle",
+							"posY": "middle",
+							"nodeClass": "h-16"
+						},
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "test4"
+							},
+							"posX": "middle",
+							"posY": "middle",
+							"nodeClass": "h-16"
+						}
+					]
+				},
+				{
+					"component": "ProgressRadial",
 					"props": {
 						"value": 33
 					},

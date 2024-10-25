@@ -97,16 +97,22 @@
 		const x = cur || layoutConfig;
 		if (x.width) {
 			if (!width1Classes.includes(x.width)) {
-				return [x.width];
+				return [x.width, 'mx-auto'];
 			}
 		}
 		return ['w-full'];
 	};
 
-	const buildBaseClass = () => {
-		const classList: string[] = [];
-		if (debug) classList.push('flexilte-debug');
-		if (layoutConfig.nodeClass) classList.push(layoutConfig.nodeClass);
+	const getNodeClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+		const x = cur || layoutConfig;
+		if (x.nodeClass) {
+			return [x.nodeClass];
+		}
+		return [];
+	};
+
+	const buildBaseClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+		const classList: string[] = ['flexilte-debug', ...getNodeClass(cur)];
 
 		return classList;
 	};
@@ -117,22 +123,37 @@
 		return classList;
 	};
 
-	const getLayoutClass = ()=>{
+	const getLayoutClass = () => {
 		const classList: string[] = [];
 		if (layoutConfig.layoutClass) classList.push(layoutConfig.layoutClass);
 		return classList;
-	}
+	};
 
-	const buildItemClass = () => {
-		const classList = [...buildBaseClass(), ...getAlignmentClass(true)];
+	// const fixClassList = (list:string[]) =>{
+	// 	const classList: string[] = [...list];
+	// 	if (!list.find(x=>x.includes("h-"))){
+	// 		classList.push("h-full")
+	// 	}
+	// 	return classList
+	// }
+
+	const buildContainerClass = (cur: LayoutConfig<C>) => {
+		const classList = [
+			'flexilte-container',
+			...buildBaseClass(cur),
+			...getWidthClass(cur),
+			...getAlignmentClass(true, cur),
+			...getLayoutClass()
+		];
 		return classList.join(' ');
 	};
 
 	const buildRowClass = () => {
 		const classList = [
-			'flex flex-col',
+			'flex flex-col w-full',
+			'flexilte-row',
 			...buildBaseClass(),
-			...getAlignmentClass(),
+			// ...getAlignmentClass(),
 			...getWrapClass(),
 			...getGapClass()
 		];
@@ -142,38 +163,29 @@
 	const buildColClass = () => {
 		const classList = [
 			'md:flex',
+			'flexilte-col',
 			...buildBaseClass(),
-			// ...getAlignmentClass(),
 			...getWrapClass(),
 			...getGapClass()
 		];
 		return classList.join(' ');
 	};
 
-	const buildColContainerClass = (cur: LayoutConfig<C>) => {
-		const classList = [
-			// 'md:flex',
-		...getWidthClass(cur), 
-		...getLayoutClass( ), 
-		// ...getAlignmentClass(false, cur)
-	];
+	const buildWrapperClass = () => {
+		const classList = [...buildBaseClass(), layoutConfig.wrapperClass];
 		return classList.join(' ');
 	};
 </script>
 
 {#if layoutConfig.component}
-	<div class={buildItemClass()} transition:fade>
-		{#if layoutConfig.component}
-			{#if layoutConfig.wrapperClass}
-				<div class={layoutConfig.wrapperClass}>
-					<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
-				</div>
-			{:else}
-				<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
-			{/if}
-		{/if}
-	</div>
-{:else if layoutConfig.rows}
+	{#if layoutConfig.wrapperClass}
+		<div class={buildWrapperClass()}>
+			<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+		</div>
+	{:else}
+		<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+	{/if}
+{:else if layoutConfig.rows && layoutConfig.rows.length > 0}
 	<div
 		class={buildRowClass()}
 		transition:fade
@@ -182,12 +194,12 @@
 		on:finalize={handleRowDndFinalize}
 	>
 		{#each layoutConfig.rows as row (row.id)}
-			<div animate:flip={{ duration: flipDurationMs }}>
+			<div animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
 				<svelte:self {components} layoutConfig={row} {debug} />
 			</div>
 		{/each}
 	</div>
-{:else if layoutConfig.cols}
+{:else if layoutConfig.cols && layoutConfig.cols.length > 0}
 	<div
 		class={buildColClass()}
 		transition:fade
@@ -196,7 +208,7 @@
 		on:finalize={handleColDndFinalize}
 	>
 		{#each layoutConfig.cols as col (col.id)}
-			<div animate:flip={{ duration: flipDurationMs }} class={buildColContainerClass(col)}>
+			<div animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
 				<svelte:self {components} layoutConfig={col} {debug} />
 			</div>
 		{/each}
