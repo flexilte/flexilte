@@ -26,7 +26,7 @@
 	import ExportBox from '$lib/editor/ExportBox.svelte';
 	import { components } from '$lib/editor/editorStore';
 	import { onMount } from 'svelte';
-	import { docStore, editorStore, exampleStore, frontPageStore } from '$lib/common';
+	import { docStore, editorStore, exampleStore, frontPageStore, setLayoutIds } from '$lib/common';
 
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
@@ -70,7 +70,7 @@
 		fetch('example.json')
 			.then((r) => r.json())
 			.then((j) => {
-				exampleStore.set(j);
+				exampleStore.set(setLayoutIds(j));
 			})
 			.catch((e) => {
 				console.error(e);
