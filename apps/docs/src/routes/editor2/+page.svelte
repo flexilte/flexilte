@@ -1,16 +1,7 @@
 <script lang="ts">
-	import {
-		components,
-		exampleStore,
-		onChangeStore,
-		setLayoutIds,
-		trimLayoutTree
-	} from '$lib/common';
+	import { components, exampleStore, onChangeStore, trimLayoutTree } from '$lib/common';
 	import Flexilte from '$lib/dnd/Flexilte.svelte';
 	import type { LayoutConfig } from '$lib/dnd/types';
-	import { TextBox } from '@flexilte/skeleton';
-	import { ProgressBar, ProgressRadial } from '@skeletonlabs/skeleton';
-	import { onMount } from 'svelte';
 	let timeoutId: NodeJS.Timeout;
 	let val: LayoutConfig<typeof components>;
 	// const components = { TextBox, ProgressRadial, ProgressBar };

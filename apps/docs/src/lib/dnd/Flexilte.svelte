@@ -6,7 +6,7 @@
 	import type { LayoutConfig } from './types';
 	import type { ComponentType } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { dndzone } from 'svelte-dnd-action';
+	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import type { DndEvent } from 'svelte-dnd-action';
 
 	export let layoutConfig: LayoutConfig<C>;
@@ -129,14 +129,6 @@
 		return classList;
 	};
 
-	// const fixClassList = (list:string[]) =>{
-	// 	const classList: string[] = [...list];
-	// 	if (!list.find(x=>x.includes("h-"))){
-	// 		classList.push("h-full")
-	// 	}
-	// 	return classList
-	// }
-
 	const buildContainerClass = (cur: LayoutConfig<C>) => {
 		const classList = [
 			'flexilte-container',
@@ -185,7 +177,7 @@
 	{:else}
 		<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
 	{/if}
-{:else if layoutConfig.rows && layoutConfig.rows.length > 0}
+{:else if layoutConfig.rows}
 	<div
 		class={buildRowClass()}
 		transition:fade
@@ -193,13 +185,17 @@
 		on:consider={handleRowDndConsider}
 		on:finalize={handleRowDndFinalize}
 	>
-		{#each layoutConfig.rows as row (row.id)}
-			<div animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
+		{#each layoutConfig.rows as row (`${row.id}${row[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + row[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
+			<div
+				animate:flip={{ duration: flipDurationMs }}
+				class={buildContainerClass(row)}
+				data-is-dnd-shadow-item-hint={row[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+			>
 				<svelte:self {components} layoutConfig={row} {debug} />
 			</div>
 		{/each}
 	</div>
-{:else if layoutConfig.cols && layoutConfig.cols.length > 0}
+{:else if layoutConfig.cols}
 	<div
 		class={buildColClass()}
 		transition:fade
@@ -207,8 +203,12 @@
 		on:consider={handleColDndConsider}
 		on:finalize={handleColDndFinalize}
 	>
-		{#each layoutConfig.cols as col (col.id)}
-			<div animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
+		{#each layoutConfig.cols as col (`${col.id}${col[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + col[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
+			<div
+				animate:flip={{ duration: flipDurationMs }}
+				class={buildContainerClass(col)}
+				data-is-dnd-shadow-item-hint={col[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+			>
 				<svelte:self {components} layoutConfig={col} {debug} />
 			</div>
 		{/each}
