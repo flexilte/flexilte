@@ -27,6 +27,7 @@
 	import { components } from '$lib/editor/editorStore';
 	import { onMount } from 'svelte';
 	import { docStore, editorStore, exampleStore, frontPageStore, setLayoutIds } from '$lib/common';
+	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
 
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
@@ -155,5 +156,9 @@
 				<Flexilte layoutConfig={$editorStore} {components}></Flexilte>
 			</div>
 		{/if}
+	{:else if $drawerStore.id === 'editor2'}
+		<div class="h-full">
+			<EditorDrawer />
+		</div>
 	{/if}
 </Drawer>

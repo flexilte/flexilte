@@ -1,4 +1,6 @@
 <script lang="ts" generics="C extends Record<string, ComponentType>">
+	import { getDrawerStore } from '@skeletonlabs/skeleton';
+
 	import { onChangeStore } from '$lib/common';
 
 	import { fade } from 'svelte/transition';
@@ -12,38 +14,33 @@
 	export let layoutConfig: LayoutConfig<C>;
 	export let components: Record<string, ComponentType>;
 	export let debug: boolean = false;
+	export let itemClickCallback: (c: LayoutConfig<C>) => void = () => {};
+
+	export let considerCallback:
+		| ((type: 'rows' | 'cols', event: CustomEvent<DndEvent<LayoutConfig<C>>>) => void)
+		| undefined = undefined;
+	export let finalizeCallback:
+		| ((type: 'rows' | 'cols', event: CustomEvent<DndEvent<LayoutConfig<C>>>) => void)
+		| undefined = undefined;
 
 	const flipDurationMs = 300;
 
-	// DND handlers for rows
-	function handleRowDndConsider(e: CustomEvent<DndEvent<LayoutConfig<C>>>) {
-		if (layoutConfig.rows) {
-			layoutConfig.rows = e.detail.items;
-		}
-	}
+	const handleDndConsider =
+		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
+			if (layoutConfig[type]) {
+				layoutConfig[type] = e.detail.items;
+				if (considerCallback) considerCallback(type, e);
+			}
+		};
 
-	function handleRowDndFinalize(e: CustomEvent<DndEvent<LayoutConfig<C>>>) {
-		if (layoutConfig.rows) {
-			layoutConfig.rows = e.detail.items;
-			layoutConfig = { ...layoutConfig };
-			onChangeStore.set({});
-		}
-	}
-
-	// DND handlers for columns
-	function handleColDndConsider(e: CustomEvent<DndEvent<LayoutConfig<C>>>) {
-		if (layoutConfig.cols) {
-			layoutConfig.cols = e.detail.items;
-		}
-	}
-
-	function handleColDndFinalize(e: CustomEvent<DndEvent<LayoutConfig<C>>>) {
-		if (layoutConfig.cols) {
-			layoutConfig.cols = e.detail.items;
-			layoutConfig = { ...layoutConfig };
-			onChangeStore.set({});
-		}
-	}
+	const handleDndFinalize =
+		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
+			if (layoutConfig[type]) {
+				layoutConfig[type] = e.detail.items;
+				layoutConfig = { ...layoutConfig };
+				if (finalizeCallback) finalizeCallback(type, e);
+			}
+		};
 
 	const getAlignmentClass = (
 		addFlex = false,
@@ -164,26 +161,26 @@
 	};
 
 	const buildWrapperClass = () => {
-		const classList = [...buildBaseClass(), layoutConfig.wrapperClass];
+		const classList = [
+			'flexilte-debug',
+			getNodeClass().join(' ').includes('w-full') ? 'w-full' : undefined,
+			layoutConfig.wrapperClass
+		];
 		return classList.join(' ');
 	};
 </script>
 
 {#if layoutConfig.component}
-	{#if layoutConfig.wrapperClass}
-		<div class={buildWrapperClass()}>
-			<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
-		</div>
-	{:else}
+	<button class={buildWrapperClass()} on:click={() => itemClickCallback(layoutConfig)}>
 		<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
-	{/if}
+	</button>
 {:else if layoutConfig.rows}
 	<div
 		class={buildRowClass()}
 		transition:fade
 		use:dndzone={{ items: layoutConfig.rows, flipDurationMs }}
-		on:consider={handleRowDndConsider}
-		on:finalize={handleRowDndFinalize}
+		on:consider={handleDndConsider('rows')}
+		on:finalize={handleDndFinalize('rows')}
 	>
 		{#each layoutConfig.rows as row (`${row.id}${row[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + row[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 			<div
@@ -191,7 +188,14 @@
 				class={buildContainerClass(row)}
 				data-is-dnd-shadow-item-hint={row[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 			>
-				<svelte:self {components} layoutConfig={row} {debug} />
+				<svelte:self
+					{components}
+					layoutConfig={row}
+					{debug}
+					{considerCallback}
+					{finalizeCallback}
+					{itemClickCallback}
+				/>
 			</div>
 		{/each}
 	</div>
@@ -200,8 +204,8 @@
 		class={buildColClass()}
 		transition:fade
 		use:dndzone={{ items: layoutConfig.cols, flipDurationMs }}
-		on:consider={handleColDndConsider}
-		on:finalize={handleColDndFinalize}
+		on:consider={handleDndConsider('cols')}
+		on:finalize={handleDndFinalize('cols')}
 	>
 		{#each layoutConfig.cols as col (`${col.id}${col[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + col[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 			<div
@@ -209,7 +213,14 @@
 				class={buildContainerClass(col)}
 				data-is-dnd-shadow-item-hint={col[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 			>
-				<svelte:self {components} layoutConfig={col} {debug} />
+				<svelte:self
+					{components}
+					layoutConfig={col}
+					{debug}
+					{considerCallback}
+					{finalizeCallback}
+					{itemClickCallback}
+				/>
 			</div>
 		{/each}
 	</div>

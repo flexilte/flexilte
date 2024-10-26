@@ -3,7 +3,7 @@ import type { SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 
 export interface LayoutConfig<C extends Record<string, ComponentType>> {
 	id: string;
-	[SHADOW_ITEM_MARKER_PROPERTY_NAME]: string;
+	[SHADOW_ITEM_MARKER_PROPERTY_NAME]?: string;
 	width?: string;
 	component?: keyof C & string;
 	props?: Record<string, unknown>;

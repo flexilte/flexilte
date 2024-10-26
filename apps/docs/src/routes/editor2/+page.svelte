@@ -1,35 +1,67 @@
 <script lang="ts">
 	import { components, exampleStore, onChangeStore, trimLayoutTree } from '$lib/common';
-	import Flexilte from '$lib/dnd/Flexilte.svelte';
+	import DNDFlexilte from '$lib/dnd/DNDFlexilte.svelte';
 	import type { LayoutConfig } from '$lib/dnd/types';
+	import { getDrawerStore } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
+	import type { DndEvent } from 'svelte-dnd-action';
+
+	import { v4 as uuidv4 } from 'uuid';
 	let timeoutId: NodeJS.Timeout;
-	let val: LayoutConfig<typeof components>;
-	// const components = { TextBox, ProgressRadial, ProgressBar };
-	onChangeStore.subscribe((a) => {
+	let layoutConfig: LayoutConfig<typeof components> = {
+		id: uuidv4(),
+		gap: 'gap-4',
+		rows: [
+			{
+				id: uuidv4(),
+				component: 'TextBox',
+				props: {
+					text: 'Component Drawer'
+				}
+			}
+		]
+	};
+
+	$: layoutConfig = $exampleStore;
+
+	const drawerStore = getDrawerStore();
+	onMount(() => {
+		openDrawer();
+	});
+
+	const openDrawer = () => {
+		drawerStore.open({ id: 'editor2', position: 'left', width: 'w-1/6' });
+	};
+
+	const finalizeCallback = (
+		type: 'rows' | 'cols',
+		event: CustomEvent<DndEvent<LayoutConfig<typeof components>>>
+	) => {
 		clearTimeout(timeoutId);
 		timeoutId = setTimeout(() => {
 			exampleStore.update((s) => {
 				const a =
 					trimLayoutTree(s) || ({ id: Date.now().toString() } as LayoutConfig<typeof components>);
-
-				// const b = setLayoutIds(a);
-				console.log(1, a);
+				console.log('result', a);
 				return a;
 			});
 		}, 250);
-	});
+	};
 
-	// onMount(()=>{
-	// 	exampleStore.update(a=>setLayoutIds(a))
-
-	// })
+	const itemClickCallback = (e: LayoutConfig<typeof components>) => {
+		console.log(e);
+	};
 </script>
 
-{#if $exampleStore}
-	<div class="px-4 container mx-auto">
-		<Flexilte layoutConfig={$exampleStore} {components} debug={true}></Flexilte>
-	</div>
-	<div class="text-center m-4 underline">
-		<a href="example.json">Click here to see the JSON of this page</a>
+{#if layoutConfig}
+	<div class="px-4 container mx-auto mt-4">
+		<div>
+			<button class="btn variant-filled-primary w-fit" on:click={openDrawer}>Open Drawer</button>
+		</div>
+
+		<div class="mt-4">
+			<DNDFlexilte {layoutConfig} {components} debug={true} {finalizeCallback} {itemClickCallback}
+			></DNDFlexilte>
+		</div>
 	</div>
 {/if}
