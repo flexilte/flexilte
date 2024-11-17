@@ -1,4 +1,6 @@
 <script lang="ts" generics="C extends Record<string, ComponentType>">
+	import Page from '../../routes/+page.svelte';
+
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 
 	import { onChangeStore } from '$lib/common';
@@ -17,10 +19,18 @@
 	export let itemClickCallback: (c: LayoutConfig<C>) => void = () => {};
 
 	export let considerCallback:
-		| ((type: 'rows' | 'cols', event: CustomEvent<DndEvent<LayoutConfig<C>>>) => void)
+		| ((
+				type: 'rows' | 'cols',
+				items: LayoutConfig<C>,
+				event: CustomEvent<DndEvent<LayoutConfig<C>>>
+		  ) => void)
 		| undefined = undefined;
 	export let finalizeCallback:
-		| ((type: 'rows' | 'cols', event: CustomEvent<DndEvent<LayoutConfig<C>>>) => void)
+		| ((
+				type: 'rows' | 'cols',
+				items: LayoutConfig<C>,
+				event: CustomEvent<DndEvent<LayoutConfig<C>>>
+		  ) => void)
 		| undefined = undefined;
 
 	const flipDurationMs = 300;
@@ -28,17 +38,19 @@
 	const handleDndConsider =
 		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
 			if (layoutConfig[type]) {
-				layoutConfig[type] = e.detail.items;
-				if (considerCallback) considerCallback(type, e);
+				if (considerCallback) considerCallback(type, layoutConfig, e);
+				else layoutConfig[type] = e.detail.items;
 			}
 		};
 
 	const handleDndFinalize =
 		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
 			if (layoutConfig[type]) {
-				layoutConfig[type] = e.detail.items;
-				layoutConfig = { ...layoutConfig };
-				if (finalizeCallback) finalizeCallback(type, e);
+				if (finalizeCallback) finalizeCallback(type, layoutConfig, e);
+				else {
+					layoutConfig[type] = e.detail.items;
+					// layoutConfig = { ...layoutConfig };
+				}
 			}
 		};
 
