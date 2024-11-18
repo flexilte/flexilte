@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Flexilte, type LayoutConfig } from '@flexilte/core';
-	import { components, componentStore } from '$lib/editor/editorStore';
+	import { componentStore } from '$lib/editor/editorStore';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
-
+	import { components } from '$lib/common';
 	const config: LayoutConfig<typeof components> = {
 		rows: [
 			{

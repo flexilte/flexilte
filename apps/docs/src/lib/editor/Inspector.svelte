@@ -1,20 +1,31 @@
 <script lang="ts">
 	import type { LayoutConfig } from '@flexilte/core';
-	import { componentValueStore, components, selectedComponentStore } from './editorStore';
+	import { componentValueStore, selectedComponentStore } from './editorStore';
+	import { exampleStore, removeTree, updateTree, type components } from '$lib/common';
 
 	let elId: string;
 	let comp: LayoutConfig<typeof components>;
 	let props: string[] = [];
-	selectedComponentStore.subscribe((id) => {
-		elId = id;
-		if ($componentValueStore[id]) {
-			comp = $componentValueStore[id];
-			props = Object.keys(comp.props);
-		} else {
-			comp = {};
-			props = [];
+	selectedComponentStore.subscribe((node) => {
+		if (node && node.props) {
+			comp = node;
+			props = Object.keys(node.props);
 		}
 	});
+
+	const updateNode = () => {
+		exampleStore.update((s) => {
+			return updateTree(s, comp.id, comp);
+		});
+	};
+
+	const removeNode = (e) => {
+		exampleStore.update((s) => {
+			return removeTree(s, comp.id);
+		});
+		comp = undefined;
+		props = [];
+	};
 
 	// componentValueStore.subscribe(console.log);
 </script>
@@ -22,6 +33,7 @@
 <div class="overflow-auto h-full">
 	{#if props.length > 0}
 		<div class="form-group">
+			<button type="button" class="btn variant-filled-error" on:click={removeNode}>Remove</button>
 			<h6 class="h6">Props</h6>
 			{#each props as prop}
 				<label class="label">
@@ -32,11 +44,8 @@
 						placeholder="Input"
 						value={comp.props[prop]}
 						on:change={(e) => {
-							componentValueStore.update((store) => {
-								comp.props[prop] = e.target.value;
-								store[elId].props[prop] = e.target.value;
-								return { ...store };
-							});
+							comp.props[prop] = e.target.value;
+							updateNode();
 						}}
 					/>
 				</label>
@@ -48,11 +57,8 @@
 					class="select"
 					value={comp.posX || ''}
 					on:change={(e) => {
-						componentValueStore.update((store) => {
-							comp.posX = e.target.value;
-							store[elId].posX = e.target.value;
-							return { ...store };
-						});
+						comp.posX = e.target.value;
+						updateNode();
 					}}
 				>
 					<option value="left">left</option>
@@ -66,48 +72,14 @@
 					class="select"
 					value={comp.posY || ''}
 					on:change={(e) => {
-						componentValueStore.update((store) => {
-							comp.posY = e.target.value;
-							store[elId].posY = e.target.value;
-							return { ...store };
-						});
+						comp.posY = e.target.value;
+						updateNode();
 					}}
 				>
 					<option value="top">top</option>
 					<option value="middle">middle</option>
 					<option value="bottom">bottom</option>
 				</select>
-			</label>
-			<h6 class="h6 mt-4">Classes</h6>
-			<label class="label">
-				<span>layoutClass</span>
-				<input
-					class="input"
-					type="text"
-					value={comp.layoutClass || ''}
-					on:change={(e) => {
-						componentValueStore.update((store) => {
-							comp.layoutClass = e.target.value;
-							store[elId].layoutClass = e.target.value;
-							return { ...store };
-						});
-					}}
-				/>
-			</label>
-			<label class="label">
-				<span>wrapperClass</span>
-				<input
-					class="input"
-					type="text"
-					value={comp.wrapperClass || ''}
-					on:change={(e) => {
-						componentValueStore.update((store) => {
-							comp.wrapperClass = e.target.value;
-							store[elId].wrapperClass = e.target.value;
-							return { ...store };
-						});
-					}}
-				/>
 			</label>
 		</div>
 	{/if}

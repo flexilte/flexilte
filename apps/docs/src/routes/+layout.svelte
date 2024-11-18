@@ -24,7 +24,7 @@
 	import Icon from '@iconify/svelte';
 	import { Flexilte } from '@flexilte/core';
 	import ExportBox from '$lib/editor/ExportBox.svelte';
-	import { components } from '$lib/editor/editorStore';
+	import { components } from '$lib/common';
 	import { onMount } from 'svelte';
 	import { docStore, editorStore, exampleStore, frontPageStore, setLayoutIds } from '$lib/common';
 	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';

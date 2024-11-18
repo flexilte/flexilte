@@ -92,3 +92,58 @@ export function setLayoutIds<C extends Record<string, ComponentType>>(
 
 	return updatedLayout;
 }
+
+export const updateTree = (
+	node: LayoutConfig<typeof components>,
+	id: string,
+	newNode: LayoutConfig<typeof components>
+): LayoutConfig<typeof components> => {
+	// Check if the current node's id matches the target id
+	if (node.id === id) {
+		// Return the new node configuration if the id matches
+		return { ...node, ...newNode };
+	}
+
+	// Recursively check and update the cols and rows if they exist
+	if (node.cols) {
+		node.cols = node.cols.map((childNode) => updateTree(childNode, id, newNode));
+	}
+	if (node.rows) {
+		node.rows = node.rows.map((childNode) => updateTree(childNode, id, newNode));
+	}
+
+	// Return the updated node
+	return node;
+};
+
+export const removeTree = <C extends Record<string, ComponentType>>(
+	node: LayoutConfig<C>,
+	id: string
+): LayoutConfig<C> | null => {
+	// Helper function to recursively search and remove the node
+	const removeNode = (currentNode: LayoutConfig<C>): LayoutConfig<C> | null => {
+		// Check if the current node is the one to remove
+		if (currentNode.id === id) {
+			return null; // Return null to indicate this node should be removed
+		}
+
+		// Check and remove from cols if they exist
+		if (currentNode.cols) {
+			currentNode.cols = currentNode.cols
+				.map(removeNode) // Recursively call removeNode on each child
+				.filter((child): child is LayoutConfig<C> => child !== null); // Filter out nulls
+		}
+
+		// Check and remove from rows if they exist
+		if (currentNode.rows) {
+			currentNode.rows = currentNode.rows
+				.map(removeNode) // Recursively call removeNode on each child
+				.filter((child): child is LayoutConfig<C> => child !== null); // Filter out nulls
+		}
+
+		return currentNode; // Return the current node (possibly modified)
+	};
+
+	// Start the removal process from the root node
+	return removeNode(node);
+};

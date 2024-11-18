@@ -17,7 +17,7 @@
 		{ id: uuidv4(), icon: 'mdi:people', name: 'Avatar', comp: 'Avatar' },
 		{
 			id: uuidv4(),
-			icon: 'mdi:table-col-plus-after',
+			icon: 'mdi:table-column-plus-after',
 			name: 'Vertical Group',
 			comp: 'VerticalGroup'
 		},
@@ -37,7 +37,8 @@
 				component: 'CardBox',
 				props: {
 					icon: item.icon,
-					body: item.name
+					body: item.name,
+					style: 'w-36'
 				},
 				comp: item.comp,
 				nodeClass: 'variant-filled-surface text-center'

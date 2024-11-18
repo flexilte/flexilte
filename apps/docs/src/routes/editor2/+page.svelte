@@ -86,7 +86,7 @@
 	};
 
 	const itemClickCallback = (e: LayoutConfig<typeof components>) => {
-		selectedComponentStore.set();
+		selectedComponentStore.set(e);
 	};
 </script>
 
@@ -100,7 +100,7 @@
 			<div class="w-1/6">
 				<EditorDrawer></EditorDrawer>
 			</div>
-			<div class="w-full">
+			<div class="w-full mx-4">
 				<DNDFlexilte {layoutConfig} {components} debug={true} {finalizeCallback} {itemClickCallback}
 				></DNDFlexilte>
 			</div>

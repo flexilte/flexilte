@@ -2,11 +2,11 @@
 	import {
 		componentStore,
 		componentValueStore,
-		components,
 		gridStore,
 		selectedComponentStore,
 		triggerRefresh
 	} from './editorStore';
+	import { components } from '$lib/common';
 	import { onMount } from 'svelte';
 	import { type LayoutConfig } from '@flexilte/core';
 	import 'gridstack/dist/gridstack.min.css';
