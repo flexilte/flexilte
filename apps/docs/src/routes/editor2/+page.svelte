@@ -5,6 +5,8 @@
 	import defaultMap from '$lib/editor/defaultMap';
 	import DndList from '$lib/editor/DNDList.svelte';
 	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
+	import { selectedComponentStore } from '$lib/editor/editorStore';
+	import Inspector from '$lib/editor/Inspector.svelte';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
@@ -55,7 +57,25 @@
 
 		itemCur[type] = e.detail.items.map((item) => {
 			if (item.id === e.detail.info.id && item.comp) {
-				return { component: item.comp, props: defaultMap[item.comp], id: uuidv4() };
+				if (item.comp === 'VerticalGroup') {
+					return {
+						id: uuidv4(),
+						cols: [
+							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } },
+							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } }
+						]
+					};
+				}
+				if (item.comp === 'HorizontalGroup') {
+					return {
+						id: uuidv4(),
+						rows: [
+							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } },
+							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } }
+						]
+					};
+				}
+				return { ...defaultMap[item.comp], id: uuidv4() };
 			} else {
 				return item;
 			}
@@ -66,7 +86,7 @@
 	};
 
 	const itemClickCallback = (e: LayoutConfig<typeof components>) => {
-		console.log('click', e);
+		selectedComponentStore.set();
 	};
 </script>
 
@@ -84,7 +104,9 @@
 				<DNDFlexilte {layoutConfig} {components} debug={true} {finalizeCallback} {itemClickCallback}
 				></DNDFlexilte>
 			</div>
-			<div class="w-1/6"></div>
+			<div class="w-1/6">
+				<Inspector></Inspector>
+			</div>
 		</div>
 	</div>
 {/if}

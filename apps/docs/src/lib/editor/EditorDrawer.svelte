@@ -14,7 +14,19 @@
 		{ id: uuidv4(), icon: 'mdi:image', name: 'ImageBox', comp: 'ImageBox' },
 		{ id: uuidv4(), icon: 'mdi:card-text', name: 'CardBox', comp: 'CardBox' },
 		{ id: uuidv4(), icon: 'mdi:code', name: 'CodeBlock', comp: 'CodeBlock' },
-		{ id: uuidv4(), icon: 'mdi:people', name: 'Avatar', comp: 'Avatar' }
+		{ id: uuidv4(), icon: 'mdi:people', name: 'Avatar', comp: 'Avatar' },
+		{
+			id: uuidv4(),
+			icon: 'mdi:table-col-plus-after',
+			name: 'Vertical Group',
+			comp: 'VerticalGroup'
+		},
+		{
+			id: uuidv4(),
+			icon: 'mdi:table-row-plus-after',
+			name: 'Horizontal Group',
+			comp: 'HorizontalGroup'
+		}
 	];
 
 	let layoutConfig: LayoutConfig<typeof components> = {
