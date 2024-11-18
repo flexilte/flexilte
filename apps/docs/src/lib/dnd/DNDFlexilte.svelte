@@ -54,6 +54,10 @@
 			}
 		};
 
+	const getDebugClass = () => {
+		return debug ? ['flexilte-debug'] : [];
+	};
+
 	const getAlignmentClass = (
 		addFlex = false,
 		cur: LayoutConfig<C> | undefined = undefined
@@ -121,7 +125,7 @@
 	};
 
 	const buildBaseClass = (cur: LayoutConfig<C> | undefined = undefined) => {
-		const classList: string[] = ['flexilte-debug', ...getNodeClass(cur)];
+		const classList: string[] = [...getDebugClass(), ...getNodeClass(cur)];
 
 		return classList;
 	};
@@ -174,7 +178,7 @@
 
 	const buildWrapperClass = () => {
 		const classList = [
-			'flexilte-debug',
+			...getDebugClass(),
 			getNodeClass().join(' ').includes('w-full') ? 'w-full' : undefined,
 			layoutConfig.wrapperClass
 		];
@@ -188,6 +192,7 @@
 	</button>
 {:else if layoutConfig.rows}
 	<div
+		id={layoutConfig.id}
 		class={buildRowClass()}
 		transition:fade
 		use:dndzone={{ items: layoutConfig.rows, flipDurationMs }}
@@ -196,6 +201,7 @@
 	>
 		{#each layoutConfig.rows as row (`${row.id}${row[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + row[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 			<div
+				id={row.id}
 				animate:flip={{ duration: flipDurationMs }}
 				class={buildContainerClass(row)}
 				data-is-dnd-shadow-item-hint={row[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -213,6 +219,7 @@
 	</div>
 {:else if layoutConfig.cols}
 	<div
+		id={layoutConfig.id}
 		class={buildColClass()}
 		transition:fade
 		use:dndzone={{ items: layoutConfig.cols, flipDurationMs }}
@@ -221,6 +228,7 @@
 	>
 		{#each layoutConfig.cols as col (`${col.id}${col[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + col[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 			<div
+				id={col.id}
 				animate:flip={{ duration: flipDurationMs }}
 				class={buildContainerClass(col)}
 				data-is-dnd-shadow-item-hint={col[SHADOW_ITEM_MARKER_PROPERTY_NAME]}

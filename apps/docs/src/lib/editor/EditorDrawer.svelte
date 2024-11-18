@@ -75,5 +75,5 @@
 </script>
 
 <div class="container mx-auto mt-12">
-	<DNDFlexilte {layoutConfig} {components} debug={true} {considerCallback}></DNDFlexilte>
+	<DNDFlexilte {layoutConfig} {components} {considerCallback}></DNDFlexilte>
 </div>

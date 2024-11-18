@@ -60,6 +60,7 @@
 				if (item.comp === 'VerticalGroup') {
 					return {
 						id: uuidv4(),
+						gap: 'gap-4',
 						cols: [
 							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } },
 							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } }
@@ -69,13 +70,14 @@
 				if (item.comp === 'HorizontalGroup') {
 					return {
 						id: uuidv4(),
+						gap: 'gap-4',
 						rows: [
 							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } },
 							{ ...defaultMap['TextBox'], id: uuidv4(), props: { text: 'Drag an element here' } }
 						]
 					};
 				}
-				return { ...defaultMap[item.comp], id: uuidv4() };
+				return { ...JSON.parse(JSON.stringify(defaultMap[item.comp])), id: uuidv4() };
 			} else {
 				return item;
 			}
@@ -101,7 +103,7 @@
 				<EditorDrawer></EditorDrawer>
 			</div>
 			<div class="w-full mx-4">
-				<DNDFlexilte {layoutConfig} {components} debug={true} {finalizeCallback} {itemClickCallback}
+				<DNDFlexilte {layoutConfig} {components} {finalizeCallback} {itemClickCallback}
 				></DNDFlexilte>
 			</div>
 			<div class="w-1/6">
