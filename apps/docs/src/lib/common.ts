@@ -25,6 +25,27 @@ export const editorStore = writable<LayoutConfig<typeof components>>();
 export const exampleStore = writable<LayoutConfig<typeof components>>();
 export const onChangeStore = writable();
 
+export const addIdField = <C extends Record<string, ComponentType>>(
+	config: LayoutConfig<C>
+): LayoutConfig<C> => {
+	// Create a new object to avoid mutating the original
+	const newConfig: LayoutConfig<C> = {
+		...config,
+		id: uuidv4()
+	};
+
+	// If there are columns or rows, recursively add id fields to them
+	if (newConfig.cols) {
+		newConfig.cols = newConfig.cols.map((col) => addIdField(col));
+	}
+
+	if (newConfig.rows) {
+		newConfig.rows = newConfig.rows.map((row) => addIdField(row));
+	}
+
+	return newConfig;
+};
+
 export function trimLayoutTree<C extends Record<string, ComponentType>>(
 	layout: LayoutConfig<C>
 ): LayoutConfig<C> | null {

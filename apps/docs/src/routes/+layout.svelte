@@ -28,6 +28,7 @@
 	import { onMount } from 'svelte';
 	import { docStore, editorStore, exampleStore, frontPageStore, setLayoutIds } from '$lib/common';
 	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
+	import { parse } from 'yaml';
 
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
@@ -60,10 +61,11 @@
 			.catch((e) => {
 				console.error(e);
 			});
-		fetch('editor.json')
-			.then((r) => r.json())
+		fetch('template1.yaml')
+			.then((r) => r.text())
 			.then((j) => {
-				editorStore.set(j);
+				const result = parse(j);
+				editorStore.set(result);
 			})
 			.catch((e) => {
 				console.error(e);

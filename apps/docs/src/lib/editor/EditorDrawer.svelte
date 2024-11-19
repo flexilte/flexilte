@@ -63,7 +63,8 @@
 						component: 'CardBox',
 						props: {
 							icon: item.icon,
-							body: item.name
+							body: item.name,
+							style: 'w-36'
 						},
 						comp: item.comp,
 						nodeClass: 'variant-filled-surface text-center'

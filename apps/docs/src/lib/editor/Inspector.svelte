@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { LayoutConfig } from '@flexilte/core';
 	import { componentValueStore, selectedComponentStore } from './editorStore';
-	import { exampleStore, removeTree, updateTree, type components } from '$lib/common';
+	import { editorStore, removeTree, updateTree, type components } from '$lib/common';
 
 	let elId: string;
 	let comp: LayoutConfig<typeof components>;
@@ -14,13 +14,13 @@
 	});
 
 	const updateNode = () => {
-		exampleStore.update((s) => {
+		editorStore.update((s) => {
 			return updateTree(s, comp.id, comp);
 		});
 	};
 
 	const removeNode = (e) => {
-		exampleStore.update((s) => {
+		editorStore.update((s) => {
 			return removeTree(s, comp.id);
 		});
 		comp = undefined;

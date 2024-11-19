@@ -1,0 +1,10 @@
+id: '1'
+rows:
+  - id: '2'
+    component: 'TextBox'
+    props:
+      text: hi
+  - id: '3'
+    component: 'TextBox'
+    props:
+      text: hi

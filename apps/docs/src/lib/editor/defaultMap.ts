@@ -28,5 +28,26 @@ export default {
 		},
 		posX: 'middle',
 		posY: 'middle'
+	},
+	Avatar: {
+		component: 'Avatar',
+		props: {
+			src: 'https://placedog.net/512/512',
+			width: 'w-32',
+			rounded: 'rounded-full'
+		},
+		posX: 'middle',
+		posY: 'middle'
+	},
+	ButtonBox: {
+		component: 'Avatar',
+		props: {
+			text: 'text',
+			icon: '',
+			link: 'https//google.com',
+			newTab: true
+		},
+		posX: 'middle',
+		posY: 'middle'
 	}
 } as Record<string, LayoutConfig<typeof components>>;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { components, exampleStore, onChangeStore, trimLayoutTree } from '$lib/common';
+	import { components, editorStore, onChangeStore, trimLayoutTree, addIdField } from '$lib/common';
 	import DNDFlexilte from '$lib/dnd/DNDFlexilte.svelte';
 	import type { LayoutConfig } from '$lib/dnd/types';
 	import defaultMap from '$lib/editor/defaultMap';
@@ -27,11 +27,11 @@
 		]
 	};
 
-	$: layoutConfig = $exampleStore;
+	$: layoutConfig = $editorStore;
 
 	const drawerStore = getDrawerStore();
 	onMount(() => {
-		// openDrawer();
+		layoutConfig = addIdField($editorStore);
 	});
 
 	const openDrawer = () => {
@@ -45,7 +45,7 @@
 	) => {
 		clearTimeout(timeoutId);
 		timeoutId = setTimeout(() => {
-			exampleStore.update((s) => {
+			editorStore.update((s) => {
 				const a =
 					trimLayoutTree(s) || ({ id: Date.now().toString() } as LayoutConfig<typeof components>);
 				console.log('result', a);
