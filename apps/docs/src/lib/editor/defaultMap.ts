@@ -1,6 +1,5 @@
 import type { LayoutConfig } from '@flexilte/core';
-import { components, exampleStore, onChangeStore, trimLayoutTree } from '$lib/common';
-import { v4 as uuidv4 } from 'uuid';
+import { components } from '$lib/common';
 
 export default {
 	TextBox: {
@@ -21,7 +20,7 @@ export default {
 	CardBox: {
 		component: 'CardBox',
 		props: {
-			title: 'titleasdaaastitleasdaaastitleasdaaas',
+			title: 'test title',
 			icon: 'ic:coffee',
 			body: 'body',
 			footer: 'footer'
@@ -40,12 +39,20 @@ export default {
 		posY: 'middle'
 	},
 	ButtonBox: {
-		component: 'Avatar',
+		component: 'ButtonBox',
 		props: {
 			text: 'text',
 			icon: '',
-			link: 'https//google.com',
+			link: 'https://google.com',
 			newTab: true
+		},
+		posX: 'middle',
+		posY: 'middle'
+	},
+	Spacing: {
+		component: 'Spacing',
+		props: {
+			space: 'h-48'
 		},
 		posX: 'middle',
 		posY: 'middle'

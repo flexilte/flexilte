@@ -1,12 +1,10 @@
 import type { LayoutConfig } from '$lib/dnd/types';
 import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
-import { CardBox, ImageBox, TextBox } from '@flexilte/skeleton';
+import { ButtonBox, CardBox, ImageBox, Spacing, TextBox } from '@flexilte/skeleton';
 import { CodeBlock, Avatar, ProgressRadial, ProgressBar, InputChip } from '@skeletonlabs/skeleton';
 import type { ComponentType } from 'svelte';
-import { SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 import { writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
-import defaultMap from './editor/defaultMap';
 export const components = {
 	CodeBlock,
 	Avatar,
@@ -16,7 +14,9 @@ export const components = {
 	InputChip,
 	ImageBox,
 	EditorDrawer,
-	CardBox
+	CardBox,
+	ButtonBox,
+	Spacing
 };
 
 export const frontPageStore = writable<LayoutConfig<typeof components>>();

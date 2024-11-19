@@ -24,7 +24,7 @@
 	import Icon from '@iconify/svelte';
 	import { Flexilte } from '@flexilte/core';
 	import ExportBox from '$lib/editor/ExportBox.svelte';
-	import { components } from '$lib/common';
+	import { addIdField, components } from '$lib/common';
 	import { onMount } from 'svelte';
 	import { docStore, editorStore, exampleStore, frontPageStore, setLayoutIds } from '$lib/common';
 	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
@@ -65,7 +65,7 @@
 			.then((r) => r.text())
 			.then((j) => {
 				const result = parse(j);
-				editorStore.set(result);
+				editorStore.set(addIdField(result));
 			})
 			.catch((e) => {
 				console.error(e);

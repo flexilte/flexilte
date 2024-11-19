@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { components, editorStore, onChangeStore, trimLayoutTree, addIdField } from '$lib/common';
+	import { components, editorStore, trimLayoutTree } from '$lib/common';
 	import DNDFlexilte from '$lib/dnd/DNDFlexilte.svelte';
 	import type { LayoutConfig } from '$lib/dnd/types';
 	import defaultMap from '$lib/editor/defaultMap';
-	import DndList from '$lib/editor/DNDList.svelte';
 	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
 	import { selectedComponentStore } from '$lib/editor/editorStore';
 	import Inspector from '$lib/editor/Inspector.svelte';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
-	import { onMount } from 'svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 
 	import { v4 as uuidv4 } from 'uuid';
@@ -30,9 +28,6 @@
 	$: layoutConfig = $editorStore;
 
 	const drawerStore = getDrawerStore();
-	onMount(() => {
-		layoutConfig = addIdField($editorStore);
-	});
 
 	const openDrawer = () => {
 		drawerStore.open({ id: 'editor2', position: 'left', width: 'w-1/6' });
@@ -87,8 +82,8 @@
 		// itemCur = { ...itemCur };
 	};
 
-	const itemClickCallback = (e: LayoutConfig<typeof components>) => {
-		selectedComponentStore.set(e);
+	const itemClickCallback = (e: MouseEvent, l: LayoutConfig<typeof components>) => {
+		selectedComponentStore.set(l);
 	};
 </script>
 
@@ -99,14 +94,14 @@
 		</div>
 
 		<div class="mt-4 flex">
-			<div class="w-1/6">
+			<div class="w-1/6 variant-filled-surface">
 				<EditorDrawer></EditorDrawer>
 			</div>
 			<div class="w-full mx-4">
 				<DNDFlexilte {layoutConfig} {components} {finalizeCallback} {itemClickCallback}
 				></DNDFlexilte>
 			</div>
-			<div class="w-1/6">
+			<div class="w-1/6 variant-filled-surface">
 				<Inspector></Inspector>
 			</div>
 		</div>

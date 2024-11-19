@@ -6,14 +6,13 @@
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 
 	import { TRIGGERS, type DndEvent } from 'svelte-dnd-action';
-	import { onMount } from 'svelte';
+
 	const drawerStore = getDrawerStore();
 
 	const items = [
 		{ id: uuidv4(), icon: 'mdi:format-text', name: 'TextBox', comp: 'TextBox' },
 		{ id: uuidv4(), icon: 'mdi:image', name: 'ImageBox', comp: 'ImageBox' },
 		{ id: uuidv4(), icon: 'mdi:card-text', name: 'CardBox', comp: 'CardBox' },
-		{ id: uuidv4(), icon: 'mdi:code', name: 'CodeBlock', comp: 'CodeBlock' },
 		{ id: uuidv4(), icon: 'mdi:people', name: 'Avatar', comp: 'Avatar' },
 		{
 			id: uuidv4(),
@@ -26,6 +25,18 @@
 			icon: 'mdi:table-row-plus-after',
 			name: 'Horizontal Group',
 			comp: 'HorizontalGroup'
+		},
+		{
+			id: uuidv4(),
+			icon: 'mdi:keyboard-space',
+			name: 'Spacing',
+			comp: 'Spacing'
+		},
+		{
+			id: uuidv4(),
+			icon: 'mdi:button-pointer',
+			name: 'Button',
+			comp: 'ButtonBox'
 		}
 	];
 
@@ -41,7 +52,7 @@
 					style: 'w-36'
 				},
 				comp: item.comp,
-				nodeClass: 'variant-filled-surface text-center'
+				nodeClass: 'text-center'
 			};
 		})
 	};
@@ -75,6 +86,6 @@
 	};
 </script>
 
-<div class="container mx-auto mt-12">
+<div class="container mx-auto my-4">
 	<DNDFlexilte {layoutConfig} {components} {considerCallback}></DNDFlexilte>
 </div>

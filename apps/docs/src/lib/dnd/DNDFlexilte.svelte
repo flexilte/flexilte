@@ -1,10 +1,4 @@
 <script lang="ts" generics="C extends Record<string, ComponentType>">
-	import Page from '../../routes/+page.svelte';
-
-	import { getDrawerStore } from '@skeletonlabs/skeleton';
-
-	import { onChangeStore } from '$lib/common';
-
 	import { fade } from 'svelte/transition';
 
 	import type { LayoutConfig } from './types';
@@ -16,7 +10,7 @@
 	export let layoutConfig: LayoutConfig<C>;
 	export let components: Record<string, ComponentType>;
 	export let debug: boolean = false;
-	export let itemClickCallback: (c: LayoutConfig<C>) => void = () => {};
+	export let itemClickCallback: (e: MouseEvent, c: LayoutConfig<C>) => void = () => {};
 
 	export let considerCallback:
 		| ((
@@ -187,7 +181,7 @@
 </script>
 
 {#if layoutConfig.component}
-	<button class={buildWrapperClass()} on:click={() => itemClickCallback(layoutConfig)}>
+	<button class={buildWrapperClass()} on:click={(e) => itemClickCallback(e, layoutConfig)}>
 		<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
 	</button>
 {:else if layoutConfig.rows}

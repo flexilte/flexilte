@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { LayoutConfig } from '@flexilte/core';
-	import { componentValueStore, selectedComponentStore } from './editorStore';
+	import { selectedComponentStore } from './editorStore';
 	import { editorStore, removeTree, updateTree, type components } from '$lib/common';
 
 	let elId: string;
@@ -30,8 +30,8 @@
 	// componentValueStore.subscribe(console.log);
 </script>
 
-<div class="overflow-auto h-full">
-	{#if props.length > 0}
+<div class="overflow-auto h-full p-4">
+	{#if comp}
 		<div class="form-group">
 			<button type="button" class="btn variant-filled-error" on:click={removeNode}>Remove</button>
 			<h6 class="h6">Props</h6>
@@ -82,5 +82,7 @@
 				</select>
 			</label>
 		</div>
+	{:else}
+		<div>Click an element to edit it!</div>
 	{/if}
 </div>
