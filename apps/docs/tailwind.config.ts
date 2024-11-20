@@ -7,10 +7,18 @@ export default {
 	darkMode: 'class',
 	content: [
 		'./src/**/*.{html,js,svelte,ts,json}',
-		'./static/**/*.json',
+		'./static/**/*.{json,yaml}',
 		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
+		join(require.resolve('@flexilte/core'), '../**/*.{html,js,svelte,ts}'),
 		join(require.resolve('@flexilte/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
+	safelist:[
+		'^text-[a-z0-9-]+$',
+		'^h-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$',
+		'^w-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$',
+		'^md:h-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$',
+		'^md:w-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$'
+	  ],
 	theme: {
 		extend: {}
 	},

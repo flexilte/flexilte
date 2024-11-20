@@ -12,8 +12,6 @@ export interface LayoutConfig<C extends Record<string, ComponentType>> {
 	rows?: LayoutConfig<C>[];
 	posX?: 'left' | 'right' | 'middle';
 	posY?: 'top' | 'bottom' | 'middle';
-	alignHeight?: boolean;
 	wrap?: 'wrap' | 'nowrap';
 	gap?: string;
-	noAutoMobile?: boolean;
 }

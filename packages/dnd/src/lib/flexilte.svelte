@@ -4,12 +4,49 @@
 	import type { LayoutConfig } from './types';
 	import type { ComponentType } from 'svelte';
 	import { flip } from 'svelte/animate';
+	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
+	import type { DndEvent } from 'svelte-dnd-action';
 
 	export let layoutConfig: LayoutConfig<C>;
 	export let components: Record<string, ComponentType>;
 	export let debug: boolean = false;
+	export let itemClickCallback: (e: MouseEvent, c: LayoutConfig<C>) => void = () => {};
+
+	export let considerCallback:
+		| ((
+				type: 'rows' | 'cols',
+				items: LayoutConfig<C>,
+				event: CustomEvent<DndEvent<LayoutConfig<C>>>
+		  ) => void)
+		| undefined = undefined;
+	export let finalizeCallback:
+		| ((
+				type: 'rows' | 'cols',
+				items: LayoutConfig<C>,
+				event: CustomEvent<DndEvent<LayoutConfig<C>>>
+		  ) => void)
+		| undefined = undefined;
 
 	const flipDurationMs = 300;
+
+	const handleDndConsider =
+		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
+			if (layoutConfig[type]) {
+				if (considerCallback) considerCallback(type, layoutConfig, e);
+				else layoutConfig[type] = e.detail.items;
+			}
+		};
+
+	const handleDndFinalize =
+		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
+			if (layoutConfig[type]) {
+				if (finalizeCallback) finalizeCallback(type, layoutConfig, e);
+				else {
+					layoutConfig[type] = e.detail.items;
+					// layoutConfig = { ...layoutConfig };
+				}
+			}
+		};
 
 	const getDebugClass = () => {
 		return debug ? ['flexilte-debug'] : [];
@@ -132,23 +169,72 @@
 		];
 		return classList.join(' ');
 	};
+
+	const buildWrapperClass = () => {
+		const classList = [
+			...getDebugClass(),
+			getNodeClass().join(' ').includes('w-full') ? 'w-full' : undefined,
+			layoutConfig.wrapperClass
+		];
+		return classList.join(' ');
+	};
 </script>
 
 {#if layoutConfig.component}
-	<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+	<button class={buildWrapperClass()} on:click={(e) => itemClickCallback(e, layoutConfig)}>
+		<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+	</button>
 {:else if layoutConfig.rows}
-	<div id={layoutConfig.id} class={buildRowClass()} transition:fade>
-		{#each layoutConfig.rows as row (row)}
-			<div id={row.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
-				<svelte:self {components} layoutConfig={row} {debug} />
+	<div
+		id={layoutConfig.id}
+		class={buildRowClass()}
+		transition:fade
+		use:dndzone={{ items: layoutConfig.rows, flipDurationMs }}
+		on:consider={handleDndConsider('rows')}
+		on:finalize={handleDndFinalize('rows')}
+	>
+		{#each layoutConfig.rows as row (`${row.id}${row[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + row[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
+			<div
+				id={row.id}
+				animate:flip={{ duration: flipDurationMs }}
+				class={buildContainerClass(row)}
+				data-is-dnd-shadow-item-hint={row[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+			>
+				<svelte:self
+					{components}
+					layoutConfig={row}
+					{debug}
+					{considerCallback}
+					{finalizeCallback}
+					{itemClickCallback}
+				/>
 			</div>
 		{/each}
 	</div>
 {:else if layoutConfig.cols}
-	<div id={layoutConfig.id} class={buildColClass()} transition:fade>
-		{#each layoutConfig.cols as col (col)}
-			<div id={col.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
-				<svelte:self {components} layoutConfig={col} {debug} />
+	<div
+		id={layoutConfig.id}
+		class={buildColClass()}
+		transition:fade
+		use:dndzone={{ items: layoutConfig.cols, flipDurationMs }}
+		on:consider={handleDndConsider('cols')}
+		on:finalize={handleDndFinalize('cols')}
+	>
+		{#each layoutConfig.cols as col (`${col.id}${col[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + col[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
+			<div
+				id={col.id}
+				animate:flip={{ duration: flipDurationMs }}
+				class={buildContainerClass(col)}
+				data-is-dnd-shadow-item-hint={col[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+			>
+				<svelte:self
+					{components}
+					layoutConfig={col}
+					{debug}
+					{considerCallback}
+					{finalizeCallback}
+					{itemClickCallback}
+				/>
 			</div>
 		{/each}
 	</div>

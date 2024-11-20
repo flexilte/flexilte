@@ -1,6 +1,10 @@
 # @flexilte/core
 
-## 1.2.0
+## 2.0.0
+
+### Major Changes
+
+- rewrite core, support dnd
 
 ### Minor Changes
 

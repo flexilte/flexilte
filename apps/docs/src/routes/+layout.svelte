@@ -22,11 +22,11 @@
 	import yaml from 'highlight.js/lib/languages/yaml';
 	import json from 'highlight.js/lib/languages/json';
 	import Icon from '@iconify/svelte';
-	import { Flexilte } from '@flexilte/core';
 	import ExportBox from '$lib/editor/ExportBox.svelte';
-	import { components } from '$lib/editor/editorStore';
+	import { addIdField } from '$lib/common';
 	import { onMount } from 'svelte';
 	import { docStore, editorStore, exampleStore, frontPageStore } from '$lib/common';
+	import { parse } from 'yaml';
 
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
@@ -59,10 +59,11 @@
 			.catch((e) => {
 				console.error(e);
 			});
-		fetch('editor.json')
-			.then((r) => r.json())
+		fetch('template1.yaml')
+			.then((r) => r.text())
 			.then((j) => {
-				editorStore.set(j);
+				const result = parse(j);
+				editorStore.set(addIdField(result));
 			})
 			.catch((e) => {
 				console.error(e);
@@ -149,11 +150,5 @@
 				on:click={() => drawerStore.close()}><span></span><span>AI</span></a
 			>
 		</div>
-	{:else if $drawerStore.id === 'editor'}
-		{#if $editorStore}
-			<div class="h-full">
-				<Flexilte layoutConfig={$editorStore} {components}></Flexilte>
-			</div>
-		{/if}
 	{/if}
 </Drawer>
