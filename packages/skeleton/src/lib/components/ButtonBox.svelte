@@ -8,7 +8,7 @@
 	export let style = '';
 	export let dndMode = false;
 
-	const openPage = (e: MouseEvent) => {
+	const openPage = () => {
 		if (newTab) {
 			window.open(link, '_blank');
 		} else {

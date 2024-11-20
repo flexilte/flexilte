@@ -1,57 +1,48 @@
 <script lang="ts" generics="C extends Record<string, ComponentType>">
-	import type { LayoutConfig } from './types.js';
+	import { fade } from 'svelte/transition';
+
+	import type { LayoutConfig } from './types';
 	import type { ComponentType } from 'svelte';
+	import { flip } from 'svelte/animate';
+
 	export let layoutConfig: LayoutConfig<C>;
 	export let components: Record<string, ComponentType>;
 	export let debug: boolean = false;
 
-	if (layoutConfig.alignHeight) {
-		layoutConfig.cols?.forEach((col: LayoutConfig<C>) => {
-			col.alignHeight = true;
-		});
-	}
+	const flipDurationMs = 300;
 
-	const getAlignmentClass = (addFlex = false): string[] => {
+	const getDebugClass = () => {
+		return debug ? ['flexilte-debug'] : [];
+	};
+
+	const getAlignmentClass = (
+		addFlex = false,
+		cur: LayoutConfig<C> | undefined = undefined
+	): string[] => {
 		const classList: string[] = [];
+		const x = cur || layoutConfig;
 
-		if (layoutConfig.posX === 'middle') classList.push('justify-center');
-		else if (layoutConfig.posX === 'left') classList.push('justify-start');
-		else if (layoutConfig.posX === 'right') classList.push('justify-end');
+		if (x.posX === 'middle') classList.push('justify-center');
+		else if (x.posX === 'left') classList.push('justify-start');
+		else if (x.posX === 'right') classList.push('justify-end');
 
-		if (layoutConfig.posY === 'middle') classList.push('items-center');
-		else if (layoutConfig.posY === 'top') classList.push('items-start');
-		else if (layoutConfig.posY === 'bottom') classList.push('items-end');
+		if (x.posY === 'middle') classList.push('items-center');
+		else if (x.posY === 'top') classList.push('items-start');
+		else if (x.posY === 'bottom') classList.push('items-end');
 
 		if (classList.length > 0 && addFlex) classList.push('flex');
 
 		return classList;
 	};
 
-	const getBaseClass = () => {
-		const classList: string[] = [];
-		if (layoutConfig.alignHeight) classList.push('flex-1');
-		if (debug) classList.push('flexilte-debug');
-		return classList;
-	};
-
-	const getWrapClass = (row: LayoutConfig<C>): string[] => {
+	const getWrapClass = (): string[] => {
 		const classList: string[] = [];
 
-		if (row.wrap === 'wrap') classList.push('flex-wrap');
-		else if (row.wrap === 'nowrap') classList.push('flex-nowrap');
+		if (layoutConfig.wrap === 'wrap') classList.push('flex-wrap');
+		else if (layoutConfig.wrap === 'nowrap') classList.push('flex-nowrap');
 
 		if (classList.length > 0) {
 			classList.push('overflow-auto');
-		}
-
-		return classList;
-	};
-
-	const getGapClass = (row: LayoutConfig<C>): string[] => {
-		const classList: string[] = [];
-
-		if (row.gap) {
-			classList.push(row.gap);
 		}
 
 		return classList;
@@ -72,92 +63,93 @@
 		'w-12/12'
 	];
 
-	const getWidthClass = (col: LayoutConfig<C>) => {
-		if (col.width) {
-			if (!width1Classes.includes(col.width)) {
-				return [col.width];
+	const getWidthClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+		const x = cur || layoutConfig;
+		if (x.width) {
+			if (!width1Classes.includes(x.width)) {
+				return [x.width, 'mx-auto'];
 			}
 		}
 		return ['w-full'];
 	};
 
-	const addWFullClass = () => {
-		return layoutConfig.nodeClass?.includes('w-') ? [] : ['w-full'];
+	const getNodeClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+		const x = cur || layoutConfig;
+		if (x.nodeClass) {
+			return [x.nodeClass];
+		}
+		return [];
 	};
 
-	const autoMobileClass = (row: LayoutConfig<C>) => {
-		return row.noAutoMobile ? [] : ['flex-col'];
+	const buildBaseClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+		const classList: string[] = [...getDebugClass(), ...getNodeClass(cur)];
+
+		return classList;
 	};
 
-	const cleanUpClassList = (l: (string | undefined)[]) => {
-		return l.filter((x) => x).join(' ');
+	const getGapClass = (): string[] => {
+		const classList: string[] = [];
+		if (layoutConfig.gap) classList.push(layoutConfig.gap);
+		return classList;
 	};
 
-	$: getRowClassList = (cur: LayoutConfig<C>) => {
+	const getLayoutClass = () => {
+		const classList: string[] = [];
+		if (layoutConfig.layoutClass) classList.push(layoutConfig.layoutClass);
+		return classList;
+	};
+
+	const buildContainerClass = (cur: LayoutConfig<C>) => {
 		const classList = [
-			...getBaseClass(),
-			...getAlignmentClass(),
-			...getGapClass(cur),
-			...getWrapClass(cur),
-			...autoMobileClass(cur),
-			...addWFullClass(),
-			layoutConfig.nodeClass,
-			cur.layoutClass
-		];
-
-		return cleanUpClassList(classList);
-	};
-
-	$: getColClassList = (cur: LayoutConfig<C>) => {
-		const classList = [
-			...getBaseClass(),
-			...getAlignmentClass(),
-			...getGapClass(cur),
+			'flexilte-container',
+			...buildBaseClass(cur),
 			...getWidthClass(cur),
-			layoutConfig.nodeClass,
-			cur.layoutClass
+			...getAlignmentClass(true, cur),
+			...getLayoutClass()
 		];
-
-		return cleanUpClassList(classList);
+		return classList.join(' ');
 	};
 
-	$: getItemClassList = () => {
+	const buildRowClass = () => {
 		const classList = [
-			...getBaseClass(),
-			...getAlignmentClass(true),
-			...addWFullClass(),
-			layoutConfig.nodeClass
+			'flex flex-col w-full',
+			'flexilte-row',
+			...buildBaseClass(),
+			// ...getAlignmentClass(),
+			...getWrapClass(),
+			...getGapClass()
 		];
-		if (debug) console.log(layoutConfig);
-		return cleanUpClassList(classList);
+		return classList.join(' ');
+	};
+
+	const buildColClass = () => {
+		const classList = [
+			'md:flex',
+			'flexilte-col',
+			...buildBaseClass(),
+			...getWrapClass(),
+			...getGapClass()
+		];
+		return classList.join(' ');
 	};
 </script>
 
-{#if layoutConfig.rows}
-	{#each layoutConfig.rows as row}
-		<div
-			id={layoutConfig.id}
-			class={`flex md:flex-row flexilte flexilte-row ${getRowClassList(row)}`}
-		>
-			<svelte:self {components} layoutConfig={row} {debug} />
-		</div>
-	{/each}
+{#if layoutConfig.component}
+	<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+{:else if layoutConfig.rows}
+	<div id={layoutConfig.id} class={buildRowClass()} transition:fade>
+		{#each layoutConfig.rows as row (row)}
+			<div id={row.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
+				<svelte:self {components} layoutConfig={row} {debug} />
+			</div>
+		{/each}
+	</div>
 {:else if layoutConfig.cols}
-	{#each layoutConfig.cols as col}
-		<div id={layoutConfig.id} class={`flex flex-col flexilte flexilte-col ${getColClassList(col)}`}>
-			<svelte:self {components} layoutConfig={col} {debug} />
-		</div>
-	{/each}
-{:else}
-	<div id={layoutConfig.id} class={`flexilte flexilte-item ${getItemClassList()}`}>
-		{#if layoutConfig.component}
-			{#if layoutConfig.wrapperClass}
-				<div class={`${layoutConfig.wrapperClass}`}>
-					<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
-				</div>
-			{:else}
-				<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
-			{/if}
-		{/if}
+	<div id={layoutConfig.id} class={buildColClass()} transition:fade>
+		{#each layoutConfig.cols as col (col)}
+			<div id={col.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
+				<svelte:self {components} layoutConfig={col} {debug} />
+			</div>
+		{/each}
 	</div>
 {/if}

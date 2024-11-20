@@ -22,12 +22,10 @@
 	import yaml from 'highlight.js/lib/languages/yaml';
 	import json from 'highlight.js/lib/languages/json';
 	import Icon from '@iconify/svelte';
-	import { Flexilte } from '@flexilte/core';
 	import ExportBox from '$lib/editor/ExportBox.svelte';
-	import { addIdField, components } from '$lib/common';
+	import { addIdField } from '$lib/common';
 	import { onMount } from 'svelte';
-	import { docStore, editorStore, exampleStore, frontPageStore, setLayoutIds } from '$lib/common';
-	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
+	import { docStore, editorStore, exampleStore, frontPageStore } from '$lib/common';
 	import { parse } from 'yaml';
 
 	hljs.registerLanguage('xml', xml); // for HTML
@@ -73,7 +71,7 @@
 		fetch('example.json')
 			.then((r) => r.json())
 			.then((j) => {
-				exampleStore.set(setLayoutIds(j));
+				exampleStore.set(j);
 			})
 			.catch((e) => {
 				console.error(e);
@@ -151,16 +149,6 @@
 				data-sveltekit-preload-data="hover"
 				on:click={() => drawerStore.close()}><span></span><span>AI</span></a
 			>
-		</div>
-	{:else if $drawerStore.id === 'editor'}
-		{#if $editorStore}
-			<div class="h-full">
-				<Flexilte layoutConfig={$editorStore} {components}></Flexilte>
-			</div>
-		{/if}
-	{:else if $drawerStore.id === 'editor2'}
-		<div class="h-full">
-			<EditorDrawer />
 		</div>
 	{/if}
 </Drawer>

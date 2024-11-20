@@ -1,86 +1,116 @@
 <script lang="ts">
-	import type { LayoutConfig } from '@flexilte/core';
-	import { selectedComponentStore } from './editorStore';
-	import { editorStore, removeTree, updateTree, type components } from '$lib/common';
+	import {
+		editorStore,
+		removeTree,
+		updateTree,
+		type components,
+		selectedComponentStore
+	} from '$lib/common';
+	import { type DNDLayoutConfig } from '@flexilte/dnd';
+	import { derived } from 'svelte/store';
 
-	let elId: string;
-	let comp: LayoutConfig<typeof components>;
-	let props: string[] = [];
-	selectedComponentStore.subscribe((node) => {
-		if (node && node.props) {
-			comp = node;
-			props = Object.keys(node.props);
+	type PosXValue = 'left' | 'middle' | 'right';
+	type PosYValue = 'top' | 'middle' | 'bottom';
+	type PositionType = 'posX' | 'posY';
+
+	const selectedComponent = derived(selectedComponentStore, ($node) =>
+		$node?.props ? $node : undefined
+	);
+
+	const handleUpdate = (id: string, updatedComp: DNDLayoutConfig<typeof components>) => {
+		editorStore.update((state) => updateTree(state, id, updatedComp));
+	};
+
+	const handleRemove = (id: string) => {
+		editorStore.update(
+			(state) => removeTree(state, id) || ({} as DNDLayoutConfig<typeof components>)
+		);
+	};
+
+	const handlePropChange = (
+		comp: DNDLayoutConfig<typeof components>,
+		prop: string,
+		event: Event
+	) => {
+		const target = event.target as HTMLInputElement;
+		if (comp.props && target) {
+			comp.props[prop] = target.value;
+			handleUpdate(comp.id, comp);
 		}
-	});
-
-	const updateNode = () => {
-		editorStore.update((s) => {
-			return updateTree(s, comp.id, comp);
-		});
 	};
 
-	const removeNode = (e) => {
-		editorStore.update((s) => {
-			return removeTree(s, comp.id);
-		});
-		comp = undefined;
-		props = [];
+	const handlePositionChange = (
+		comp: DNDLayoutConfig<typeof components>,
+		type: PositionType,
+		event: Event
+	) => {
+		const target = event.target as HTMLSelectElement;
+		if (target) {
+			if (type === 'posX') {
+				comp[type] = target.value as PosXValue;
+			} else {
+				comp[type] = target.value as PosYValue;
+			}
+			handleUpdate(comp.id, comp);
+		}
 	};
 
-	// componentValueStore.subscribe(console.log);
+	const positionOptions: Record<PositionType, Array<{ value: string; label: string }>> = {
+		posX: [
+			{ value: 'left', label: 'Left' },
+			{ value: 'middle', label: 'Middle' },
+			{ value: 'right', label: 'Right' }
+		],
+		posY: [
+			{ value: 'top', label: 'Top' },
+			{ value: 'middle', label: 'Middle' },
+			{ value: 'bottom', label: 'Bottom' }
+		]
+	} as const;
+
+	const positionTypes: PositionType[] = ['posX', 'posY'];
 </script>
 
 <div class="overflow-auto h-full p-4">
-	{#if comp}
+	{#if $selectedComponent && $selectedComponent.props}
 		<div class="form-group">
-			<button type="button" class="btn variant-filled-error" on:click={removeNode}>Remove</button>
+			<button
+				type="button"
+				class="btn variant-filled-error"
+				on:click={() => handleRemove($selectedComponent.id)}
+			>
+				Remove
+			</button>
+
 			<h6 class="h6">Props</h6>
-			{#each props as prop}
+			{#each Object.entries($selectedComponent.props) as [prop, value]}
 				<label class="label">
 					<span>{prop}</span>
 					<input
 						class="input"
 						type="text"
 						placeholder="Input"
-						value={comp.props[prop]}
-						on:change={(e) => {
-							comp.props[prop] = e.target.value;
-							updateNode();
-						}}
+						{value}
+						on:change={(e) => handlePropChange($selectedComponent, prop, e)}
 					/>
 				</label>
 			{/each}
+
 			<h6 class="h6 mt-4">Layout</h6>
-			<label class="label">
-				<span>posX</span>
-				<select
-					class="select"
-					value={comp.posX || ''}
-					on:change={(e) => {
-						comp.posX = e.target.value;
-						updateNode();
-					}}
-				>
-					<option value="left">left</option>
-					<option value="middle">middle</option>
-					<option value="right">right</option>
-				</select>
-			</label>
-			<label class="label">
-				<span>posY</span>
-				<select
-					class="select"
-					value={comp.posY || ''}
-					on:change={(e) => {
-						comp.posY = e.target.value;
-						updateNode();
-					}}
-				>
-					<option value="top">top</option>
-					<option value="middle">middle</option>
-					<option value="bottom">bottom</option>
-				</select>
-			</label>
+			{#each positionTypes as posType}
+				<label class="label">
+					<span>{posType}</span>
+					<select
+						class="select"
+						value={$selectedComponent[posType] || ''}
+						on:change={(e) => handlePositionChange($selectedComponent, posType, e)}
+					>
+						{#each positionOptions[posType] as option}
+							<option value={option.value}>{option.label}</option>
+						{/each}
+					</select>
+				</label>
+			{/each}
 		</div>
 	{:else}
 		<div>Click an element to edit it!</div>

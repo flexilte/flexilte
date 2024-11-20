@@ -46,6 +46,7 @@
 	"dependencies": {
 		"@flexilte/core": "workspace:^",
 		"@flexilte/skeleton": "workspace:^",
+		"@flexilte/dnd": "workspace:^",
 		"@iconify/svelte": "^4.0.2",
 		"gridstack": "^10.2.0",
 		"highlight.js": "11.9.0",

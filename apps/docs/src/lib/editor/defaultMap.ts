@@ -44,7 +44,9 @@ export default {
 			text: 'text',
 			icon: '',
 			link: 'https://google.com',
-			newTab: true
+			newTab: true,
+			dndMode: true,
+			style: 'w-full'
 		},
 		posX: 'middle',
 		posY: 'middle'

@@ -1,5 +1,5 @@
-import type { LayoutConfig } from '$lib/dnd/types';
-import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
+import type { LayoutConfig } from '$lib/dnd1/types';
+import type { DNDLayoutConfig } from '@flexilte/dnd';
 import { ButtonBox, CardBox, ImageBox, Spacing, TextBox } from '@flexilte/skeleton';
 import { CodeBlock, Avatar, ProgressRadial, ProgressBar, InputChip } from '@skeletonlabs/skeleton';
 import type { ComponentType } from 'svelte';
@@ -13,7 +13,6 @@ export const components = {
 	TextBox,
 	InputChip,
 	ImageBox,
-	EditorDrawer,
 	CardBox,
 	ButtonBox,
 	Spacing
@@ -21,34 +20,38 @@ export const components = {
 
 export const frontPageStore = writable<LayoutConfig<typeof components>>();
 export const docStore = writable<LayoutConfig<typeof components>>();
-export const editorStore = writable<LayoutConfig<typeof components>>();
+export const editorStore = writable<DNDLayoutConfig<typeof components>>();
 export const exampleStore = writable<LayoutConfig<typeof components>>();
+export const selectedComponentStore = writable<DNDLayoutConfig<typeof components>>();
 export const onChangeStore = writable();
 
 export const addIdField = <C extends Record<string, ComponentType>>(
-	config: LayoutConfig<C>
-): LayoutConfig<C> => {
-	// Create a new object to avoid mutating the original
-	const newConfig: LayoutConfig<C> = {
-		...config,
-		id: uuidv4()
-	};
+	config: DNDLayoutConfig<C>
+): DNDLayoutConfig<C> => {
+	// Create shallow copy of the layout
+	const updatedLayout = { ...config };
 
-	// If there are columns or rows, recursively add id fields to them
-	if (newConfig.cols) {
-		newConfig.cols = newConfig.cols.map((col) => addIdField(col));
+	// Set UUID if no ID exists
+	if (!updatedLayout.id) {
+		updatedLayout.id = uuidv4();
 	}
 
-	if (newConfig.rows) {
-		newConfig.rows = newConfig.rows.map((row) => addIdField(row));
+	// Recursively handle cols if they exist
+	if (updatedLayout.cols) {
+		updatedLayout.cols = updatedLayout.cols.map((col) => addIdField(col));
 	}
 
-	return newConfig;
+	// Recursively handle rows if they exist
+	if (updatedLayout.rows) {
+		updatedLayout.rows = updatedLayout.rows.map((row) => addIdField(row));
+	}
+
+	return updatedLayout;
 };
 
 export function trimLayoutTree<C extends Record<string, ComponentType>>(
-	layout: LayoutConfig<C>
-): LayoutConfig<C> | null {
+	layout: DNDLayoutConfig<C>
+): DNDLayoutConfig<C> | null {
 	// Create a copy of the layout to avoid mutating the input
 	const trimmedLayout = { ...layout };
 
@@ -90,35 +93,11 @@ export function trimLayoutTree<C extends Record<string, ComponentType>>(
 	return trimmedLayout;
 }
 
-export function setLayoutIds<C extends Record<string, ComponentType>>(
-	layout: LayoutConfig<C>
-): LayoutConfig<C> {
-	// Create shallow copy of the layout
-	const updatedLayout = { ...layout };
-
-	// Set UUID if no ID exists
-	if (!updatedLayout.id) {
-		updatedLayout.id = uuidv4();
-	}
-
-	// Recursively handle cols if they exist
-	if (updatedLayout.cols) {
-		updatedLayout.cols = updatedLayout.cols.map((col) => setLayoutIds(col));
-	}
-
-	// Recursively handle rows if they exist
-	if (updatedLayout.rows) {
-		updatedLayout.rows = updatedLayout.rows.map((row) => setLayoutIds(row));
-	}
-
-	return updatedLayout;
-}
-
 export const updateTree = (
-	node: LayoutConfig<typeof components>,
+	node: DNDLayoutConfig<typeof components>,
 	id: string,
-	newNode: LayoutConfig<typeof components>
-): LayoutConfig<typeof components> => {
+	newNode: DNDLayoutConfig<typeof components>
+): DNDLayoutConfig<typeof components> => {
 	// Check if the current node's id matches the target id
 	if (node.id === id) {
 		// Return the new node configuration if the id matches
@@ -138,9 +117,9 @@ export const updateTree = (
 };
 
 export const removeTree = <C extends Record<string, ComponentType>>(
-	node: LayoutConfig<C>,
+	node: DNDLayoutConfig<C>,
 	id: string
-): LayoutConfig<C> | null => {
+): DNDLayoutConfig<C> | null => {
 	// Helper function to recursively search and remove the node
 	const removeNode = (currentNode: LayoutConfig<C>): LayoutConfig<C> | null => {
 		// Check if the current node is the one to remove
