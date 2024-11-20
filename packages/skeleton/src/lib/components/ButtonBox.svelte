@@ -3,7 +3,7 @@
 	export let text = '';
 	export let icon = '';
 	export let link: string;
-	export let newTab: boolean | undefined;
+	export let newTab: boolean | undefined = false;
 	export let variant = '';
 	export let style = '';
 	export let dndMode = false;

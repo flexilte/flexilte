@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { components } from '$lib/common';
-	import { DNDFlexilte } from '@flexilte/dnd';
-	import type { LayoutConfig } from '$lib/dnd1/types';
+	import { DNDFlexilte, type DNDLayoutConfig } from '@flexilte/dnd';
 	import { v4 as uuidv4 } from 'uuid';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 	import { TRIGGERS, type DndEvent } from 'svelte-dnd-action';
@@ -25,9 +24,9 @@
 		{ icon: 'mdi:button-pointer', name: 'Button', comp: 'ButtonBox' }
 	];
 
-	let layoutConfig: LayoutConfig<typeof components> = createLayoutConfig();
+	let layoutConfig: DNDLayoutConfig<typeof components> = createLayoutConfig();
 
-	function createLayoutConfig(): LayoutConfig<typeof components> {
+	function createLayoutConfig(): DNDLayoutConfig<typeof components> {
 		return {
 			id: uuidv4(),
 			rows: items.map((item) => ({
@@ -46,8 +45,8 @@
 
 	const considerCallback = (
 		type: 'rows' | 'cols',
-		itemCur: LayoutConfig<typeof components>,
-		e: CustomEvent<DndEvent<LayoutConfig<typeof components>>>
+		itemCur: DNDLayoutConfig<typeof components>,
+		e: CustomEvent<DndEvent<DNDLayoutConfig<typeof components>>>
 	) => {
 		drawerStore.close();
 		console.warn(`Received consider event: ${JSON.stringify(e.detail, null, 2)}`);

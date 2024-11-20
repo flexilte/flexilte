@@ -1,4 +1,4 @@
-import type { LayoutConfig } from '$lib/dnd1/types';
+import type { LayoutConfig } from '@flexilte/core';
 import type { DNDLayoutConfig } from '@flexilte/dnd';
 import { ButtonBox, CardBox, ImageBox, Spacing, TextBox } from '@flexilte/skeleton';
 import { CodeBlock, Avatar, ProgressRadial, ProgressBar, InputChip } from '@skeletonlabs/skeleton';

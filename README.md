@@ -1,4 +1,5 @@
 # Flexilte
+The World First Dynamic Component Assembly(DCA) Framework
 
 Flexilte is a powerful Svelte framework that transforms JSON into flex-based pages. It supports any frontend UI framework and custom components, allowing for dynamic page creation and easy integration with AI-generated layouts.
 

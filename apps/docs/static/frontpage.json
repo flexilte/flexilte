@@ -14,7 +14,7 @@
 		{
 			"component": "TextBox",
 			"props": {
-				"text": "Create dynamic and flexible layouts effortlessly with our JSON-powered Svelte framework.",
+				"text": "The World First Dynamic Component Assembly Framework",
 				"type": "h3"
 			},
 			"posX": "middle",
