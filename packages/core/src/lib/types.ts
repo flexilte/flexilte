@@ -7,7 +7,6 @@ export interface LayoutConfig<C extends Record<string, Component<any>>> {
 	component?: keyof C & string;
 	props?: Record<string, unknown>;
 	nodeClass?: string;
-	wrapperClass?: string;
 	layoutClass?: string;
 	cols?: LayoutConfig<C>[];
 	rows?: LayoutConfig<C>[];

@@ -17,9 +17,7 @@
 	/>
 </svelte:head>
 
-<div class="px-4 container mx-auto">
-	<Flexilte {layoutConfig} {components}></Flexilte>
-</div>
+<Flexilte {layoutConfig} {components}></Flexilte>
 <div class="text-center p-4 underline text-primary-800 dark:text-primary-100">
 	<a href="frontpage.json">Click here to see the JSON of this page</a>
 </div>

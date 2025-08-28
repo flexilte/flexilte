@@ -29,6 +29,12 @@
 						{
 							"component": "TextBox",
 							"props": {
+								"text": "Flexilte is svelte 5 ready! If you want to use for svelte 4, please use Flexilte v2."
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
 								"text": "Features",
 								"type": "h2"
 							}
@@ -76,7 +82,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "<script lang=\"ts\">\nimport { Flexilte } from '@flexilte/core';\n  import { Tags } from \"flowbite-svelte\";\n    export const components = {\n        Tags,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"Tags\",\n                    \"props\": {\n                        \"availableTags\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"placeholder\": \"Your favorite pet?\",\n                     }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {LayoutConfig} {components}></Flexilte>",
+								"code": "<script lang=\"ts\">\nimport { Flexilte } from '@flexilte/core';\nimport { Tags } from \"flowbite-svelte\";\n    export const components = {\n        Tags,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"Tags\",\n                    \"props\": {\n                        \"availableTags\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"placeholder\": \"Your favorite pet?\",\n                     }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {LayoutConfig} {components}></Flexilte>",
 								"language": "ts"
 							}
 						},
@@ -109,7 +115,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "export interface LayoutConfig<C extends Record<string, Component<any>>> {\n\tid?: string;\n\twidth?: string;\n\tcomponent?: keyof C & string;\n\tprops?: Record<string, unknown>;\n\tnodeClass?: string;\n\twrapperClass?: string;\n\tlayoutClass?: string;\n\tcols?: LayoutConfig<C>[];\n\trows?: LayoutConfig<C>[];\n\tposX?: 'left' | 'right' | 'middle';\n\tposY?: 'top' | 'bottom' | 'middle';\n\twrap?: 'wrap' | 'nowrap';\n\tgap?: string;\n}",
+								"code": "export interface LayoutConfig<C extends Record<string, Component<any>>> {\n\tid?: string;\n\twidth?: string;\n\tcomponent?: keyof C & string;\n\tprops?: Record<string, unknown>;\n\tnodeClass?: string;\n\tlayoutClass?: string;\n\tcols?: LayoutConfig<C>[];\n\trows?: LayoutConfig<C>[];\n\tposX?: 'left' | 'right' | 'middle';\n\tposY?: 'top' | 'bottom' | 'middle';\n\twrap?: 'wrap' | 'nowrap';\n\tgap?: string;\n}",
 								"language": "ts"
 							}
 						}

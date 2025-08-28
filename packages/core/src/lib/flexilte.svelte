@@ -143,7 +143,6 @@
 	};
 </script>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 {#if layoutConfig.component}
 	{@const SvelteComponent = components[layoutConfig.component]}
 	<SvelteComponent {...layoutConfig.props} />
