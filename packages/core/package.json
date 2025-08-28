@@ -21,7 +21,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/flexilte/flexilte.git"
+		"url": "git+https://github.com/flexilte/flexilte.git"
 	},
 	"author": "borgmon <borgmon.contact@gmail.com>",
 	"type": "module",
