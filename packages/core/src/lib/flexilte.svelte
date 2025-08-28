@@ -1,4 +1,4 @@
-<script lang="ts" generics="C extends Record<string, Component<any, any, any>>">
+<script lang="ts" generics="C extends Record<string, Component>">
 	import Flexilte from './flexilte.svelte';
 	import { fade } from 'svelte/transition';
 
@@ -8,7 +8,7 @@
 
 	interface Props {
 		layoutConfig: LayoutConfig<C>;
-		components: Record<string, Component<any, any, any>>;
+		components: Record<string, Component>;
 		debug?: boolean;
 	}
 

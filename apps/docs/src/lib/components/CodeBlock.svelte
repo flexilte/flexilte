@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Heading, P } from 'flowbite-svelte';
 	import { Highlight } from 'svelte-highlight';
 	import type { LanguageType } from 'svelte-highlight/languages';
 	import typescript from 'svelte-highlight/languages/typescript';
@@ -27,6 +26,7 @@
 </script>
 
 <svelte:head>
+	<!-- eslint-disable-next-line -- XSS attack lint error -->
 	{@html atomOneDark}
 </svelte:head>
 <Highlight language={langType} {code} />

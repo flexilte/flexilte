@@ -4,7 +4,7 @@ import CardBox from '$lib/components/CardBox.svelte';
 import DemoBox from '$lib/components/DemoBox.svelte';
 import ImageBox from '$lib/components/ImageBox.svelte';
 import Spacing from '$lib/components/Spacing.svelte';
-import { Avatar, Progressbar, Spinner } from 'flowbite-svelte';
+import { Avatar, Progressbar, Spinner, Tags } from 'flowbite-svelte';
 import CodeBlock from './components/CodeBlock.svelte';
 import ChatView from './ai/ChatView.svelte';
 import InputView from './ai/InputView.svelte';
@@ -21,5 +21,6 @@ export const components = {
 	ChatView,
 	InputView,
 	Spacing,
-	ImageBox
+	ImageBox,
+	Tags
 };

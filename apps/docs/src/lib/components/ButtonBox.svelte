@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Heading, P } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 
 	interface Props {
 		text: string;

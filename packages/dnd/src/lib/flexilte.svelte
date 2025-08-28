@@ -1,55 +1,74 @@
-<script lang="ts" generics="C extends Record<string, Component<any, any, any>>">
-	import DNDFlexilte from './flexilte.svelte';
-	import { fade } from 'svelte/transition';
-
-	import type { DNDLayoutConfig as LayoutConfig } from './types';
+<script lang="ts" generics="C extends Record<string, Component >">
+	import type { DNDLayoutConfig } from './types';
 	import type { Component } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
+	import { dndzone } from 'svelte-dnd-action';
 	import type { DndEvent } from 'svelte-dnd-action';
+	import Flexilte from './flexilte.svelte';
+	import { findAll, removeAtIndex } from './utils';
 
 	interface Props {
-		layoutConfig: LayoutConfig<C>;
-		components: Record<string, Component<any, any, any>>;
+		layoutConfig: DNDLayoutConfig<C>;
+		components: Record<string, Component>;
 		debug?: boolean;
-		itemClickCallback?: (e: MouseEvent, c: LayoutConfig<C>) => void;
+		itemClickCallback?: (e: Event, c: DNDLayoutConfig<C>) => void;
 		considerCallback?: (
 			type: 'rows' | 'cols',
-			items: LayoutConfig<C>,
-			event: CustomEvent<DndEvent<LayoutConfig<C>>>
+			items: DNDLayoutConfig<C>,
+			event: CustomEvent<DndEvent<DNDLayoutConfig<C>>>
 		) => void;
+
 		finalizeCallback?: (
 			type: 'rows' | 'cols',
-			items: LayoutConfig<C>,
-			event: CustomEvent<DndEvent<LayoutConfig<C>>>
+			items: DNDLayoutConfig<C>,
+			event: CustomEvent<DndEvent<DNDLayoutConfig<C>>>
 		) => void;
 	}
+
 	let {
 		layoutConfig,
 		components,
-		debug,
+		debug = false,
 		itemClickCallback = () => {},
-		considerCallback,
-		finalizeCallback
+		finalizeCallback,
+		considerCallback
 	}: Props = $props();
 
 	const flipDurationMs = 300;
 
 	const handleDndConsider =
-		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
+		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<DNDLayoutConfig<C>>>) => {
 			if (layoutConfig[type]) {
 				if (considerCallback) considerCallback(type, layoutConfig, e);
-				else layoutConfig[type] = e.detail.items;
+				else {
+					const finds = findAll(e.detail.items, (x) => x.id === e.detail.info.id);
+					if (finds.length > 1) {
+						const fixedNode = removeAtIndex(e.detail.items, finds[1]);
+						delete fixedNode[finds[0]]['isDndShadowItem'];
+
+						layoutConfig[type] = fixedNode;
+					} else if (finds.length === 1) {
+						const shadowItems = e.detail.items
+							.filter((x) => x['isDndShadowItem'])
+							.filter((x) => x.id !== e.detail.info.id);
+						if (shadowItems.length > 0) {
+							delete shadowItems[0]['isDndShadowItem'];
+						}
+						layoutConfig[type] = e.detail.items;
+					} else {
+						layoutConfig[type] = e.detail.items;
+					}
+				}
 			}
 		};
 
 	const handleDndFinalize =
-		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<LayoutConfig<C>>>) => {
+		(type: 'rows' | 'cols') => (e: CustomEvent<DndEvent<DNDLayoutConfig<C>>>) => {
 			if (layoutConfig[type]) {
 				if (finalizeCallback) finalizeCallback(type, layoutConfig, e);
 				else {
 					layoutConfig[type] = e.detail.items;
-					// layoutConfig = { ...layoutConfig };
+					// dNDLayoutConfig = { ...dNDLayoutConfig };
 				}
 			}
 		};
@@ -60,7 +79,7 @@
 
 	const getAlignmentClass = (
 		addFlex = false,
-		cur: LayoutConfig<C> | undefined = undefined
+		cur: DNDLayoutConfig<C> | undefined = undefined
 	): string[] => {
 		const classList: string[] = [];
 		const x = cur || layoutConfig;
@@ -106,7 +125,7 @@
 		'w-12/12'
 	];
 
-	const getWidthClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+	const getWidthClass = (cur: DNDLayoutConfig<C> | undefined = undefined) => {
 		const x = cur || layoutConfig;
 		if (x.width) {
 			if (!width1Classes.includes(x.width)) {
@@ -116,7 +135,7 @@
 		return ['w-full'];
 	};
 
-	const getNodeClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+	const getNodeClass = (cur: DNDLayoutConfig<C> | undefined = undefined) => {
 		const x = cur || layoutConfig;
 		if (x.nodeClass) {
 			return [x.nodeClass];
@@ -124,7 +143,7 @@
 		return [];
 	};
 
-	const buildBaseClass = (cur: LayoutConfig<C> | undefined = undefined) => {
+	const buildBaseClass = (cur: DNDLayoutConfig<C> | undefined = undefined) => {
 		const classList: string[] = [...getDebugClass(), ...getNodeClass(cur)];
 
 		return classList;
@@ -142,7 +161,7 @@
 		return classList;
 	};
 
-	const buildContainerClass = (cur: LayoutConfig<C>) => {
+	const buildContainerClass = (cur: DNDLayoutConfig<C>) => {
 		const classList = [
 			'flexilte-container',
 			...buildBaseClass(cur),
@@ -186,35 +205,46 @@
 	};
 </script>
 
-{#if layoutConfig.component}
-	{@const SvelteComponent = components[layoutConfig.component]}
+{#snippet compSnippet(comp: Component)}
+	{@const SvelteComponent = comp}
+	<SvelteComponent {...layoutConfig.props} />
+{/snippet}
 
-	<button class={buildWrapperClass()} onclick={(e) => itemClickCallback(e, layoutConfig)}>
-		<SvelteComponent {...layoutConfig.props} />
-	</button>
+{#if layoutConfig.component}
+	<div
+		class={buildWrapperClass()}
+		onclick={(e) => {
+			e.preventDefault();
+			itemClickCallback(e, layoutConfig);
+		}}
+		role="button"
+		tabindex="0"
+		onkeydown={(e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				itemClickCallback(e, layoutConfig);
+			}
+		}}
+	>
+		{@render compSnippet(components[layoutConfig.component])}
+	</div>
 {:else if layoutConfig.rows}
 	<div
 		id={layoutConfig.id}
 		class={buildRowClass()}
-		transition:fade
 		use:dndzone={{ items: layoutConfig.rows, flipDurationMs }}
 		onconsider={handleDndConsider('rows')}
 		onfinalize={handleDndFinalize('rows')}
 	>
-		{#each layoutConfig.rows as row (`${row.id}${row[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + row[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
-			<div
-				id={row.id}
-				animate:flip={{ duration: flipDurationMs }}
-				class={buildContainerClass(row)}
-				data-is-dnd-shadow-item-hint={row[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
-			>
-				<DNDFlexilte
+		{#each layoutConfig.rows as row (row.id)}
+			<div id={row.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
+				<Flexilte
 					{components}
-					{debug}
 					layoutConfig={row}
-					{itemClickCallback}
+					{debug}
 					{considerCallback}
 					{finalizeCallback}
+					{itemClickCallback}
 				/>
 			</div>
 		{/each}
@@ -223,25 +253,19 @@
 	<div
 		id={layoutConfig.id}
 		class={buildColClass()}
-		transition:fade
 		use:dndzone={{ items: layoutConfig.cols, flipDurationMs }}
 		onconsider={handleDndConsider('cols')}
 		onfinalize={handleDndFinalize('cols')}
 	>
-		{#each layoutConfig.cols as col (`${col.id}${col[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + col[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
-			<div
-				id={col.id}
-				animate:flip={{ duration: flipDurationMs }}
-				class={buildContainerClass(col)}
-				data-is-dnd-shadow-item-hint={col[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
-			>
-				<DNDFlexilte
+		{#each layoutConfig.cols as col (col.id)}
+			<div id={col.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
+				<Flexilte
 					{components}
-					{debug}
 					layoutConfig={col}
-					{itemClickCallback}
+					{debug}
 					{considerCallback}
 					{finalizeCallback}
+					{itemClickCallback}
 				/>
 			</div>
 		{/each}

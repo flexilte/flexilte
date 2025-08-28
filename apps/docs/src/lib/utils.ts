@@ -2,7 +2,7 @@ import type { DNDLayoutConfig } from '@flexilte/dnd';
 import type { Component } from 'svelte';
 import { v4 as uuidv4 } from 'uuid';
 
-export const addIdField = <C extends Record<string, Component<any>>>(
+export const addIdField = <C extends Record<string, Component<C>>>(
 	config: DNDLayoutConfig<C>
 ): DNDLayoutConfig<C> => {
 	// Create shallow copy of the layout

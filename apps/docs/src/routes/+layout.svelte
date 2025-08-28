@@ -21,7 +21,6 @@
 			<NavLi href="./">Home</NavLi>
 			<NavLi href="./docs">Documentation</NavLi>
 			<NavLi href="./example">Example</NavLi>
-			<NavLi href="./editor">Editor</NavLi>
 			<NavLi href="./ai">AI</NavLi>
 			<NavLi href="https://github.com/flexilte/flexilte" target="_blank">GitHub</NavLi>
 		</NavUl>

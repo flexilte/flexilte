@@ -50,15 +50,6 @@
 						{
 							"component": "ButtonBox",
 							"props": {
-								"text": "Drag and drop editor",
-								"link": "./editor",
-								"variant": "variant-filled-secondary"
-							},
-							"posX": "middle"
-						},
-						{
-							"component": "ButtonBox",
-							"props": {
 								"text": "Generate using LLM",
 								"link": "./ai",
 								"variant": "variant-filled-tertiary"
@@ -78,9 +69,9 @@
 					"component": "CardBox",
 					"props": {
 						"img": "dnd.jpeg",
-						"title": "Drag and Drop Editor",
-						"body": "Build your UI with ease using our simple drag-and-drop editor, perfectly designed for quick prototyping and adjustments.",
-						"link": "./editor"
+						"title": "UI Framework Agnostic",
+						"body": "Seamlessly integrate with any UI framework of your choice. Enjoy the freedom to choose and switch between frameworks effortlessly.",
+						"link": "./docs"
 					}
 				},
 				{

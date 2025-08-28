@@ -4,6 +4,8 @@
 	import { Button, ButtonGroup } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
+	const backgroundColor = 'bg-gray-100 dark:bg-gray-800';
+
 	const radialData: LayoutConfig<typeof components> = {
 		component: 'Spinner',
 		props: {
@@ -12,7 +14,7 @@
 		},
 		posX: 'middle',
 		posY: 'middle',
-		nodeClass: 'h-full my-12'
+		nodeClass: backgroundColor
 	};
 
 	const avatarData: LayoutConfig<typeof components> = {
@@ -23,14 +25,14 @@
 		},
 		posX: 'middle',
 		posY: 'middle',
-		nodeClass: 'h-full my-12'
+		nodeClass: backgroundColor
 	};
 
 	const loadingBarData: LayoutConfig<typeof components> = {
 		component: 'Progressbar',
 		posX: 'middle',
 		posY: 'middle',
-		nodeClass: 'md:h-full p-12'
+		nodeClass: '  p-12 ' + backgroundColor
 	};
 	let demoJson = $state<LayoutConfig<typeof components>>({
 		rows: [
@@ -85,14 +87,12 @@ const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, nul
 </script>
 
 <div class="w-full">
-	<div class="flex justify-center mt-6">
-		<div class="btn-group variant-filled mx-auto">
-			<ButtonGroup>
-				<Button onclick={() => onDemoClick('avatar')}>avatar</Button>
-				<Button onclick={() => onDemoClick('radial')}>radial</Button>
-				<Button onclick={() => onDemoClick('loadingBar')}>loading bar</Button>
-			</ButtonGroup>
-		</div>
+	<div class="flex justify-center py-12">
+		<ButtonGroup>
+			<Button onclick={() => onDemoClick('avatar')}>avatar</Button>
+			<Button onclick={() => onDemoClick('radial')}>radial</Button>
+			<Button onclick={() => onDemoClick('loadingBar')}>loading bar</Button>
+		</ButtonGroup>
 	</div>
 
 	<div class="md:h-[40rem] h-[52rem] mt-6">

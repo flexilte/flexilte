@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { components } from '$lib/common';
 	import { Flexilte } from '@flexilte/core';
-	import { Avatar } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
-	import Highlight, { HighlightAuto } from 'svelte-highlight';
-	import typescript from 'svelte-highlight/languages/typescript';
 	let layoutConfig = {};
 	onMount(async () => {
 		const res = await fetch('frontpage.json');

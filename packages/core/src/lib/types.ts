@@ -1,6 +1,8 @@
 import type { Component } from 'svelte';
 
-export interface LayoutConfig<C extends Record<string, Component<any>>> {
+export interface LayoutConfig<
+	C extends Record<string, Component<C extends Component<infer Props> ? Props : never>>
+> {
 	id?: string;
 	width?: string;
 	component?: keyof C & string;
