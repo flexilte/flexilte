@@ -44,7 +44,7 @@ jobs:
         with:
           repository: flexilte/flexilte.github.io
           path: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WEBSITE_PAT }}
 
       - name: Copy Build Content
         run: |
