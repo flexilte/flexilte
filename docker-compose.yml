@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  caddy:
+    image: caddy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./apps/docs/build:/srv
+    command: caddy run --config /etc/caddy/Caddyfile
+    ports:
+      - "8084:8084"

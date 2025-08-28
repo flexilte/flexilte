@@ -1,15 +1,6 @@
 <script lang="ts">
 	import { Flexilte, type LayoutConfig } from '@flexilte/core';
-	import { TextBox, ImageBox } from '@flexilte/skeleton';
-	import ChatView from '$lib/ai/ChatView.svelte';
-	import InputView from '$lib/ai/InputView.svelte';
-
-	const components = {
-		TextBox,
-		ImageBox,
-		ChatView,
-		InputView
-	};
+	import { components } from '$lib/common';
 
 	const layoutConfig: LayoutConfig<typeof components> = {
 		rows: [
@@ -22,6 +13,14 @@
 		]
 	};
 </script>
+
+<svelte:head>
+	<title>Flexilte AI Chat</title>
+	<meta
+		name="description"
+		content="Chat with AI using Flexilte. Try the interactive chat and input components."
+	/>
+</svelte:head>
 
 <div class="px-4 container mx-auto">
 	<Flexilte {layoutConfig} {components}></Flexilte>

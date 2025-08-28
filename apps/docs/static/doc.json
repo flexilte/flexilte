@@ -29,6 +29,12 @@
 						{
 							"component": "TextBox",
 							"props": {
+								"text": "Flexilte is svelte 5 ready! If you want to use for svelte 4, please use Flexilte v2."
+							}
+						},
+						{
+							"component": "TextBox",
+							"props": {
 								"text": "Features",
 								"type": "h2"
 							}
@@ -55,7 +61,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "npm install @flexilte/core @flexilte/skeleton",
+								"code": "npm install @flexilte/core",
 								"language": "bash"
 							}
 						},
@@ -67,9 +73,16 @@
 							}
 						},
 						{
+							"component": "TextBox",
+							"props": {
+								"text": "Assuming you are ready using a framework. Lets say flowbite. "
+							}
+						},
+
+						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "<script lang=\"ts\">\n\timport { Flexilte } from '@flexilte/core';\n    export const components = {\n        InputChip,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"InputChip\",\n                    \"props\": {\n                        \"value\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"input\": \"Your favorite pet?\",\n                        \"name\": \"InputChip\"\n                    }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {LayoutConfig} {components}></Flexilte>",
+								"code": "<script lang=\"ts\">\nimport { Flexilte } from '@flexilte/core';\nimport { Tags } from \"flowbite-svelte\";\n    export const components = {\n        Tags,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"Tags\",\n                    \"props\": {\n                        \"availableTags\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"placeholder\": \"Your favorite pet?\",\n                     }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {LayoutConfig} {components}></Flexilte>",
 								"language": "ts"
 							}
 						},
@@ -80,11 +93,10 @@
 							}
 						},
 						{
-							"component": "InputChip",
+							"component": "Tags",
 							"props": {
 								"value": ["Cat", "Dog"],
-								"input": "Your favorite pet?",
-								"name": "InputChip"
+								"placeholder": "Your favorite pet?"
 							}
 						},
 						{
@@ -103,7 +115,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "interface LayoutConfig<C extends Record<string, ComponentType>> {\n\tid?: string; // will be added to the element\n\twidth?: string; // tailwind class for the width (w-1/6)\n\tcomponent?: keyof C & string; // component name\n\tprops?: Record<string, unknown>; // component props\n\tnodeClass?: string; // classes apply to cols/rows/elements\n\twrapperClass?: string; // create and wrap element with a wrapper, this is a short hand for components that doesn't like flex box\n\tlayoutClass?: string; // classes apply to cols/rows\n\tcols?: LayoutConfig<C>[]; // array of itself\n\trows?: LayoutConfig<C>[]; // array of itself\n\tposX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally\n\tposY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically\n\talignHeight?: boolean; // if true then all element in the same row/col will align at the bottom\n\twrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way\n\tgap?: string; // tailwind class for the gap (gap-4)\n}",
+								"code": "export interface LayoutConfig<C extends Record<string, Component<any>>> {\n\tid?: string; // optional id set to the each layer\n\twidth?: string; // tailwind class for the width (w-1/6)\n\tcomponent?: keyof C & string; // component name\n\tprops?: Record<string, unknown>; // component props\n\tnodeClass?: string; // classes apply to cols/rows/elements\n\tlayoutClass?: string; // classes apply to cols/rows\n\tcols?: LayoutConfig<C>[]; // array of itself\n\trows?: LayoutConfig<C>[]; // array of itself\n\tposX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally\n\tposY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically\n\twrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way\n\tgap?: string; // tailwind class for the gap (gap-4)\n}\n",
 								"language": "ts"
 							}
 						}

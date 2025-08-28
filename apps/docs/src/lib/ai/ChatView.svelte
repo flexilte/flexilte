@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Flexilte, type LayoutConfig } from '@flexilte/core';
 	import { aiResultStore } from '$lib/ai/AIStore';
-	import { components } from '$lib/common';
 	import { onMount } from 'svelte';
+	import { components } from '$lib/common';
 
 	let layoutConfig: LayoutConfig<typeof components> = {
 		rows: [

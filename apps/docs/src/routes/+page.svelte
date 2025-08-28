@@ -1,18 +1,23 @@
 <script lang="ts">
+	import { components } from '$lib/common';
 	import { Flexilte } from '@flexilte/core';
-	import { ButtonBox, CardBox, TextBox } from '@flexilte/skeleton';
-	import { CodeBlock } from '@skeletonlabs/skeleton';
-	import DemoBox from '$lib/DemoBox.svelte';
-	import { frontPageStore } from '$lib/common';
-
-	const components = { TextBox, CardBox, CodeBlock, DemoBox, ButtonBox };
+	import { onMount } from 'svelte';
+	let layoutConfig = {};
+	onMount(async () => {
+		const res = await fetch('frontpage.json');
+		layoutConfig = await res.json();
+	});
 </script>
 
-{#if $frontPageStore}
-	<div class="px-4 container mx-auto">
-		<Flexilte layoutConfig={$frontPageStore} {components}></Flexilte>
-	</div>
-	<div class="text-center m-4 underline">
-		<a href="frontpage.json">Click here to see the JSON of this page</a>
-	</div>
-{/if}
+<svelte:head>
+	<title>Flexilte</title>
+	<meta
+		name="description"
+		content="Welcome to Flexilte! Explore dynamic layouts and flexible UI components."
+	/>
+</svelte:head>
+
+<Flexilte {layoutConfig} {components}></Flexilte>
+<div class="text-center p-4 underline text-primary-800 dark:text-primary-100">
+	<a href="frontpage.json">Click here to see the JSON of this page</a>
+</div>

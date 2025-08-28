@@ -1,0 +1,12 @@
+:8084 {
+	handle /app {
+		root * /srv
+		file_server
+		rewrite * /index.html
+	}
+	handle_path /app/* {
+		root * /srv
+		try_files {path} {path}/index.html index.html
+		file_server
+	}
+}

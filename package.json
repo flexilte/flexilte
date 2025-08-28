@@ -2,21 +2,41 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev -F docs",
-    "preview": "turbo run preview -F docs",
+    "dev": "turbo run dev -F @flexilte/docs",
+    "preview": "turbo run preview -F @flexilte/docs",
     "lint": "turbo run lint -- --fix",
+    "lint:publish": "publint packages/core",
     "format": "prettier --write .",
-    "publish-packages": "turbo run build lint --filter=!docs && changeset version && changeset publish"
+    "publish-packages": "turbo run build lint --filter='!@flexilte/docs' && changeset version && changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.7",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "prettier-plugin-svelte": "^3.2.3",
-    "turbo": "latest"
+    "@changesets/cli": "^2.29.6",
+    "@eslint/compat": "^1.2.5",
+    "@eslint/js": "^9.18.0",
+    "@sveltejs/adapter-auto": "^6.1.0",
+    "@sveltejs/adapter-static": "^3.0.9",
+    "@sveltejs/vite-plugin-svelte": "^6.0.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-svelte": "^3.0.0",
+    "eslint-plugin-tailwindcss": "^3.18.2",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-svelte": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "publint": "^0.3.12",
+    "turbo": "^2.5.6",
+    "typescript-eslint": "^8.20.0"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
+  },
+  "type": "module",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

@@ -5,7 +5,8 @@
 			"props": {
 				"text": "Flexilte",
 				"type": "h1",
-				"classList": "text-7xl bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone"
+				"gradient": "skyToEmerald",
+				"classList": " md:text-5xl lg:text-6xl "
 			},
 			"posX": "middle",
 			"posY": "middle",
@@ -32,9 +33,11 @@
 		},
 		{
 			"nodeClass": "mt-12",
+			"posX": "middle",
 			"cols": [
 				{
-					"gap": "gap-2",
+					"gap": "gap-4",
+
 					"rows": [
 						{
 							"component": "ButtonBox",
@@ -42,15 +45,8 @@
 								"text": "Get Started",
 								"link": "./docs",
 								"variant": "variant-filled-primary"
-							}
-						},
-						{
-							"component": "ButtonBox",
-							"props": {
-								"text": "Drag and drop editor",
-								"link": "./editor",
-								"variant": "variant-filled-secondary"
-							}
+							},
+							"posX": "middle"
 						},
 						{
 							"component": "ButtonBox",
@@ -58,7 +54,8 @@
 								"text": "Generate using LLM",
 								"link": "./ai",
 								"variant": "variant-filled-tertiary"
-							}
+							},
+							"posX": "middle"
 						}
 					]
 				}
@@ -67,16 +64,16 @@
 		{
 			"nodeClass": "mt-12",
 			"gap": "gap-4",
-			"alignHeight": true,
 			"cols": [
 				{
 					"component": "CardBox",
 					"props": {
 						"img": "dnd.jpeg",
-						"title": "Drag and Drop Editor",
-						"body": "Build your UI with ease using our simple drag-and-drop editor, perfectly designed for quick prototyping and adjustments.",
-						"link": "./editor"
-					}
+						"title": "UI Framework Agnostic",
+						"body": "Seamlessly integrate with any UI framework of your choice. Enjoy the freedom to choose and switch between frameworks effortlessly.",
+						"link": "./docs"
+					},
+					"posX": "middle"
 				},
 				{
 					"component": "CardBox",
@@ -85,7 +82,8 @@
 						"title": "AI/LLM Page Generation",
 						"body": "Unlock the full potential of AI by generating custom pages in seconds. Simplify your workflow with AI-driven page creation. Support offline LLMs like Ollama.",
 						"link": "./ai"
-					}
+					},
+					"posX": "middle"
 				},
 				{
 					"component": "CardBox",
@@ -94,7 +92,8 @@
 						"title": "Dynamic Page Loading",
 						"body": "Experience ultimate flexibility with dynamic page loading. Easily update and modify content without any hassle. Click here to see the original json!",
 						"link": "/frontpage.json"
-					}
+					},
+					"posX": "middle"
 				}
 			]
 		},

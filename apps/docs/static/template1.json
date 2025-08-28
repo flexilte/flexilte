@@ -1,0 +1,101 @@
+{
+	"rows": [
+		{
+			"component": "Spacing",
+			"props": {
+				"space": "h-12"
+			},
+			"posX": "middle",
+			"poxY": "middle"
+		},
+		{
+			"component": "TextBox",
+			"props": {
+				"text": "Welcome to Drag and Drop Example",
+				"type": "h1"
+			},
+			"posX": "middle",
+			"poxY": "middle"
+		},
+		{
+			"component": "ImageBox",
+			"props": {
+				"url": "https://placedog.net/200/200"
+			},
+			"posX": "middle",
+			"poxY": "middle"
+		},
+		{
+			"cols": [
+				{
+					"component": "CardBox",
+					"props": {
+						"title": "Hello there!",
+						"icon": "ic:baseline-coffee",
+						"body": "Enjoy this coffee"
+					},
+					"posX": "middle",
+					"poxY": "middle"
+				},
+				{
+					"rows": [
+						{
+							"component": "ButtonBox",
+							"props": {
+								"text": "Google",
+								"icon": null,
+								"link": "https://google.com",
+								"newTab": true,
+								"style": "w-full",
+								"dndMode": true
+							},
+							"nodeClass": "w-full",
+							"posX": "middle",
+							"poxY": "middle"
+						},
+						{
+							"component": "ButtonBox",
+							"props": {
+								"text": "DuckDuckGo",
+								"icon": null,
+								"link": "https://duckduckgo.com",
+								"newTab": true,
+								"style": "w-full",
+								"dndMode": true
+							},
+							"nodeClass": "w-full",
+							"posX": "middle",
+							"poxY": "middle"
+						},
+						{
+							"component": "ButtonBox",
+							"props": {
+								"text": "Bing",
+								"icon": null,
+								"link": "https://bing.com",
+								"newTab": true,
+								"style": "w-full",
+								"dndMode": true
+							},
+							"nodeClass": "w-full",
+							"posX": "middle",
+							"poxY": "middle"
+						}
+					],
+					"gap": "gap-4"
+				}
+			]
+		},
+		{
+			"component": "Spacing",
+			"props": {
+				"space": "h-12"
+			},
+			"posX": "middle",
+			"poxY": "middle"
+		}
+	],
+	"gap": "gap-4",
+	"posX": "middle",
+	"poxY": "middle"
+}

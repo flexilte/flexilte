@@ -1,12 +1,12 @@
-import type { ComponentType } from 'svelte';
+import type { Component } from 'svelte';
 
-export interface LayoutConfig<C extends Record<string, ComponentType>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface LayoutConfig<C extends Record<string, Component<any>>> {
 	id?: string;
 	width?: string;
 	component?: keyof C & string;
 	props?: Record<string, unknown>;
 	nodeClass?: string;
-	wrapperClass?: string;
 	layoutClass?: string;
 	cols?: LayoutConfig<C>[];
 	rows?: LayoutConfig<C>[];
