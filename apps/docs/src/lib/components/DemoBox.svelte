@@ -4,7 +4,9 @@
 	import { Button, ButtonGroup } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
-	const backgroundColor = 'bg-gray-100 dark:bg-gray-800';
+	let currentSelection = $state<string>('avatar');
+
+	const backgroundColor = 'bg-gray-100 dark:bg-gray-800 p-5';
 
 	const radialData: LayoutConfig<typeof components> = {
 		component: 'Spinner',
@@ -79,19 +81,29 @@ const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, nul
 			demoJson.rows![0].cols![1].props!.code = '';
 			demoJson.rows![0].cols![1].props!.code = buildExample();
 		}
+		currentSelection = demo;
 	};
 
 	onMount(() => {
-		onDemoClick('avatar');
+		onDemoClick(currentSelection);
 	});
 </script>
 
 <div class="w-full">
-	<div class="flex justify-center py-12">
+	<div class="flex justify-center pt-12">
 		<ButtonGroup>
-			<Button onclick={() => onDemoClick('avatar')}>avatar</Button>
-			<Button onclick={() => onDemoClick('radial')}>radial</Button>
-			<Button onclick={() => onDemoClick('loadingBar')}>loading bar</Button>
+			<Button
+				color={currentSelection === 'avatar' ? 'primary' : undefined}
+				onclick={() => onDemoClick('avatar')}>avatar</Button
+			>
+			<Button
+				color={currentSelection === 'radial' ? 'primary' : undefined}
+				onclick={() => onDemoClick('radial')}>radial</Button
+			>
+			<Button
+				color={currentSelection === 'loadingBar' ? 'primary' : undefined}
+				onclick={() => onDemoClick('loadingBar')}>loading bar</Button
+			>
 		</ButtonGroup>
 	</div>
 
