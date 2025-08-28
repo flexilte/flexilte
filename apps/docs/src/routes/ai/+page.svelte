@@ -1,15 +1,6 @@
 <script lang="ts">
 	import { Flexilte, type LayoutConfig } from '@flexilte/core';
-	import { TextBox, ImageBox } from '@flexilte/skeleton';
-	import ChatView from '$lib/ai/ChatView.svelte';
-	import InputView from '$lib/ai/InputView.svelte';
-
-	const components = {
-		TextBox,
-		ImageBox,
-		ChatView,
-		InputView
-	};
+	import { components } from '$lib/common';
 
 	const layoutConfig: LayoutConfig<typeof components> = {
 		rows: [

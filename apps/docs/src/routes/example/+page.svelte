@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { exampleStore } from '$lib/common';
+	import { components } from '$lib/common';
 	import { Flexilte } from '@flexilte/core';
-	import { TextBox } from '@flexilte/skeleton';
-	import { ProgressBar, ProgressRadial } from '@skeletonlabs/skeleton';
-
-	const components = { TextBox, ProgressRadial, ProgressBar };
+	import { onMount } from 'svelte';
+	let layoutConfig = {};
+	onMount(async () => {
+		const res = await fetch('example.json');
+		layoutConfig = await res.json();
+	});
 </script>
 
-{#if $exampleStore}
-	<div class="px-4 container mx-auto">
-		<Flexilte layoutConfig={$exampleStore} {components} debug={true}></Flexilte>
-	</div>
-	<div class="text-center m-4 underline">
-		<a href="example.json">Click here to see the JSON of this page</a>
-	</div>
-{/if}
+<div class="px-4 container mx-auto">
+	<Flexilte {layoutConfig} {components} debug={true}></Flexilte>
+</div>
+<div class="text-center p-4 underline text-primary-800 dark:text-primary-100">
+	<a href="example.json">Click here to see the JSON of this page</a>
+</div>

@@ -1,31 +1,37 @@
-<script lang="ts" generics="C extends Record<string, ComponentType>">
+<script lang="ts" generics="C extends Record<string, Component<any, any, any>>">
+	import DNDFlexilte from './flexilte.svelte';
 	import { fade } from 'svelte/transition';
 
-	import type { LayoutConfig } from './types';
-	import type { ComponentType } from 'svelte';
+	import type { DNDLayoutConfig as LayoutConfig } from './types';
+	import type { Component } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import type { DndEvent } from 'svelte-dnd-action';
 
-	export let layoutConfig: LayoutConfig<C>;
-	export let components: Record<string, ComponentType>;
-	export let debug: boolean = false;
-	export let itemClickCallback: (e: MouseEvent, c: LayoutConfig<C>) => void = () => {};
-
-	export let considerCallback:
-		| ((
-				type: 'rows' | 'cols',
-				items: LayoutConfig<C>,
-				event: CustomEvent<DndEvent<LayoutConfig<C>>>
-		  ) => void)
-		| undefined = undefined;
-	export let finalizeCallback:
-		| ((
-				type: 'rows' | 'cols',
-				items: LayoutConfig<C>,
-				event: CustomEvent<DndEvent<LayoutConfig<C>>>
-		  ) => void)
-		| undefined = undefined;
+	interface Props {
+		layoutConfig: LayoutConfig<C>;
+		components: Record<string, Component<any, any, any>>;
+		debug?: boolean;
+		itemClickCallback?: (e: MouseEvent, c: LayoutConfig<C>) => void;
+		considerCallback?: (
+			type: 'rows' | 'cols',
+			items: LayoutConfig<C>,
+			event: CustomEvent<DndEvent<LayoutConfig<C>>>
+		) => void;
+		finalizeCallback?: (
+			type: 'rows' | 'cols',
+			items: LayoutConfig<C>,
+			event: CustomEvent<DndEvent<LayoutConfig<C>>>
+		) => void;
+	}
+	let {
+		layoutConfig,
+		components,
+		debug,
+		itemClickCallback = () => {},
+		considerCallback,
+		finalizeCallback
+	}: Props = $props();
 
 	const flipDurationMs = 300;
 
@@ -181,8 +187,10 @@
 </script>
 
 {#if layoutConfig.component}
-	<button class={buildWrapperClass()} on:click={(e) => itemClickCallback(e, layoutConfig)}>
-		<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+	{@const SvelteComponent = components[layoutConfig.component]}
+
+	<button class={buildWrapperClass()} onclick={(e) => itemClickCallback(e, layoutConfig)}>
+		<SvelteComponent {...layoutConfig.props} />
 	</button>
 {:else if layoutConfig.rows}
 	<div
@@ -190,8 +198,8 @@
 		class={buildRowClass()}
 		transition:fade
 		use:dndzone={{ items: layoutConfig.rows, flipDurationMs }}
-		on:consider={handleDndConsider('rows')}
-		on:finalize={handleDndFinalize('rows')}
+		onconsider={handleDndConsider('rows')}
+		onfinalize={handleDndFinalize('rows')}
 	>
 		{#each layoutConfig.rows as row (`${row.id}${row[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + row[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 			<div
@@ -200,13 +208,13 @@
 				class={buildContainerClass(row)}
 				data-is-dnd-shadow-item-hint={row[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 			>
-				<svelte:self
+				<DNDFlexilte
 					{components}
-					layoutConfig={row}
 					{debug}
+					layoutConfig={row}
+					{itemClickCallback}
 					{considerCallback}
 					{finalizeCallback}
-					{itemClickCallback}
 				/>
 			</div>
 		{/each}
@@ -217,8 +225,8 @@
 		class={buildColClass()}
 		transition:fade
 		use:dndzone={{ items: layoutConfig.cols, flipDurationMs }}
-		on:consider={handleDndConsider('cols')}
-		on:finalize={handleDndFinalize('cols')}
+		onconsider={handleDndConsider('cols')}
+		onfinalize={handleDndFinalize('cols')}
 	>
 		{#each layoutConfig.cols as col (`${col.id}${col[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + col[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 			<div
@@ -227,13 +235,13 @@
 				class={buildContainerClass(col)}
 				data-is-dnd-shadow-item-hint={col[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 			>
-				<svelte:self
+				<DNDFlexilte
 					{components}
-					layoutConfig={col}
 					{debug}
+					layoutConfig={col}
+					{itemClickCallback}
 					{considerCallback}
 					{finalizeCallback}
-					{itemClickCallback}
 				/>
 			</div>
 		{/each}

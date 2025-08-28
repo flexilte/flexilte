@@ -1,5 +1,5 @@
-import type { LayoutConfig } from '@flexilte/core';
 import { components } from '$lib/common';
+import type { LayoutConfig } from '@flexilte/core';
 
 export default {
 	TextBox: {

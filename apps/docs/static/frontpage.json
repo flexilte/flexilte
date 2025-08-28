@@ -32,9 +32,11 @@
 		},
 		{
 			"nodeClass": "mt-12",
+			"posX": "middle",
 			"cols": [
 				{
-					"gap": "gap-2",
+					"gap": "gap-4",
+
 					"rows": [
 						{
 							"component": "ButtonBox",
@@ -42,7 +44,8 @@
 								"text": "Get Started",
 								"link": "./docs",
 								"variant": "variant-filled-primary"
-							}
+							},
+							"posX": "middle"
 						},
 						{
 							"component": "ButtonBox",
@@ -50,7 +53,8 @@
 								"text": "Drag and drop editor",
 								"link": "./editor",
 								"variant": "variant-filled-secondary"
-							}
+							},
+							"posX": "middle"
 						},
 						{
 							"component": "ButtonBox",
@@ -58,7 +62,8 @@
 								"text": "Generate using LLM",
 								"link": "./ai",
 								"variant": "variant-filled-tertiary"
-							}
+							},
+							"posX": "middle"
 						}
 					]
 				}

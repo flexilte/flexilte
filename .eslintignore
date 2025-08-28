@@ -8,9 +8,9 @@ bun.lockb
 # Miscellaneous
 /static/
 
-.DS_Store
-.svelte-kit
-node_modules
-build
-eslint.config.js
-dist
+**/.DS_Store/
+**/.svelte-kit/
+**/node_modules/
+**/build/
+**/eslint.config.js
+**/dist/

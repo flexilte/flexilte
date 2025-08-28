@@ -1,12 +1,14 @@
 <script lang="ts">
+	import { components } from '$lib/common';
 	import { Flexilte, type LayoutConfig } from '@flexilte/core';
+	import { Button, ButtonGroup } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
-	import { components } from './common';
 
 	const radialData: LayoutConfig<typeof components> = {
-		component: 'ProgressRadial',
+		component: 'Spinner',
 		props: {
-			value: '33'
+			progress: '33',
+			size: '16'
 		},
 		posX: 'middle',
 		posY: 'middle',
@@ -17,8 +19,7 @@
 		component: 'Avatar',
 		props: {
 			src: 'https://placedog.net/512/512',
-			width: 'w-32',
-			rounded: 'rounded-full'
+			size: 'xl'
 		},
 		posX: 'middle',
 		posY: 'middle',
@@ -26,16 +27,14 @@
 	};
 
 	const loadingBarData: LayoutConfig<typeof components> = {
-		component: 'ProgressBar',
+		component: 'Progressbar',
 		posX: 'middle',
 		posY: 'middle',
-		wrapperClass: 'w-48',
-		nodeClass: 'md:h-full my-12'
+		nodeClass: 'md:h-full p-12'
 	};
-	let demoJson: LayoutConfig<typeof components> = {
+	let demoJson = $state<LayoutConfig<typeof components>>({
 		rows: [
 			{
-				alignHeight: true,
 				cols: [
 					{
 						component: 'CodeBlock',
@@ -54,17 +53,17 @@
 				]
 			}
 		]
-	};
-
+	});
 	const buildExample = () => {
 		const copy = JSON.parse(JSON.stringify(demoJson));
 		copy.rows![0].cols = copy.rows![0].cols[0];
-		return `const components = { ProgressRadial, Avatar, ProgressBar };
+		return `const components = { Progressbar, Avatar, Spinner };
 const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, null, 2)}
 <Flexilte {layoutConfig} {components}></Flexilte>`;
 	};
 
 	const onDemoClick = (demo: string) => {
+		console.log(demo);
 		let data: LayoutConfig<typeof components> = {};
 		if (demo === 'radial') {
 			data = radialData;
@@ -88,9 +87,11 @@ const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, nul
 <div class="w-full">
 	<div class="flex justify-center mt-6">
 		<div class="btn-group variant-filled mx-auto">
-			<button on:click={() => onDemoClick('radial')}>radial</button>
-			<button on:click={() => onDemoClick('avatar')}>avatar</button>
-			<button on:click={() => onDemoClick('loadingBar')}>loading bar</button>
+			<ButtonGroup>
+				<Button onclick={() => onDemoClick('avatar')}>avatar</Button>
+				<Button onclick={() => onDemoClick('radial')}>radial</Button>
+				<Button onclick={() => onDemoClick('loadingBar')}>loading bar</Button>
+			</ButtonGroup>
 		</div>
 	</div>
 

@@ -2,10 +2,8 @@
 	import { components } from '$lib/common';
 	import { DNDFlexilte, type DNDLayoutConfig } from '@flexilte/dnd';
 	import { v4 as uuidv4 } from 'uuid';
-	import { getDrawerStore } from '@skeletonlabs/skeleton';
 	import { TRIGGERS, type DndEvent } from 'svelte-dnd-action';
-
-	const drawerStore = getDrawerStore();
+	import { drawerStore } from './utils';
 
 	interface Item {
 		icon: string;
@@ -48,7 +46,7 @@
 		itemCur: DNDLayoutConfig<typeof components>,
 		e: CustomEvent<DndEvent<DNDLayoutConfig<typeof components>>>
 	) => {
-		drawerStore.close();
+		drawerStore.set(false);
 		console.warn(`Received consider event: ${JSON.stringify(e.detail, null, 2)}`);
 		const { trigger } = e.detail.info;
 

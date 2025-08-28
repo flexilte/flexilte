@@ -1,13 +1,18 @@
-<script lang="ts" generics="C extends Record<string, ComponentType>">
+<script lang="ts" generics="C extends Record<string, Component<any, any, any>>">
+	import Flexilte from './flexilte.svelte';
 	import { fade } from 'svelte/transition';
 
 	import type { LayoutConfig } from './types';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { flip } from 'svelte/animate';
 
-	export let layoutConfig: LayoutConfig<C>;
-	export let components: Record<string, ComponentType>;
-	export let debug: boolean = false;
+	interface Props {
+		layoutConfig: LayoutConfig<C>;
+		components: Record<string, Component<any, any, any>>;
+		debug?: boolean;
+	}
+
+	let { layoutConfig, components, debug = false }: Props = $props();
 
 	const flipDurationMs = 300;
 
@@ -124,7 +129,9 @@
 
 	const buildColClass = () => {
 		const classList = [
-			'md:flex',
+			'flex',
+			'flex-col',
+			'md:flex-row',
 			'flexilte-col',
 			...buildBaseClass(),
 			...getWrapClass(),
@@ -135,12 +142,13 @@
 </script>
 
 {#if layoutConfig.component}
-	<svelte:component this={components[layoutConfig.component]} {...layoutConfig.props} />
+	{@const SvelteComponent = components[layoutConfig.component]}
+	<SvelteComponent {...layoutConfig.props} />
 {:else if layoutConfig.rows}
 	<div id={layoutConfig.id} class={buildRowClass()} transition:fade>
 		{#each layoutConfig.rows as row (row)}
 			<div id={row.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
-				<svelte:self {components} layoutConfig={row} {debug} />
+				<Flexilte {components} layoutConfig={row} {debug} />
 			</div>
 		{/each}
 	</div>
@@ -148,7 +156,7 @@
 	<div id={layoutConfig.id} class={buildColClass()} transition:fade>
 		{#each layoutConfig.cols as col (col)}
 			<div id={col.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
-				<svelte:self {components} layoutConfig={col} {debug} />
+				<Flexilte {components} layoutConfig={col} {debug} />
 			</div>
 		{/each}
 	</div>

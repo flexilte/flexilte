@@ -1,6 +1,6 @@
-import type { ComponentType } from 'svelte';
+import type { Component } from 'svelte';
 
-export interface LayoutConfig<C extends Record<string, ComponentType>> {
+export interface LayoutConfig<C extends Record<string, Component<any>>> {
 	id?: string;
 	width?: string;
 	component?: keyof C & string;

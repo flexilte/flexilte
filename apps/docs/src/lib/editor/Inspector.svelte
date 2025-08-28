@@ -1,13 +1,8 @@
 <script lang="ts">
-	import {
-		editorStore,
-		removeTree,
-		updateTree,
-		type components,
-		selectedComponentStore
-	} from '$lib/common';
+	import type { components } from '$lib/common';
 	import { type DNDLayoutConfig } from '@flexilte/dnd';
 	import { derived } from 'svelte/store';
+	import { selectedComponentStore, editorStore, updateTree, removeTree } from './utils';
 
 	type PosXValue = 'left' | 'middle' | 'right';
 	type PosYValue = 'top' | 'middle' | 'bottom';
@@ -35,7 +30,7 @@
 		const target = event.target as HTMLInputElement;
 		if (comp.props && target) {
 			comp.props[prop] = target.value;
-			handleUpdate(comp.id, comp);
+			handleUpdate(comp.id!, comp);
 		}
 	};
 
@@ -51,7 +46,7 @@
 			} else {
 				comp[type] = target.value as PosYValue;
 			}
-			handleUpdate(comp.id, comp);
+			handleUpdate(comp.id!, comp);
 		}
 	};
 
@@ -77,7 +72,7 @@
 			<button
 				type="button"
 				class="btn variant-filled-error"
-				on:click={() => handleRemove($selectedComponent.id)}
+				on:click={() => handleRemove($selectedComponent.id!)}
 			>
 				Remove
 			</button>

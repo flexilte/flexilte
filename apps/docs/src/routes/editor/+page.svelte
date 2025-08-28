@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { components, editorStore, trimLayoutTree, selectedComponentStore } from '$lib/common';
+	import { components } from '$lib/common';
 	import { DNDFlexilte, type DNDLayoutConfig } from '@flexilte/dnd';
 	import defaultMap from '$lib/editor/defaultMap';
 	import EditorDrawer from '$lib/editor/EditorDrawer.svelte';
@@ -7,8 +7,10 @@
 	import type { DndEvent } from 'svelte-dnd-action';
 
 	import { v4 as uuidv4 } from 'uuid';
-	import { getModalStore, SlideToggle, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
+	import { editorStore, trimLayoutTree, selectedComponentStore } from '$lib/editor/utils';
+	import { Toggle } from 'flowbite-svelte';
+	import { addIdField } from '$lib/utils';
 
 	let timeoutId: number;
 	let layoutConfig: DNDLayoutConfig<typeof components> = {
@@ -26,12 +28,14 @@
 	};
 
 	$: layoutConfig = $editorStore;
-	const modalStore = getModalStore();
 	let isMobile = false;
 	let debug = false;
 
-	onMount(() => {
+	onMount(async () => {
 		isMobile = window.innerWidth <= 768;
+		const res = await fetch('template1.json');
+		const j = await res.json();
+		editorStore.set(addIdField(j));
 	});
 
 	const finalizeCallback = (
@@ -87,15 +91,15 @@
 	};
 
 	const exportLayout = () => {
-		const modal: ModalSettings = {
-			type: 'component',
-			component: 'ExportBox',
-			meta: {
-				language: 'json',
-				code: JSON.stringify($editorStore, null, 2)
-			}
-		};
-		modalStore.trigger(modal);
+		// const modal: ModalSettings = {
+		// 	type: 'component',
+		// 	component: 'ExportBox',
+		// 	meta: {
+		// 		language: 'json',
+		// 		code: JSON.stringify($editorStore, null, 2)
+		// 	}
+		// };
+		// modalStore.trigger(modal);
 	};
 </script>
 
@@ -107,7 +111,7 @@
 	<div class="px-4 container mx-auto mt-4">
 		<div class="flex justify-end gap-4">
 			<div class="mt-2">
-				<SlideToggle name="slider-label" bind:checked={debug}>Debug View</SlideToggle>
+				<Toggle name="slider-label" bind:checked={debug}>Debug View</Toggle>
 			</div>
 			<button class="btn variant-filled-primary w-fit" on:click={exportLayout}>Export Layout</button
 			>
