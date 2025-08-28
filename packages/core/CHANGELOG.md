@@ -1,5 +1,11 @@
 # @flexilte/core
 
+## 3.0.0
+
+### Major Changes
+
+- ffe46be: Update to svelte 5, drop dnd editor and skeleton package
+
 ## 2.0.0
 
 ### Major Changes
