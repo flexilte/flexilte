@@ -115,7 +115,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "export interface LayoutConfig<C extends Record<string, Component<any>>> {\n\tid?: string;\n\twidth?: string;\n\tcomponent?: keyof C & string;\n\tprops?: Record<string, unknown>;\n\tnodeClass?: string;\n\tlayoutClass?: string;\n\tcols?: LayoutConfig<C>[];\n\trows?: LayoutConfig<C>[];\n\tposX?: 'left' | 'right' | 'middle';\n\tposY?: 'top' | 'bottom' | 'middle';\n\twrap?: 'wrap' | 'nowrap';\n\tgap?: string;\n}",
+								"code": "export interface LayoutConfig<C extends Record<string, Component<any>>> {\n\tid?: string; // optional id set to the each layer\n\twidth?: string; // tailwind class for the width (w-1/6)\n\tcomponent?: keyof C & string; // component name\n\tprops?: Record<string, unknown>; // component props, set by svelte\n\tnodeClass?: string; // classes apply to cols/rows/elements\n\tlayoutClass?: string; // classes apply to cols/rows\n\tcols?: LayoutConfig<C>[]; // array of itself\n\trows?: LayoutConfig<C>[]; // array of itself\n\tposX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally\n\tposY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically\n\twrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way\n\tgap?: string; // tailwind class for the gap (gap-4)\n}\n",
 								"language": "ts"
 							}
 						}
