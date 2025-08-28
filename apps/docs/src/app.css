@@ -50,11 +50,3 @@
 	background-color: rgba(50, 205, 50, 0.2);
 	border: 1px solid #32cd32;
 }
-
-.editor-area {
-	background-color: darkcyan;
-	border: 1px pink solid;
-}
-.grid-stack-item-content {
-	background: rgba(0, 0, 0, 0.2);
-}

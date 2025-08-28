@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
 import unusedImports from 'eslint-plugin-unused-imports';
+import tailwind from 'eslint-plugin-tailwindcss';
 
 const gitignorePath = fileURLToPath(new URL('../../.gitignore', import.meta.url));
 
@@ -17,6 +18,7 @@ export default ts.config(
 	...svelte.configs.recommended,
 	prettier,
 	...svelte.configs.prettier,
+	...tailwind.configs['flat/recommended'],
 	{
 		plugins: {
 			'unused-imports': unusedImports

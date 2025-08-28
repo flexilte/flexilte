@@ -34,7 +34,7 @@
 		component: 'Progressbar',
 		posX: 'middle',
 		posY: 'middle',
-		nodeClass: '  p-12 ' + backgroundColor
+		nodeClass: 'p-12 ' + backgroundColor
 	};
 	let demoJson = $state<LayoutConfig<typeof components>>({
 		rows: [

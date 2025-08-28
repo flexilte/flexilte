@@ -1,6 +1,5 @@
 <script lang="ts">
-	export let url;
-	export let alt = '';
+	let { url, alt = '' } = $props();
 </script>
 
 <div class="w-full overflow-hidden flex items-center justify-center">

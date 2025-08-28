@@ -67,7 +67,7 @@ export interface LayoutConfig<C extends Record<string, Component<any>>> {
 	id?: string; // optional id set to the each layer
 	width?: string; // tailwind class for the width (w-1/6)
 	component?: keyof C & string; // component name
-	props?: Record<string, unknown>; // component props, set by svelte
+	props?: Record<string, unknown>; // component props
 	nodeClass?: string; // classes apply to cols/rows/elements
 	layoutClass?: string; // classes apply to cols/rows
 	cols?: LayoutConfig<C>[]; // array of itself

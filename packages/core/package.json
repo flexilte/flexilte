@@ -31,7 +31,6 @@
 			"svelte": "./src/lib/index.ts"
 		}
 	},
-	"types": "./src/lib/index.ts",
 	"files": [
 		"./dist/**/*.svelte",
 		"./dist/**/*.js",
