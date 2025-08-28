@@ -12,13 +12,13 @@ export default {
 		join(require.resolve('@flexilte/core'), '../**/*.{html,js,svelte,ts}'),
 		join(require.resolve('@flexilte/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
-	safelist:[
+	safelist: [
 		'^text-[a-z0-9-]+$',
-		'^h-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$',
-		'^w-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$',
-		'^md:h-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$',
-		'^md:w-([0-9]+|[0-9]+\/[0-9]+|auto|full|screen|fit|min|max|px)$'
-	  ],
+		'^h-([0-9]+|[0-9]+/[0-9]+|auto|full|screen|fit|min|max|px)$',
+		'^w-([0-9]+|[0-9]+/[0-9]+|auto|full|screen|fit|min|max|px)$',
+		'^md:h-([0-9]+|[0-9]+/[0-9]+|auto|full|screen|fit|min|max|px)$',
+		'^md:w-([0-9]+|[0-9]+/[0-9]+|auto|full|screen|fit|min|max|px)$'
+	],
 	theme: {
 		extend: {}
 	},

@@ -83,7 +83,7 @@
 			</button>
 
 			<h6 class="h6">Props</h6>
-			{#each Object.entries($selectedComponent.props) as [prop, value]}
+			{#each Object.entries($selectedComponent.props) as [prop, value] (prop)}
 				<label class="label">
 					<span>{prop}</span>
 					<input
@@ -97,7 +97,7 @@
 			{/each}
 
 			<h6 class="h6 mt-4">Layout</h6>
-			{#each positionTypes as posType}
+			{#each positionTypes as posType (posType)}
 				<label class="label">
 					<span>{posType}</span>
 					<select
@@ -105,7 +105,7 @@
 						value={$selectedComponent[posType] || ''}
 						on:change={(e) => handlePositionChange($selectedComponent, posType, e)}
 					>
-						{#each positionOptions[posType] as option}
+						{#each positionOptions[posType] as option (option.value)}
 							<option value={option.value}>{option.label}</option>
 						{/each}
 					</select>

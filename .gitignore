@@ -30,3 +30,5 @@ yarn-error.log*
 .turbo
 dist
 build
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

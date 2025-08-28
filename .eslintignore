@@ -11,5 +11,6 @@ bun.lockb
 .DS_Store
 .svelte-kit
 node_modules
-/build
-/package
+build
+eslint.config.js
+dist
