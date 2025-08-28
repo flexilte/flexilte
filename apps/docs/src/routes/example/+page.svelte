@@ -9,6 +9,14 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Flexilte Example</title>
+	<meta
+		name="description"
+		content="See a live example of Flexilte in action. Explore layout and debug features."
+	/>
+</svelte:head>
+
 <div class="px-4 container mx-auto">
 	<Flexilte {layoutConfig} {components} debug={true}></Flexilte>
 </div>

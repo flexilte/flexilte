@@ -1,4 +1,5 @@
-<script lang="ts" generics="C extends Record<string, Component>">
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
+<script lang="ts" generics="C extends Record<string, Component<any>>">
 	import Flexilte from './flexilte.svelte';
 	import { fade } from 'svelte/transition';
 
@@ -8,7 +9,8 @@
 
 	interface Props {
 		layoutConfig: LayoutConfig<C>;
-		components: Record<string, Component>;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		components: Record<string, Component<any>>;
 		debug?: boolean;
 	}
 
@@ -141,6 +143,7 @@
 	};
 </script>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 {#if layoutConfig.component}
 	{@const SvelteComponent = components[layoutConfig.component]}
 	<SvelteComponent {...layoutConfig.props} />

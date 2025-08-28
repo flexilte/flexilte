@@ -1,0 +1,8 @@
+{
+	# Proxy /app to the static folder
+	handle_path /app/* {
+		root * /srv/static
+		try_files {path} {path}/index.html
+		file_server
+	}
+}

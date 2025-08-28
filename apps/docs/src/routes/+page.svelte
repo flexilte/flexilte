@@ -9,6 +9,14 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Flexilte</title>
+	<meta
+		name="description"
+		content="Welcome to Flexilte! Explore dynamic layouts and flexible UI components."
+	/>
+</svelte:head>
+
 <div class="px-4 container mx-auto">
 	<Flexilte {layoutConfig} {components}></Flexilte>
 </div>

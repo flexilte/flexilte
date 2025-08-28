@@ -1,8 +1,7 @@
 import type { Component } from 'svelte';
 
-export interface LayoutConfig<
-	C extends Record<string, Component<C extends Component<infer Props> ? Props : never>>
-> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface LayoutConfig<C extends Record<string, Component<any>>> {
 	id?: string;
 	width?: string;
 	component?: keyof C & string;

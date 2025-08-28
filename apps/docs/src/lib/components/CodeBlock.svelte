@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Highlight } from 'svelte-highlight';
-	import type { LanguageType } from 'svelte-highlight/languages';
 	import typescript from 'svelte-highlight/languages/typescript';
 	import javascript from 'svelte-highlight/languages/javascript';
 	import json from 'svelte-highlight/languages/json';
@@ -12,21 +11,21 @@
 	}
 
 	let { language, code }: Props = $props();
-	let langType = $state<LanguageType<'typescript' | 'javascript' | 'json' | 'plaintext'>>();
-	if (language === 'ts') {
-		langType = typescript;
-	} else if (language === 'js') {
-		langType = javascript;
-	} else if (language === 'json') {
-		langType = json;
-	} else {
-		langType = plaintext;
-	}
-	console.log(language, langType);
+	const langType = $derived(() => {
+		if (language === 'ts') {
+			return typescript;
+		} else if (language === 'js') {
+			return javascript;
+		} else if (language === 'json') {
+			return json;
+		} else {
+			return plaintext;
+		}
+	});
 </script>
 
 <svelte:head>
 	<!-- eslint-disable-next-line -- XSS attack lint error -->
 	{@html atomOneDark}
 </svelte:head>
-<Highlight language={langType} {code} />
+<Highlight language={langType()} {code} />

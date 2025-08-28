@@ -14,6 +14,14 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Flexilte AI Chat</title>
+	<meta
+		name="description"
+		content="Chat with AI using Flexilte. Try the interactive chat and input components."
+	/>
+</svelte:head>
+
 <div class="px-4 container mx-auto">
 	<Flexilte {layoutConfig} {components}></Flexilte>
 </div>
