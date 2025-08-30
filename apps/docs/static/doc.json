@@ -82,7 +82,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "<script lang=\"ts\">\nimport { Flexilte } from '@flexilte/core';\nimport { Tags } from \"flowbite-svelte\";\n    export const components = {\n        Tags,\n    };\n    const layoutConfig: LayoutConfig<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"Tags\",\n                    \"props\": {\n                        \"availableTags\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"placeholder\": \"Your favorite pet?\",\n                     }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {LayoutConfig} {components}></Flexilte>",
+								"code": "<script lang=\"ts\">\nimport { Flexilte } from '@flexilte/core';\nimport { Tags } from \"flowbite-svelte\";\n    export const components = {\n        Tags,\n    };\n    const layout: FlexilteLayout<typeof components> = {\n        \"rows\": [\n            {\n                \"cols\": {\n                    \"component\": \"Tags\",\n                    \"props\": {\n                        \"availableTags\": [\n                            \"Cat\",\n                            \"Dog\"\n                        ],\n                        \"placeholder\": \"Your favorite pet?\",\n                     }\n                }\n            }\n        ]\n    }\n</script>\n<Flexilte {FlexilteLayout} {components}></Flexilte>",
 								"language": "ts"
 							}
 						},
@@ -115,7 +115,7 @@
 						{
 							"component": "CodeBlock",
 							"props": {
-								"code": "export interface LayoutConfig<C extends Record<string, Component<any>>> {\n\tid?: string; // optional id set to the each layer\n\twidth?: string; // tailwind class for the width (w-1/6)\n\tcomponent?: keyof C & string; // component name\n\tprops?: Record<string, unknown>; // component props\n\tnodeClass?: string; // classes apply to cols/rows/elements\n\tlayoutClass?: string; // classes apply to cols/rows\n\tcols?: LayoutConfig<C>[]; // array of itself\n\trows?: LayoutConfig<C>[]; // array of itself\n\tposX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally\n\tposY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically\n\twrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way\n\tgap?: string; // tailwind class for the gap (gap-4)\n}\n",
+								"code": "export interface FlexilteLayout<C extends Record<string, Component<any>>> {\n\tid?: string; // optional id set to the each layer\n\twidth?: string; // tailwind class for the width (w-1/6)\n\tcomponent?: keyof C & string; // component name\n\tprops?: Record<string, unknown>; // component props\n\tnodeClass?: string; // classes apply to cols/rows/elements\n\tlayoutClass?: string; // classes apply to cols/rows\n\tcols?: FlexilteLayout<C>[]; // array of itself\n\trows?: FlexilteLayout<C>[]; // array of itself\n\tposX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally\n\tposY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically\n\twrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way\n\tgap?: string; // tailwind class for the gap (gap-4)\n}\n",
 								"language": "ts"
 							}
 						}

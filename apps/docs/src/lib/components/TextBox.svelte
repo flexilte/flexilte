@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Heading, P, Span } from 'flowbite-svelte';
+	import type { HeadingProps } from 'flowbite-svelte';
 
 	interface Props {
 		text: string;
-		type?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+		type?: HeadingProps['tag'];
 		classList?: string;
 		gradient?:
 			| 'skyToEmerald'

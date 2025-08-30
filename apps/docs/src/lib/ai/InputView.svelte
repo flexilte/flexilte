@@ -55,64 +55,114 @@
 	});
 </script>
 
-<form class="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+<form
+	class="
+   mx-auto max-w-2xl rounded-lg bg-white p-6 shadow
+   dark:bg-gray-800
+ "
+>
 	<div class="mb-5">
-		<label for="endpoint" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-			>Endpoint</label
+		<label
+			for="endpoint"
+			class="
+     mb-2 block text-sm font-medium text-gray-900
+     dark:text-white
+   ">Endpoint</label
 		>
 		<input
 			id="endpoint"
 			type="text"
-			class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			class="
+     block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
+     focus:border-blue-500 focus:ring-blue-500
+     dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+     dark:focus:border-blue-500 dark:focus:ring-blue-500
+   "
 			placeholder="https://api.openai.com/v1/chat/completions"
 			bind:value={url}
 		/>
 	</div>
 	<div class="mb-5">
-		<label for="model" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-			>Model</label
+		<label
+			for="model"
+			class="
+     mb-2 block text-sm font-medium text-gray-900
+     dark:text-white
+   ">Model</label
 		>
 		<input
 			id="model"
 			type="text"
-			class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			class="
+     block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
+     focus:border-blue-500 focus:ring-blue-500
+     dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+     dark:focus:border-blue-500 dark:focus:ring-blue-500
+   "
 			placeholder="gpt-4o"
 			bind:value={model}
 		/>
 	</div>
 	<div class="mb-5">
-		<label for="apiKey" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-			>API key (stored in browser)</label
+		<label
+			for="apiKey"
+			class="
+     mb-2 block text-sm font-medium text-gray-900
+     dark:text-white
+   ">API key (stored in browser)</label
 		>
 		<input
 			id="apiKey"
 			type="password"
-			class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			class="
+     block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
+     focus:border-blue-500 focus:ring-blue-500
+     dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+     dark:focus:border-blue-500 dark:focus:ring-blue-500
+   "
 			placeholder="sk-..."
 			bind:value={apiKey}
 			on:change={handleKeyChange}
 		/>
 	</div>
 	<div class="mb-5">
-		<label for="prompt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-			>Prompt</label
+		<label
+			for="prompt"
+			class="
+     mb-2 block text-sm font-medium text-gray-900
+     dark:text-white
+   ">Prompt</label
 		>
 		<textarea
 			id="prompt"
 			rows="4"
-			class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			class="
+     block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
+     focus:border-blue-500 focus:ring-blue-500
+     dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+     dark:focus:border-blue-500 dark:focus:ring-blue-500
+   "
 			placeholder="You are an AI assistant."
 			bind:value={prompt}
 		></textarea>
 	</div>
 	<div class="mb-5">
-		<label for="currentMessage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-			>Message</label
+		<label
+			for="currentMessage"
+			class="
+     mb-2 block text-sm font-medium text-gray-900
+     dark:text-white
+   ">Message</label
 		>
 		<textarea
 			id="currentMessage"
 			rows="2"
-			class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			class="
+     block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900
+     focus:border-blue-500 focus:ring-blue-500
+     dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+     dark:focus:border-blue-500 dark:focus:ring-blue-500
+   "
 			placeholder="Write a message..."
 			bind:value={currentMessage}
 		></textarea>
@@ -120,7 +170,12 @@
 	<div class="flex justify-end">
 		<button
 			type="button"
-			class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+			class="
+     rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white
+     hover:bg-blue-800
+     focus:ring-4 focus:ring-blue-300 focus:outline-none
+     dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+   "
 			on:click={() => getChatGPTResponse()}
 		>
 			Send

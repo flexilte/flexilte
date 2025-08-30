@@ -1,16 +1,12 @@
-import type { DNDLayoutConfig } from '@flexilte/dnd';
-import type { Component } from 'svelte';
-import { v4 as uuidv4 } from 'uuid';
+import type { ComponentMap, FlexilteLayout } from '@flexilte/core';
 
-export const addIdField = <C extends Record<string, Component<C>>>(
-	config: DNDLayoutConfig<C>
-): DNDLayoutConfig<C> => {
+export const addIdField = <M extends ComponentMap>(config: FlexilteLayout<M>) => {
 	// Create shallow copy of the layout
 	const updatedLayout = { ...config };
 
 	// Set UUID if no ID exists
 	if (!updatedLayout.id) {
-		updatedLayout.id = uuidv4();
+		updatedLayout.id = '1';
 	}
 
 	// Recursively handle cols if they exist

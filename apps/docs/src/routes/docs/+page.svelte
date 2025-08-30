@@ -2,10 +2,10 @@
 	import { components } from '$lib/common';
 	import { Flexilte } from '@flexilte/core';
 	import { onMount } from 'svelte';
-	let layoutConfig = {};
+	let layout = {};
 	onMount(async () => {
 		const res = await fetch('doc.json');
-		layoutConfig = await res.json();
+		layout = await res.json();
 	});
 </script>
 
@@ -17,9 +17,14 @@
 	/>
 </svelte:head>
 
-<div class="px-4 container mx-auto">
-	<Flexilte {layoutConfig} {components}></Flexilte>
+<div class="container mx-auto px-4">
+	<Flexilte {layout} {components}></Flexilte>
 </div>
-<div class="text-center p-4 underline text-primary-800 dark:text-primary-100">
+<div
+	class="
+   p-4 text-center text-primary-800 underline
+   dark:text-primary-100
+ "
+>
 	<a href="doc.json">Click here to see the JSON of this page</a>
 </div>

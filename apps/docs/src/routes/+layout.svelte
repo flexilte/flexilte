@@ -10,14 +10,33 @@
 	let activeUrl = $derived('.' + page.url.pathname);
 </script>
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-	<Navbar class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+<div
+	class="
+   min-h-screen bg-gray-50
+   dark:bg-gray-900
+ "
+>
+	<Navbar
+		class="
+    border-gray-200 bg-white px-4 py-2.5
+    lg:px-6
+    dark:bg-gray-800
+  "
+	>
 		<NavBrand href="./">
-			<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-				>Flexilte</span
+			<span
+				class="
+      self-center text-xl font-semibold whitespace-nowrap
+      dark:text-white
+    ">Flexilte</span
 			>
 		</NavBrand>
-		<div class="flex md:order-2">
+		<div
+			class="
+     flex
+     md:order-2
+   "
+		>
 			<a href="./docs"><Button size="sm">Get started</Button></a>
 			<NavHamburger />
 		</div>
@@ -28,12 +47,12 @@
 			<NavLi href="./ai">AI</NavLi>
 			<NavLi href="https://github.com/flexilte/flexilte" target="_blank">
 				<span class="inline-flex items-center gap-1"
-					>GitHub<ArrowUpRightFromSquareOutline class="shrink-0 h-4 w-4" /></span
+					>GitHub<ArrowUpRightFromSquareOutline class="h-4 w-4 shrink-0" /></span
 				>
 			</NavLi>
 		</NavUl>
 	</Navbar>
-	<main class="p-4 container mx-auto">
+	<main class="container mx-auto p-4">
 		{@render children()}
 	</main>
 </div>

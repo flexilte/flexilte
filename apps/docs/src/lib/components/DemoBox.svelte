@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { components } from '$lib/common';
-	import { Flexilte, type LayoutConfig } from '@flexilte/core';
+	import { Flexilte, type FlexilteLayout } from '@flexilte/core';
 	import { Button, ButtonGroup } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
@@ -8,10 +8,9 @@
 
 	const backgroundColor = 'bg-gray-100 dark:bg-gray-800 p-5';
 
-	const radialData: LayoutConfig<typeof components> = {
+	const radialData: FlexilteLayout<typeof components> = {
 		component: 'Spinner',
 		props: {
-			progress: '33',
 			size: '16'
 		},
 		posX: 'middle',
@@ -19,7 +18,7 @@
 		nodeClass: backgroundColor
 	};
 
-	const avatarData: LayoutConfig<typeof components> = {
+	const avatarData: FlexilteLayout<typeof components> = {
 		component: 'Avatar',
 		props: {
 			src: 'https://placedog.net/512/512',
@@ -30,13 +29,13 @@
 		nodeClass: backgroundColor
 	};
 
-	const loadingBarData: LayoutConfig<typeof components> = {
+	const loadingBarData: FlexilteLayout<typeof components> = {
 		component: 'Progressbar',
 		posX: 'middle',
 		posY: 'middle',
 		nodeClass: 'p-12 ' + backgroundColor
 	};
-	let demoJson = $state<LayoutConfig<typeof components>>({
+	let demoJson = $state<FlexilteLayout<typeof components>>({
 		rows: [
 			{
 				cols: [
@@ -62,13 +61,13 @@
 		const copy = JSON.parse(JSON.stringify(demoJson));
 		copy.rows![0].cols = copy.rows![0].cols[0];
 		return `const components = { Progressbar, Avatar, Spinner };
-const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, null, 2)}
-<Flexilte {layoutConfig} {components}></Flexilte>`;
+const layout: FlexilteLayout<typeof components> = ${JSON.stringify(copy, null, 2)}
+<Flexilte {layout} {components}></Flexilte>`;
 	};
 
 	const onDemoClick = (demo: string) => {
 		console.log(demo);
-		let data: LayoutConfig<typeof components> = {};
+		let data: FlexilteLayout<typeof components> = {};
 		if (demo === 'radial') {
 			data = radialData;
 		} else if (demo === 'avatar') {
@@ -78,8 +77,10 @@ const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, nul
 		}
 		if (data) {
 			demoJson.rows![0].cols![0] = data;
-			demoJson.rows![0].cols![1].props!.code = '';
-			demoJson.rows![0].cols![1].props!.code = buildExample();
+			if (demoJson.rows![0].cols![1].component === 'CodeBlock') {
+				demoJson.rows![0].cols![1].props!.code = '';
+				demoJson.rows![0].cols![1].props!.code = buildExample();
+			}
 		}
 		currentSelection = demo;
 	};
@@ -107,7 +108,12 @@ const layoutConfig: LayoutConfig<typeof components> = ${JSON.stringify(copy, nul
 		</ButtonGroup>
 	</div>
 
-	<div class="md:h-[40rem] h-[52rem] mt-6">
-		<Flexilte layoutConfig={demoJson} {components}></Flexilte>
+	<div
+		class="
+    mt-6 h-[52rem]
+    md:h-[40rem]
+  "
+	>
+		<Flexilte layout={demoJson} {components}></Flexilte>
 	</div>
 </div>

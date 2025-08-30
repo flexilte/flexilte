@@ -15,19 +15,46 @@
 	const iconColor = 'text-gray-300';
 </script>
 
-<div class="space-y-4 mx-auto">
+<div class="mx-auto space-y-4">
 	{#if link}
-		<a href={link} class="transition-transform hover:scale-145">
+		<a
+			href={link}
+			class="
+     transition-transform
+     hover:scale-145
+   "
+		>
 			<Card {img}>
 				<div class="m-6">
 					{#if icon}
-						<div class={`flex items-center justify-center h-12 ${iconColor}`}><Icon {icon} /></div>
+						<div
+							class={`
+         flex h-12 items-center justify-center
+         ${iconColor}
+       `}
+						>
+							<Icon {icon} />
+						</div>
 					{/if}
 					{#if title}
-						<h5 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">{title}</h5>
+						<h5
+							class="
+         mb-2 text-2xl font-bold text-gray-900
+         dark:text-white
+       "
+						>
+							{title}
+						</h5>
 					{/if}
 					{#if body}
-						<p class="mb-3 leading-tight font-normal text-gray-700 dark:text-gray-400">{body}</p>
+						<p
+							class="
+         mb-3 leading-tight font-normal text-gray-700
+         dark:text-gray-400
+       "
+						>
+							{body}
+						</p>
 					{/if}
 				</div>
 			</Card>
@@ -35,14 +62,35 @@
 	{:else}<Card {img}>
 			<div class="m-6">
 				{#if icon}
-					<div class={`flex items-center justify-center h-12 ${iconColor}`}><Icon {icon} /></div>
+					<div
+						class={`
+        flex h-12 items-center justify-center
+        ${iconColor}
+      `}
+					>
+						<Icon {icon} />
+					</div>
 				{/if}
 
 				{#if title}
-					<h5 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">{title}</h5>
+					<h5
+						class="
+        mb-2 text-2xl font-bold text-gray-900
+        dark:text-white
+      "
+					>
+						{title}
+					</h5>
 				{/if}
 				{#if body}
-					<p class="mb-3 leading-tight font-normal text-gray-700 dark:text-gray-400">{body}</p>
+					<p
+						class="
+        mb-3 leading-tight font-normal text-gray-700
+        dark:text-gray-400
+      "
+					>
+						{body}
+					</p>
 				{/if}
 			</div>
 		</Card>

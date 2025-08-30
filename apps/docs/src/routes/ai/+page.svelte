@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Flexilte, type LayoutConfig } from '@flexilte/core';
+	import { Flexilte, type FlexilteLayout } from '@flexilte/core';
 	import { components } from '$lib/common';
 
-	const layoutConfig: LayoutConfig<typeof components> = {
+	const layout: FlexilteLayout<typeof components> = {
 		rows: [
 			{
 				component: 'ChatView'
@@ -22,6 +22,6 @@
 	/>
 </svelte:head>
 
-<div class="px-4 container mx-auto">
-	<Flexilte {layoutConfig} {components}></Flexilte>
+<div class="container mx-auto px-4">
+	<Flexilte {layout} {components}></Flexilte>
 </div>

@@ -40,7 +40,7 @@ Assuming you are ready using a framework. Lets say flowbite.
 	export const components = {
 		Tags
 	};
-	const layoutConfig: LayoutConfig<typeof components> = {
+	const layout: FlexilteLayout<typeof components> = {
 		rows: [
 			{
 				cols: {
@@ -55,7 +55,7 @@ Assuming you are ready using a framework. Lets say flowbite.
 	};
 </script>
 
-<Flexilte {LayoutConfig} {components}></Flexilte>
+<Flexilte {layout} {components}></Flexilte>
 ```
 
 ## Layout Config Model
@@ -63,15 +63,15 @@ Assuming you are ready using a framework. Lets say flowbite.
 Layout config is a recursive tree.
 
 ```ts
-export interface LayoutConfig<C extends Record<string, Component<any>>> {
+export interface FlexilteLayout<C extends Record<string, Component<any>>> {
 	id?: string; // optional id set to the each layer
 	width?: string; // tailwind class for the width (w-1/6)
 	component?: keyof C & string; // component name
 	props?: Record<string, unknown>; // component props
 	nodeClass?: string; // classes apply to cols/rows/elements
 	layoutClass?: string; // classes apply to cols/rows
-	cols?: LayoutConfig<C>[]; // array of itself
-	rows?: LayoutConfig<C>[]; // array of itself
+	cols?: FlexilteLayout<C>[]; // array of itself
+	rows?: FlexilteLayout<C>[]; // array of itself
 	posX?: 'left' | 'right' | 'middle'; // we solved css! choose how to position your element horizontally
 	posY?: 'top' | 'bottom' | 'middle'; // we solved css! choose how to position your element vertically
 	wrap?: 'wrap' | 'nowrap'; // choose if element wrap around flex way

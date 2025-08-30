@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Flexilte, type LayoutConfig } from '@flexilte/core';
+	import { Flexilte, type FlexilteLayout } from '@flexilte/core';
 	import { aiResultStore } from '$lib/ai/AIStore';
 	import { onMount } from 'svelte';
 	import { components } from '$lib/common';
 
-	let layoutConfig: LayoutConfig<typeof components> = {
+	let layout: FlexilteLayout<typeof components> = {
 		rows: [
 			{
 				cols: [
@@ -25,11 +25,11 @@
 	onMount(() => {
 		const aiStore = sessionStorage.getItem('aiStore');
 		if (aiStore) {
-			layoutConfig = JSON.parse(aiStore);
+			layout = JSON.parse(aiStore);
 		}
 	});
 </script>
 
-<div class="px-4 container mx-auto h-[30rem] w-full">
-	<Flexilte layoutConfig={$aiResultStore ?? layoutConfig} {components}></Flexilte>
+<div class="container mx-auto h-[30rem] w-full px-4">
+	<Flexilte layout={$aiResultStore ?? layout} {components}></Flexilte>
 </div>

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { components } from '$lib/common';
-	import { Flexilte } from '@flexilte/core';
+	import { Flexilte, type FlexilteLayout } from '@flexilte/core';
 	import { onMount } from 'svelte';
-	let layoutConfig = {};
+
+	let layout: FlexilteLayout<typeof components> = {};
+
 	onMount(async () => {
 		const res = await fetch('frontpage.json');
-		layoutConfig = await res.json();
+		layout = await res.json();
 	});
 </script>
 
@@ -17,7 +19,12 @@
 	/>
 </svelte:head>
 
-<Flexilte {layoutConfig} {components}></Flexilte>
-<div class="text-center p-4 underline text-primary-800 dark:text-primary-100">
+<Flexilte {layout} {components}></Flexilte>
+<div
+	class="
+   p-4 text-center text-primary-800 underline
+   dark:text-primary-100
+ "
+>
 	<a href="frontpage.json">Click here to see the JSON of this page</a>
 </div>

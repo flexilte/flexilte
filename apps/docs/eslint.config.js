@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
 import unusedImports from 'eslint-plugin-unused-imports';
-import tailwind from 'eslint-plugin-tailwindcss';
+import eslintPluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
 
 const gitignorePath = fileURLToPath(new URL('../../.gitignore', import.meta.url));
 
@@ -18,12 +18,6 @@ export default ts.config(
 	...svelte.configs.recommended,
 	prettier,
 	...svelte.configs.prettier,
-	...tailwind.configs['flat/recommended'],
-	{
-		plugins: {
-			'unused-imports': unusedImports
-		}
-	},
 	{
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node }
@@ -43,6 +37,37 @@ export default ts.config(
 				parser: ts.parser,
 				svelteConfig
 			}
+		}
+	},
+	{
+		plugins: {
+			'better-tailwindcss': eslintPluginBetterTailwindcss
+		},
+		rules: {
+			// enable all recommended rules to report a warning
+			...eslintPluginBetterTailwindcss.configs['recommended-warn'].rules,
+			// enable all recommended rules to report an error
+			...eslintPluginBetterTailwindcss.configs['recommended-error'].rules,
+
+			// or configure rules individually
+			'better-tailwindcss/enforce-consistent-line-wrapping': ['warn', { printWidth: 100 }],
+			'better-tailwindcss/no-unregistered-classes': 'off'
+		},
+		settings: {
+			'better-tailwindcss': {
+				// tailwindcss 4: the path to the entry file of the css based tailwind config (eg: `src/global.css`)
+				entryPoint: 'src/app.css'
+			}
+		}
+	},
+	{
+		plugins: {
+			'unused-imports': unusedImports
+		}
+	},
+	{
+		rules: {
+			'unused-imports/no-unused-imports': 'error'
 		}
 	}
 );
