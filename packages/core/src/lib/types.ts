@@ -1,19 +1,20 @@
 import type { Component, ComponentProps } from 'svelte';
+import type { ClassValue } from 'svelte/elements';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ComponentMap = Record<string, Component<any>>;
 
 type BaseLayout<M extends ComponentMap> = {
 	id?: string;
-	width?: string;
-	nodeClass?: string;
-	layoutClass?: string;
-	cols?: FlexilteLayout<M>[];
-	rows?: FlexilteLayout<M>[];
 	posX?: 'left' | 'right' | 'middle';
 	posY?: 'top' | 'bottom' | 'middle';
+	width?: ClassValue;
+	gap?: ClassValue;
+	nodeClass?: ClassValue;
+	layoutClass?: ClassValue;
 	wrap?: 'wrap' | 'nowrap';
-	gap?: string;
+	cols?: FlexilteLayout<M>[];
+	rows?: FlexilteLayout<M>[];
 };
 
 type ComponentLayout<M extends ComponentMap> = {

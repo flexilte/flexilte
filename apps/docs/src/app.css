@@ -38,6 +38,7 @@
 
 @source "../node_modules/flowbite-svelte/dist";
 @source "../node_modules/flowbite-svelte-icons/dist";
+@source inline("items-end");
 
 @layer base {
 	/* disable chrome cancel button */
@@ -47,6 +48,6 @@
 }
 
 .flexilte-debug {
-	background-color: rgba(50, 205, 50, 0.2);
+	background-color: rgba(50, 205, 50, 0.1);
 	border: 1px solid #32cd32;
 }
