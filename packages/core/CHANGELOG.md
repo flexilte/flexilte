@@ -1,5 +1,11 @@
 # @flexilte/core
 
+## 3.2.1
+
+### Patch Changes
+
+- c08e478: fix version
+
 ## 3.2.0
 
 ### Minor Changes
