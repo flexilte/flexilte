@@ -5,7 +5,7 @@
 	import { flip } from 'svelte/animate';
 	import type { ComponentMap, FlexilteLayout } from './types';
 	import type { ClassValue } from 'svelte/elements';
-	import { getBaseClass, normalizeClassValue } from './utils';
+	import { extractBaseClass, normalizeClassValue } from './utils';
 
 	interface Props {
 		layout: FlexilteLayout<M>;
@@ -17,16 +17,17 @@
 	const flipDurationMs = 300;
 
 	const getDebugClass = () => {
-		return debug ? 'flexilte-debug' : '';
+		return debug ? ['flexilte-debug'] : [];
 	};
 
 	const getAlignmentClass = (addFlex = false, cur?: FlexilteLayout<M>) => {
-		const classList: ClassValue = [];
+		const classList = [];
 		const x = cur || layout;
 
 		if (x.posX === 'middle') {
 			classList.push('justify-center');
-			if (getWidthClass(cur) !== 'w-full') classList.push('mx-auto');
+			if (!(getWidthClass(cur).length === 1 && getWidthClass(cur)[0] === 'w-full'))
+				classList.push('mx-auto');
 		} else if (x.posX === 'left') classList.push('justify-start');
 		else if (x.posX === 'right') classList.push('justify-end');
 
@@ -40,7 +41,7 @@
 	};
 
 	const getWrapClass = () => {
-		const classList: ClassValue = [];
+		const classList = [];
 
 		if (layout.wrap === 'wrap') classList.push('flex-wrap');
 		else if (layout.wrap === 'nowrap') classList.push('flex-nowrap');
@@ -52,44 +53,42 @@
 
 	function getWidthClass(cur?: FlexilteLayout<M>) {
 		const x = cur || layout;
-		const classList = normalizeClassValue([
-			x.width,
-			normalizeClassValue(getNodeClass(cur)).filter((c) => getBaseClass(c).startsWith('w-')),
-			cur
-				? normalizeClassValue(getLayoutClass()).filter((c) => getBaseClass(c).startsWith('w-'))
-				: []
-		]);
-		return classList.length > 0 ? classList : 'w-full';
+		const classList = [
+			...normalizeClassValue(x.width),
+			...getNodeClass(cur).filter((c) => extractBaseClass(c).startsWith('w-')),
+			...(cur ? getLayoutClass().filter((c) => extractBaseClass(c).startsWith('w-')) : [])
+		];
+		return classList.length > 0 ? classList : ['w-full'];
 	}
 
 	const getNodeClass = (cur?: FlexilteLayout<M>) => {
 		const x = cur || layout;
-		return x.nodeClass ? x.nodeClass : '';
+		return normalizeClassValue(x.nodeClass);
 	};
 
 	function buildBaseClass(cur?: FlexilteLayout<M>) {
-		return [getDebugClass(), getNodeClass(cur)];
+		return [...getDebugClass(), ...getNodeClass(cur)];
 	}
 
 	const getGapClass = () => {
-		const classList: ClassValue = [];
-		if (layout.gap) classList.push(layout.gap);
+		const classList = [];
+		if (layout.gap) classList.push(...normalizeClassValue(layout.gap));
 		return classList;
 	};
 
 	function getLayoutClass() {
-		const classList: ClassValue = [];
-		if (layout.layoutClass) classList.push(layout.layoutClass);
+		const classList = [];
+		if (layout.layoutClass) classList.push(...normalizeClassValue(layout.layoutClass));
 		return classList;
 	}
 
 	const buildContainerClass = (cur: FlexilteLayout<M>) => {
 		return [
 			'flexilte-container',
-			buildBaseClass(cur),
-			getWidthClass(cur),
-			getAlignmentClass(true, cur),
-			getLayoutClass()
+			...buildBaseClass(cur),
+			...getLayoutClass(),
+			...getWidthClass(cur),
+			...getAlignmentClass(true, cur),
 		];
 	};
 
@@ -99,11 +98,10 @@
 			'flex-col',
 			'w-full',
 			'flexilte-row',
-			buildBaseClass(),
-			getWidthClass(),
-
-			getWrapClass(),
-			getGapClass()
+			...buildBaseClass(),
+			...getWidthClass(),
+			...getWrapClass(),
+			...getGapClass()
 		];
 	};
 
@@ -113,10 +111,10 @@
 			'md:flex-row',
 			layout.wrap === 'wrap' ? '' : 'flex-col',
 			'flexilte-col',
-			buildBaseClass(),
-			getWidthClass(),
-			getWrapClass(),
-			getGapClass()
+			...buildBaseClass(),
+			...getWidthClass(),
+			...getWrapClass(),
+			...getGapClass()
 		];
 	};
 </script>

@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "FlexilteLayout",
+	"description": "JSON Schema for FlexilteLayout type.",
+	"additionalProperties": false,
+	"type": "object",
+	"properties": {
+		"$schema": { "type": "string" },
+		"id": { "type": "string" },
+		"posX": { "type": "string", "enum": ["left", "right", "middle"] },
+		"posY": { "type": "string", "enum": ["top", "bottom", "middle"] },
+		"width": { "type": ["string", "array"] },
+		"gap": { "type": ["string", "array"] },
+		"nodeClass": { "type": ["string", "array"] },
+		"layoutClass": { "type": ["string", "array"] },
+		"wrap": { "type": "string", "enum": ["wrap", "nowrap"] },
+		"component": { "type": "string" },
+		"props": { "type": "object" },
+		"cols": {
+			"type": "array",
+			"items": { "$ref": "#" }
+		},
+		"rows": {
+			"type": "array",
+			"items": { "$ref": "#" }
+		}
+	}
+}

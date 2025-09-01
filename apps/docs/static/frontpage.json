@@ -1,4 +1,5 @@
 {
+	"$schema": "https://flexilte.github.io/schema.json",
 	"rows": [
 		{
 			"component": "TextBox",

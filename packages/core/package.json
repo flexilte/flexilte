@@ -37,7 +37,8 @@
 		"./dist/**/*.d.ts",
 		"./dist/**/*.cjs",
 		"./dist/**/*.d.cts",
-		"!./dist/**/*.test.*"
+		"!./dist/**/*.test.*",
+		"./schema.json"
 	],
 	"scripts": {
 		"build": "vite build",

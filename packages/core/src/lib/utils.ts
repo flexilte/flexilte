@@ -22,6 +22,6 @@ export const normalizeClassValue = (value?: ClassValue): string[] => {
 	return [];
 };
 
-export function getBaseClass(className: string): string {
+export function extractBaseClass(className: string): string {
 	return className.split(':').pop() ?? '';
 }
