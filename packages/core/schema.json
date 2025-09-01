@@ -9,10 +9,18 @@
 		"id": { "type": "string" },
 		"posX": { "type": "string", "enum": ["left", "right", "middle"] },
 		"posY": { "type": "string", "enum": ["top", "bottom", "middle"] },
-		"width": { "type": ["string", "array"] },
-		"gap": { "type": ["string", "array"] },
-		"nodeClass": { "type": ["string", "array"] },
-		"layoutClass": { "type": ["string", "array"] },
+		"width": {
+			"oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+		},
+		"gap": {
+			"oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+		},
+		"nodeClass": {
+			"oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+		},
+		"layoutClass": {
+			"oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
+		},
 		"wrap": { "type": "string", "enum": ["wrap", "nowrap"] },
 		"component": { "type": "string" },
 		"props": { "type": "object" },
@@ -24,5 +32,15 @@
 			"type": "array",
 			"items": { "$ref": "#" }
 		}
-	}
+	},
+	"oneOf": [
+		{
+			"required": ["component"],
+			"not": { "anyOf": [{ "required": ["cols"] }, { "required": ["rows"] }] }
+		},
+		{
+			"not": { "anyOf": [{ "required": ["component"] }, { "required": ["props"] }] },
+			"anyOf": [{ "required": ["cols"] }, { "required": ["rows"] }]
+		}
+	]
 }

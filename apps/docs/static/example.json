@@ -1,15 +1,18 @@
 {
-	"$schema": "https://flexilte.github.io/schema.json",
+	"$schema": "../../../packages/core/schema.json",
 	"gap": "gap-4",
-	"layoutClass": "p-4",
 	"rows": [
 		{
-			"component": "TextBox",
-			"props": {
-				"text": "Alignments",
-				"type": "h4"
-			},
+			"gap": "gap-2",
 			"rows": [
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "Alignments",
+						"type": "h4"
+					}
+				},
+
 				{
 					"component": "TextBox",
 					"props": {
@@ -39,12 +42,14 @@
 			]
 		},
 		{
-			"component": "TextBox",
-			"props": {
-				"text": "Width",
-				"type": "h4"
-			},
 			"rows": [
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "Width",
+						"type": "h4"
+					}
+				},
 				{
 					"cols": [
 						{
@@ -82,12 +87,14 @@
 			]
 		},
 		{
-			"component": "TextBox",
-			"props": {
-				"text": "Gap",
-				"type": "h4"
-			},
 			"rows": [
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "Gap",
+						"type": "h4"
+					}
+				},
 				{
 					"gap": "gap-4",
 					"cols": [
@@ -126,12 +133,14 @@
 			]
 		},
 		{
-			"component": "TextBox",
-			"props": {
-				"text": "Node Class",
-				"type": "h4"
-			},
 			"rows": [
+				{
+					"component": "TextBox",
+					"props": {
+						"text": "Node Class",
+						"type": "h4"
+					}
+				},
 				{
 					"cols": [
 						{
@@ -166,21 +175,22 @@
 			]
 		},
 		{
-			"component": "TextBox",
-			"props": {
-				"text": "Layout Class",
-				"type": "h4"
-			},
 			"rows": [
 				{
-					"layoutClass": "uppercase",
+					"component": "TextBox",
+					"props": {
+						"text": "Layout Class",
+						"type": "h4"
+					}
+				},
+				{
+					"layoutClass": "uppercase md:h-16",
 					"cols": [
 						{
 							"component": "TextBox",
 							"props": {
 								"text": "test"
 							},
-							"nodeClass": "h-16",
 							"posX": "middle",
 							"posY": "middle"
 						},
@@ -189,38 +199,39 @@
 							"props": {
 								"text": "test"
 							},
-							"nodeClass": "h-16",
 							"posX": "middle",
 							"posY": "middle"
 						},
 						{
-							"posX": "middle",
-							"posY": "middle",
-							"layoutClass": "h-12",
-							"cols": [
+							"rows": [
 								{
-									"component": "TextBox",
-									"props": {
-										"text": "test"
-									},
-									"posX": "middle",
-									"posY": "middle"
-								},
-								{
-									"component": "TextBox",
-									"props": {
-										"text": "test"
-									},
-									"posX": "middle",
-									"posY": "middle"
-								},
-								{
-									"component": "TextBox",
-									"props": {
-										"text": "test"
-									},
-									"posX": "middle",
-									"posY": "middle"
+									"layoutClass": "h-16",
+									"cols": [
+										{
+											"component": "TextBox",
+											"props": {
+												"text": "test"
+											},
+											"posX": "middle",
+											"posY": "middle"
+										},
+										{
+											"component": "TextBox",
+											"props": {
+												"text": "test"
+											},
+											"posX": "middle",
+											"posY": "middle"
+										},
+										{
+											"component": "TextBox",
+											"props": {
+												"text": "test"
+											},
+											"posX": "middle",
+											"posY": "middle"
+										}
+									]
 								}
 							]
 						}
@@ -229,20 +240,24 @@
 			]
 		},
 		{
-			"gap": "gap-4",
-			"component": "TextBox",
-			"props": {
-				"text": "Wrap",
-				"type": "h4"
-			},
 			"rows": [
 				{
+					"gap": "gap-4",
 					"component": "TextBox",
 					"props": {
-						"text": "wrap",
-						"type": "h5"
-					},
+						"text": "Wrap",
+						"type": "h4"
+					}
+				},
+				{
 					"rows": [
+						{
+							"component": "TextBox",
+							"props": {
+								"text": "wrap",
+								"type": "h5"
+							}
+						},
 						{
 							"wrap": "wrap",
 							"layoutClass": "w-1/2 h-16",
@@ -276,52 +291,58 @@
 					]
 				},
 				{
-					"component": "TextBox",
-					"props": {
-						"text": "nowrap",
-						"type": "h5"
-					},
-					"wrap": "nowrap",
-					"cols": [
+					"rows": [
 						{
-							"component": "Avatar",
+							"component": "TextBox",
 							"props": {
-								"src": "https://placedog.net/64/64"
-							},
-							"posX": "middle",
-							"posY": "middle",
-							"nodeClass": "h-16"
+								"text": "nowrap",
+								"type": "h5"
+							}
 						},
 						{
-							"component": "Avatar",
-							"props": {
-								"src": "https://placedog.net/64/64"
-							},
-							"posX": "middle",
-							"posY": "middle",
-							"nodeClass": "h-16"
-						},
-						{
-							"component": "Avatar",
-							"props": {
-								"src": "https://placedog.net/64/64"
-							},
-							"posX": "middle",
-							"posY": "middle",
-							"nodeClass": "h-16"
+							"wrap": "nowrap",
+							"layoutClass": "w-1/2 h-16",
+							"cols": [
+								{
+									"component": "Avatar",
+									"props": {
+										"src": "https://placedog.net/64/64"
+									},
+									"posX": "middle",
+									"posY": "middle"
+								},
+								{
+									"component": "Avatar",
+									"props": {
+										"src": "https://placedog.net/64/64"
+									},
+									"posX": "middle",
+									"posY": "middle"
+								},
+								{
+									"component": "Avatar",
+									"props": {
+										"src": "https://placedog.net/64/64"
+									},
+									"posX": "middle",
+									"posY": "middle"
+								}
+							]
 						}
 					]
 				}
 			]
 		},
 		{
-			"gap": "gap-4",
-			"component": "TextBox",
-			"props": {
-				"text": "Columns",
-				"type": "h4"
-			},
 			"rows": [
+				{
+					"gap": "gap-4",
+					"component": "TextBox",
+					"props": {
+						"text": "Columns",
+						"type": "h4"
+					}
+				},
 				{
 					"cols": [
 						{

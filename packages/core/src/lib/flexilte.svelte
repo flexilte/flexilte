@@ -1,7 +1,7 @@
 <script lang="ts" generics="M extends ComponentMap  ">
 	import Flexilte from './flexilte.svelte';
 	import { fade } from 'svelte/transition';
-
+	import { twMerge } from 'tailwind-merge';
 	import { flip } from 'svelte/animate';
 	import type { ComponentMap, FlexilteLayout } from './types';
 	import type { ClassValue } from 'svelte/elements';
@@ -51,19 +51,31 @@
 		return classList;
 	};
 
+	const getClass = (classes: string[], type: string) => {
+		const classList = classes.filter((c) => {
+			const base = extractBaseClass(c);
+			return (
+				base.startsWith(`${type}-`) ||
+				base.startsWith(`min-${type}-`) ||
+				base.startsWith(`max-${type}-`)
+			);
+		});
+		return classList;
+	};
+
 	function getWidthClass(cur?: FlexilteLayout<M>) {
 		const x = cur || layout;
 		const classList = [
-			...normalizeClassValue(x.width),
-			...getNodeClass(cur).filter((c) => extractBaseClass(c).startsWith('w-')),
-			...(cur ? getLayoutClass().filter((c) => extractBaseClass(c).startsWith('w-')) : [])
+			...(x ? getClass(getLayoutClass(), 'w') : []),
+			...(x ? getClass(getNodeClass(x), 'w') : []),
+			...normalizeClassValue(x.width)
 		];
 		return classList.length > 0 ? classList : ['w-full'];
 	}
 
 	const getNodeClass = (cur?: FlexilteLayout<M>) => {
 		const x = cur || layout;
-		return normalizeClassValue(x.nodeClass);
+		return x.nodeClass ? normalizeClassValue(x.nodeClass) : [];
 	};
 
 	function buildBaseClass(cur?: FlexilteLayout<M>) {
@@ -82,51 +94,49 @@
 		return classList;
 	}
 
+	function prepareClasses(classes: string[]) {
+		return twMerge(classes);
+	}
+
 	const buildContainerClass = (cur: FlexilteLayout<M>) => {
-		return [
+		return prepareClasses([
 			'flexilte-container',
 			...buildBaseClass(cur),
 			...getLayoutClass(),
-			...getWidthClass(cur),
 			...getAlignmentClass(true, cur),
-		];
+			...getWidthClass(cur)
+		]);
 	};
 
 	const buildRowClass = () => {
-		return [
+		return prepareClasses([
 			'flex',
 			'flex-col',
 			'w-full',
 			'flexilte-row',
 			...buildBaseClass(),
-			...getWidthClass(),
 			...getWrapClass(),
 			...getGapClass()
-		];
+		]);
 	};
 
 	const buildColClass = () => {
-		return [
+		return prepareClasses([
 			'flex',
 			'md:flex-row',
-			layout.wrap === 'wrap' ? '' : 'flex-col',
+			'flex-col',
 			'flexilte-col',
 			...buildBaseClass(),
-			...getWidthClass(),
 			...getWrapClass(),
 			...getGapClass()
-		];
+		]);
 	};
 </script>
 
 {#snippet nested(arr: FlexilteLayout<M>[], classList: ClassValue)}
 	<div id={layout.id} class={classList} transition:fade>
 		{#each arr as el (el.id || el)}
-			<div
-				id={el.id}
-				animate:flip={{ duration: flipDurationMs }}
-				class={normalizeClassValue(buildContainerClass(el))}
-			>
+			<div id={el.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(el)}>
 				<Flexilte {components} layout={el} {debug} />
 			</div>
 		{/each}
@@ -136,9 +146,8 @@
 {#if layout.component}
 	{@const SvelteComponent = components[layout.component]}
 	<SvelteComponent {...layout.props} />
-{/if}
-{#if layout.rows}
-	{@render nested(layout.rows, normalizeClassValue(buildRowClass()))}
+{:else if layout.rows}
+	{@render nested(layout.rows, buildRowClass())}
 {:else if layout.cols}
-	{@render nested(layout.cols, normalizeClassValue(buildColClass()))}
+	{@render nested(layout.cols, buildColClass())}
 {/if}
