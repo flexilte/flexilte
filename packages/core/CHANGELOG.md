@@ -1,5 +1,11 @@
 # @flexilte/core
 
+## 3.3.0
+
+### Minor Changes
+
+- 77de39b: animation prop
+
 ## 3.2.1
 
 ### Patch Changes
