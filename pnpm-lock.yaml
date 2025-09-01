@@ -173,6 +173,9 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.4.5
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
       vite:
         specifier: ^7.0.4
         version: 7.1.3

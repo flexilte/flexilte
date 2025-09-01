@@ -1,9 +1,11 @@
 <script lang="ts" generics="M extends ComponentMap  ">
 	import Flexilte from './flexilte.svelte';
 	import { fade } from 'svelte/transition';
-
+	import { twMerge } from 'tailwind-merge';
 	import { flip } from 'svelte/animate';
 	import type { ComponentMap, FlexilteLayout } from './types';
+	import type { ClassValue } from 'svelte/elements';
+	import { extractBaseClass, normalizeClassValue } from './utils';
 
 	interface Props {
 		layout: FlexilteLayout<M>;
@@ -18,15 +20,15 @@
 		return debug ? ['flexilte-debug'] : [];
 	};
 
-	const getAlignmentClass = (
-		addFlex = false,
-		cur: FlexilteLayout<M> | undefined = undefined
-	): string[] => {
-		const classList: string[] = [];
+	const getAlignmentClass = (addFlex = false, cur?: FlexilteLayout<M>) => {
+		const classList = [];
 		const x = cur || layout;
 
-		if (x.posX === 'middle') classList.push('justify-center');
-		else if (x.posX === 'left') classList.push('justify-start');
+		if (x.posX === 'middle') {
+			classList.push('justify-center');
+			if (!(getWidthClass(cur).length === 1 && getWidthClass(cur)[0] === 'w-full'))
+				classList.push('mx-auto');
+		} else if (x.posX === 'left') classList.push('justify-start');
 		else if (x.posX === 'right') classList.push('justify-end');
 
 		if (x.posY === 'middle') classList.push('items-center');
@@ -38,124 +40,114 @@
 		return classList;
 	};
 
-	const getWrapClass = (): string[] => {
-		const classList: string[] = [];
+	const getWrapClass = () => {
+		const classList = [];
 
 		if (layout.wrap === 'wrap') classList.push('flex-wrap');
 		else if (layout.wrap === 'nowrap') classList.push('flex-nowrap');
 
-		if (classList.length > 0) {
-			classList.push('overflow-auto');
-		}
+		if (classList.length > 0) classList.push('overflow-auto');
 
 		return classList;
 	};
 
-	const width1Classes = [
-		'w-1/1',
-		'w-2/2',
-		'w-3/3',
-		'w-4/4',
-		'w-5/5',
-		'w-6/6',
-		'w-7/7',
-		'w-8/8',
-		'w-9/9',
-		'w-10/10',
-		'w-11/11',
-		'w-12/12'
-	];
+	const getClass = (classes: string[], type: string) => {
+		const classList = classes.filter((c) => {
+			const base = extractBaseClass(c);
+			return (
+				base.startsWith(`${type}-`) ||
+				base.startsWith(`min-${type}-`) ||
+				base.startsWith(`max-${type}-`)
+			);
+		});
+		return classList;
+	};
 
-	const getWidthClass = (cur: FlexilteLayout<M> | undefined = undefined) => {
+	function getWidthClass(cur?: FlexilteLayout<M>) {
 		const x = cur || layout;
-		if (x.width) {
-			if (!width1Classes.includes(x.width)) {
-				return [x.width, 'mx-auto'];
-			}
-		}
-		return ['w-full'];
-	};
+		const classList = [
+			...(x ? getClass(getLayoutClass(), 'w') : []),
+			...(x ? getClass(getNodeClass(x), 'w') : []),
+			...normalizeClassValue(x.width)
+		];
+		return classList.length > 0 ? classList : ['w-full'];
+	}
 
-	const getNodeClass = (cur: FlexilteLayout<M> | undefined = undefined) => {
+	const getNodeClass = (cur?: FlexilteLayout<M>) => {
 		const x = cur || layout;
-		if (x.nodeClass) {
-			return [x.nodeClass];
-		}
-		return [];
+		return x.nodeClass ? normalizeClassValue(x.nodeClass) : [];
 	};
 
-	const buildBaseClass = (cur: FlexilteLayout<M> | undefined = undefined) => {
-		const classList: string[] = [...getDebugClass(), ...getNodeClass(cur)];
+	function buildBaseClass(cur?: FlexilteLayout<M>) {
+		return [...getDebugClass(), ...getNodeClass(cur)];
+	}
 
+	const getGapClass = () => {
+		const classList = [];
+		if (layout.gap) classList.push(...normalizeClassValue(layout.gap));
 		return classList;
 	};
 
-	const getGapClass = (): string[] => {
-		const classList: string[] = [];
-		if (layout.gap) classList.push(layout.gap);
+	function getLayoutClass() {
+		const classList = [];
+		if (layout.layoutClass) classList.push(...normalizeClassValue(layout.layoutClass));
 		return classList;
-	};
+	}
 
-	const getLayoutClass = () => {
-		const classList: string[] = [];
-		if (layout.layoutClass) classList.push(layout.layoutClass);
-		return classList;
-	};
+	function prepareClasses(classes: string[]) {
+		return twMerge(classes);
+	}
 
 	const buildContainerClass = (cur: FlexilteLayout<M>) => {
-		const classList = [
+		return prepareClasses([
 			'flexilte-container',
 			...buildBaseClass(cur),
-			...getWidthClass(cur),
+			...getLayoutClass(),
 			...getAlignmentClass(true, cur),
-			...getLayoutClass()
-		];
-		return classList.join(' ');
+			...getWidthClass(cur)
+		]);
 	};
 
 	const buildRowClass = () => {
-		const classList = [
-			'flex flex-col w-full',
+		return prepareClasses([
+			'flex',
+			'flex-col',
+			'w-full',
 			'flexilte-row',
 			...buildBaseClass(),
-			// ...getAlignmentClass(),
 			...getWrapClass(),
 			...getGapClass()
-		];
-		return classList.join(' ');
+		]);
 	};
 
 	const buildColClass = () => {
-		const classList = [
+		return prepareClasses([
 			'flex',
-			'flex-col',
 			'md:flex-row',
+			'flex-col',
 			'flexilte-col',
 			...buildBaseClass(),
 			...getWrapClass(),
 			...getGapClass()
-		];
-		return classList.join(' ');
+		]);
 	};
 </script>
+
+{#snippet nested(arr: FlexilteLayout<M>[], classList: ClassValue)}
+	<div id={layout.id} class={classList} transition:fade>
+		{#each arr as el (el.id || el)}
+			<div id={el.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(el)}>
+				<Flexilte {components} layout={el} {debug} />
+			</div>
+		{/each}
+	</div>
+{/snippet}
 
 {#if layout.component}
 	{@const SvelteComponent = components[layout.component]}
 	<SvelteComponent {...layout.props} />
 {:else if layout.rows}
-	<div id={layout.id} class={buildRowClass()} transition:fade>
-		{#each layout.rows as row (row)}
-			<div id={row.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(row)}>
-				<Flexilte {components} layout={row} {debug} />
-			</div>
-		{/each}
-	</div>
+	{@render nested(layout.rows, buildRowClass())}
 {:else if layout.cols}
-	<div id={layout.id} class={buildColClass()} transition:fade>
-		{#each layout.cols as col (col)}
-			<div id={col.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(col)}>
-				<Flexilte {components} layout={col} {debug} />
-			</div>
-		{/each}
-	</div>
+	{@render nested(layout.cols, buildColClass())}
 {/if}
