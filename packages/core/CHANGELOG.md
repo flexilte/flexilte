@@ -1,5 +1,11 @@
 # @flexilte/core
 
+## 3.2.0
+
+### Minor Changes
+
+- 6226521: patch formatting with wrap and layout
+
 ## 3.1.0
 
 ### Minor Changes
