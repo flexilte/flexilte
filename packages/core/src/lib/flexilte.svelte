@@ -11,9 +11,10 @@
 		layout: FlexilteLayout<M>;
 		components: M;
 		debug?: boolean;
+		animate?: boolean;
 	}
 
-	let { layout, components, debug = false }: Props = $props();
+	let { layout, components, debug = false, animate = true }: Props = $props();
 	const flipDurationMs = 300;
 
 	const getDebugClass = () => {
@@ -134,10 +135,14 @@
 </script>
 
 {#snippet nested(arr: FlexilteLayout<M>[], classList: ClassValue)}
-	<div id={layout.id} class={classList} transition:fade>
+	<div id={layout.id} class={classList} transition:fade={animate ? {} : undefined}>
 		{#each arr as el (el.id || el)}
-			<div id={el.id} animate:flip={{ duration: flipDurationMs }} class={buildContainerClass(el)}>
-				<Flexilte {components} layout={el} {debug} />
+			<div
+				id={el.id}
+				animate:flip={animate ? { duration: flipDurationMs } : undefined}
+				class={buildContainerClass(el)}
+			>
+				<Flexilte {components} layout={el} {debug} {animate} />
 			</div>
 		{/each}
 	</div>
